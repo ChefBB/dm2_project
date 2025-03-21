@@ -4,6 +4,18 @@
 
 everybody looks for which outlier detection they would rather perform
 
+## Meeting 2 objectives
+create standardized dataset to work on
+handle features accordingly to updated description.txt
+outlier detection
+
+
+> # !!!!!TODO first!!!!!
+> decide which type of outlier detection each of use prefers
+
+
+
+
 # Module 1
 ## Anomaly detection (and visualization w/ dim redu)
 ### Deadline: 30/03
