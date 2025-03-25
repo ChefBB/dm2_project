@@ -1,5 +1,9 @@
 import ast
 
+
+feats_to_list = ['countryOfOrigin', 'genres', 'regions', 'soundMixes']
+
+
 def convert_string_list(str_list: str) -> list[str]:
     """
     Converts a string in the format "['<str>' (, ...)]" to a list
