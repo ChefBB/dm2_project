@@ -1,5 +1,8 @@
 import ast
 
+feats_to_keep = [
+    
+]
 
 feats_to_list = ['countryOfOrigin', 'genres', 'regions', 'soundMixes']
 
