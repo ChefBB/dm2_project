@@ -12,6 +12,7 @@ outlier detection
 
 > # !!!!!TODO first!!!!!
 > decide which type of outlier detection each of use prefers
+> __Done__
 
 
 
