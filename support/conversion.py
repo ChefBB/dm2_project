@@ -1,3 +1,7 @@
+"""
+This module contains functions to convert data from one format to another
+"""
+
 import ast
 
 feats_to_keep = [
