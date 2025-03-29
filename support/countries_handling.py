@@ -48,7 +48,7 @@ def get_encoded(country_list: list[str], name: str = '') -> dict[str, int]:
     
     continent_counts = {f"{name}_{key}": value for key, value in continent_counts.items()}
     for continent in CONTINENTS:
-        if continent not in continent_counts:
+        if (name + '_' + continent) not in continent_counts:
             continent_counts[f"{name}_{continent}"] = 0
     
     return dict(continent_counts)
