@@ -80,7 +80,7 @@ def explode_continents_and_freq_enc(df: pd.DataFrame) -> pd.DataFrame:
         # Get frequency encoding for the column
         freq_enc = exploded.value_counts(normalize=True).to_dict()
         result[f'{feat}_freq_enc'] = df[feat].map(
-            lambda x: sum(freq_enc.get(i, 0) for i in x))
+            lambda x, freq_enc=freq_enc: sum(freq_enc.get(i, 0) for i in x))
         
         # Apply the get_encoded function to the column
         encoded = df[feat].apply(get_encoded, name=feat)
