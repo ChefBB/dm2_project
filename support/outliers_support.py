@@ -4,13 +4,17 @@ Some constants and functions to help with outliers detection
 import pandas as pd
 from sklearn.ensemble import IsolationForest
 from sklearn.decomposition import PCA
+from h2o.estimators.extended_isolation_forest import H2OExtendedIsolationForestEstimator
+import h2o
+from h2o.frame import H2OFrame
 import plotly.express as px
 
 
+
 feats_to_keep_iso_forest = [
-    'startYear', 'endYear', 'runtimeMinutes', 'numVotes',
+    'startYear', 'runtimeMinutes',
     'totalCredits', 'criticReviewsTotal',
-    'isAdult', 'numRegions', 'userReviewsTotal', 'ratingCount',
+    'numRegions', 'userReviewsTotal', 'ratingCount',
     'castNumber', 'companiesNumber', 'averageRating', 'externalLinks',
     'writerCredits', 'directorsCredits', 'totalMedia',
     'totalNominations',
@@ -18,11 +22,14 @@ feats_to_keep_iso_forest = [
     'regions_AF', 'regions_OC', 'regions_SA', 'regions_UNK',
     'countryOfOrigin_freq_enc', 'countryOfOrigin_NA', 'countryOfOrigin_AF',
     'countryOfOrigin_AS', 'countryOfOrigin_EU', 'countryOfOrigin_OC',
-    'countryOfOrigin_SA', 'countryOfOrigin_UNK'
+    'countryOfOrigin_SA', 'countryOfOrigin_UNK',
+    # 'endYear', 
 ]
 
 
-def iso_forest_titletype(df: pd.DataFrame, feats: list[str]=feats_to_keep_iso_forest):
+def iso_forest_titletype(df: pd.DataFrame,
+                         feats: list[str]=feats_to_keep_iso_forest,
+                         ) -> pd.Series:
     """
     Applies Isolation Forest to detect outliers in the DataFrame.
     The function scales the data and applies Isolation Forest separately for each titleType.
@@ -32,10 +39,11 @@ def iso_forest_titletype(df: pd.DataFrame, feats: list[str]=feats_to_keep_iso_fo
     ----------
     df : pd.DataFrame
         The DataFrame containing the data to be processed.
-
+    feats : list[str], optional
+        The features to use for the model. Defaults to feats_to_keep_iso_forest.
     Returns
     -------
-    pd.DataFrame: A DataFrame with outlier predictions, maintaining the original order.
+    pd.Series: A Series with outlier predictions, maintaining the original order.
     """
     # Initialize a list to store processed groups
     processed_groups = []
@@ -47,7 +55,8 @@ def iso_forest_titletype(df: pd.DataFrame, feats: list[str]=feats_to_keep_iso_fo
         group = group.reset_index(drop=True)
 
         # Apply Isolation Forest
-        iso_forest = IsolationForest(random_state=42, contamination=0.01)
+        iso_forest = (
+            IsolationForest(random_state=42, contamination=0.01))
         group['outlier'] = iso_forest.fit_predict(group[feats])
 
         # Restore the original index
@@ -57,10 +66,10 @@ def iso_forest_titletype(df: pd.DataFrame, feats: list[str]=feats_to_keep_iso_fo
     # Concatenate all groups and sort by the original index
     result = pd.concat(processed_groups).sort_index()
 
-    return result
+    return result['outlier']
 
 
-def iso_forest_full_dataset(df: pd.DataFrame, feats: list[str]=feats_to_keep_iso_forest):
+def iso_forest_full_dataset(df: pd.DataFrame, feats: list[str]=feats_to_keep_iso_forest)->pd.Series:
     """
     Applies Isolation Forest to detect outliers in the entire DataFrame.
     The outlier predictions are stored in a new column 'outlier'.
@@ -72,7 +81,7 @@ def iso_forest_full_dataset(df: pd.DataFrame, feats: list[str]=feats_to_keep_iso
 
     Returns
     -------
-    pd.DataFrame: A DataFrame with outlier predictions, maintaining the original order.
+    pd.Series: A Series with outlier predictions, maintaining the original order.
     """
     # Preserve the original index
     original_index = df.index
@@ -87,7 +96,113 @@ def iso_forest_full_dataset(df: pd.DataFrame, feats: list[str]=feats_to_keep_iso
     # Restore the original index
     df.index = original_index
 
-    return df
+    return df['outlier']
+
+
+def global_extended_iso_forest(df: pd.DataFrame, feats: list[str] = feats_to_keep_iso_forest) -> pd.Series:
+    """
+    Applies H2O Extended Isolation Forest to detect outliers in the DataFrame.
+    The outlier predictions are stored in a new column 'outlier_h2o'.
+
+    Parameters
+    ----------
+    df : pd.DataFrame
+        The DataFrame containing the data to be processed.
+    feats : list[str], optional
+        The features to use for the model. Defaults to feats_to_keep_iso_forest.
+
+    Returns
+    -------
+    pd.Series: A series with outlier predictions, maintaining the original order.
+    """
+
+    # Initialize H2O
+    h2o.init()
+
+    # Convert DataFrame to H2OFrame
+    h2o_df = H2OFrame(df[feats])
+
+    # Initialize the H2O Extended Isolation Forest model
+    eif_model = H2OExtendedIsolationForestEstimator(seed=42, sample_size=256, ntrees=100)
+
+    # Train the model
+    eif_model.train(training_frame=h2o_df)
+
+    # Predict outliers
+    predictions = eif_model.predict(h2o_df)
+
+    # Extract the anomaly score
+    anomaly_scores = predictions['anomaly_score'].as_data_frame().values.flatten()
+
+    # Determine the threshold for the top 1% of outliers
+    threshold = pd.Series(anomaly_scores).quantile(0.99)
+
+    # Assign -1 to the top 1% of outliers and 1 to the rest
+    result = pd.Series((anomaly_scores >= threshold).astype(int)).replace({0: 1, 1: -1})
+
+    # Shutdown H2O
+    h2o.shutdown(prompt=False)
+
+    return result
+
+
+def classwise_extended_iso_forest(df: pd.DataFrame, feats: list[str] = feats_to_keep_iso_forest) -> pd.Series:
+    """
+    Applies H2O Extended Isolation Forest to detect outliers in the DataFrame.
+    The outlier predictions are stored in a new column 'outlier_h2o'.
+
+    Parameters
+    ----------
+    df : pd.DataFrame
+        The DataFrame containing the data to be processed.
+    feats : list[str], optional
+        The features to use for the model. Defaults to feats_to_keep_iso_forest.
+
+    Returns
+    -------
+    pd.Series: A Series with outlier predictions, maintaining the original order.
+    """
+    processed_groups = []
+
+    # Initialize H2O
+    h2o.init()
+
+    for _, group in df.groupby('titleType'):
+        # Preserve the original index
+        original_index = group.index
+        group = group.reset_index(drop=True)
+        
+        # Convert DataFrame to H2OFrame
+        h2o_df = H2OFrame(group[feats])
+
+        # Initialize the H2O Extended Isolation Forest model
+        eif_model = H2OExtendedIsolationForestEstimator(seed=42, sample_size=256, ntrees=100)
+
+        # Train the model
+        eif_model.train(training_frame=h2o_df)
+
+        # Predict outliers
+        predictions = eif_model.predict(h2o_df)
+
+        # Extract the anomaly score
+        anomaly_scores = predictions['anomaly_score'].as_data_frame().values.flatten()
+
+        # Determine the threshold for the top 1% of outliers
+        threshold = pd.Series(anomaly_scores).quantile(0.99)
+        
+        group['outlier'] = pd.Series((anomaly_scores >= threshold).astype(int)).replace({0: 1, 1: -1})
+
+        # Restore the original index
+        group.index = original_index
+        processed_groups.append(group)
+
+    # Assign -1 to the top 1% of outliers and 1 to the rest
+    result = pd.concat(processed_groups).set_index(df.index)['outlier']
+
+    # Shutdown H2O
+    h2o.shutdown(prompt=False)
+
+    return result
 
 
 
@@ -116,7 +231,7 @@ def plot_3d_outliers(
         df = df[df['titleType'] == title_type]
 
     # Apply PCA to reduce to 3 components
-    pca = PCA(n_components=3)
+    pca = PCA(n_components=3, random_state=42)
     pca_components = pca.fit_transform(df[feats])
     df_pca = pd.DataFrame(pca_components, columns=['PCA1', 'PCA2', 'PCA3'], index=df.index)
 
