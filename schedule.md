@@ -33,6 +33,7 @@ start w/ imbalanced learning (just some groundwork)
 how should we represent genres?
 - word2vec (solve problem of nans)
 - linear comb of one-hot enc
+- one-hot enc (bruno's pick for ML models)
 
 
 ## Imbalanced Learning
