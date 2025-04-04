@@ -11,6 +11,7 @@ import plotly.express as px
 
 
 
+
 feats_to_keep_iso_forest = [
     'startYear', 'runtimeMinutes',
     'totalCredits', 'criticReviewsTotal',
@@ -73,7 +74,6 @@ def iso_forest_titletype(df: pd.DataFrame,
     result = pd.concat(processed_groups).sort_index()
 
     return result['outlier'], iso_forest_dict
-
 
 
 def iso_forest_full_dataset(df: pd.DataFrame,
@@ -215,7 +215,6 @@ def classwise_extended_iso_forest(df: pd.DataFrame, feats: list[str] = feats_to_
     return result
 
 
-
 def plot_3d_outliers(
     df: pd.DataFrame, title_type: str = None, feats: list[str] = feats_to_keep_iso_forest,
     outlier_col: str = 'outlier'):
@@ -263,10 +262,7 @@ def plot_3d_outliers(
     )
     fig.update_traces(marker_size=3)
     fig.show()
-    
-    
-    
-    
+     
     
 def apply_iso_forest(df: pd.DataFrame, model: IsolationForest | H2OExtendedIsolationForestEstimator |
                      dict[str, IsolationForest] | dict[str, H2OExtendedIsolationForestEstimator]) -> pd.DataFrame:

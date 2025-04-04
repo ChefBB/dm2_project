@@ -1,4 +1,6 @@
 """
+!!!NO FINAL SOLUTION TO EMBEDDING THE GENRE COLUMN YET!!!
+
 This module contains functions to generate embeddings for the genres of movies using Word2Vec.
 """
 import pandas as pd
@@ -59,52 +61,53 @@ def get_genre_embedding(genre: list[str], w2v_model: Word2Vec) -> np.ndarray:
     # Return the mean of the embeddings
     return np.mean(embeddings, axis=0) if embeddings else np.zeros(w2v_model.vector_size)
 
-    def get_node2vec_model(graph: nx.Graph, name: str='models/genre_node2vec_model.model') -> Node2Vec:
-        """
-        Generate the Node2Vec model for the given graph.
-        Save model to the specified name.
-        ----------
-        Parameters
-        ----------
-        graph : nx.Graph
-            The graph representing the genres.
 
-        name : str
-            The name of the model file.
-            
-        ----------
-        Returns
-        -------
-        Node2Vec: The Node2Vec model.
-        """
-        node2vec = Node2Vec(graph, dimensions=100, walk_length=30, num_walks=200, workers=4)
-        model = node2vec.fit(window=10, min_count=1, batch_words=4)
-        model.save(name)
+def get_node2vec_model(graph: nx.Graph, name: str='models/genre_node2vec_model.model') -> Node2Vec:
+    """
+    Generate the Node2Vec model for the given graph.
+    Save model to the specified name.
+    ----------
+    Parameters
+    ----------
+    graph : nx.Graph
+        The graph representing the genres.
+
+    name : str
+        The name of the model file.
         
-        return model
+    ----------
+    Returns
+    -------
+    Node2Vec: The Node2Vec model.
+    """
+    node2vec = Node2Vec(graph, dimensions=100, walk_length=30, num_walks=200, workers=4)
+    model = node2vec.fit(window=10, min_count=1, batch_words=4)
+    model.save(name)
+    
+    return model
 
 
-    def get_node_embedding(node: str, node2vec_model: Node2Vec) -> np.ndarray:
-        """
-        Generate the embedding for a single node using the Node2Vec model.
-        ----------
-        Parameters
-        ----------
-        node : str
-            The node to generate the embedding for.
+def get_node_embedding(node: str, node2vec_model: Node2Vec) -> np.ndarray:
+    """
+    Generate the embedding for a single node using the Node2Vec model.
+    ----------
+    Parameters
+    ----------
+    node : str
+        The node to generate the embedding for.
 
-        node2vec_model : Node2Vec
-            The Node2Vec model.
-            
-        ----------
-        Returns
-        -------
-        np.ndarray: The embedding for the node.
-        """
-        if node in node2vec_model.wv:
-            return node2vec_model.wv[node]
-        else:
-            return np.zeros(node2vec_model.wv.vector_size)
+    node2vec_model : Node2Vec
+        The Node2Vec model.
+        
+    ----------
+    Returns
+    -------
+    np.ndarray: The embedding for the node.
+    """
+    if node in node2vec_model.wv:
+        return node2vec_model.wv[node]
+    else:
+        return np.zeros(node2vec_model.wv.vector_size)
 
 # Apply the function to generate embeddings for each row
 # df['genre_embedding'] = df['genre'].apply(lambda x: get_genre_embedding(x, w2v_model))
