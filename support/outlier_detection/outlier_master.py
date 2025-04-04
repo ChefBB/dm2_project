@@ -16,10 +16,11 @@ from sklearn.decomposition import PCA
 import seaborn as sns
 import matplotlib.pyplot as plt
 
+
 feats_to_keep = [
     'startYear', 'runtimeMinutes',
-    'totalCredits', 'criticReviewsTotal',
-    'numRegions', 'userReviewsTotal', 'ratingCount',
+    'totalCredits', 'reviewsTotal',
+    'numRegions', 'ratingCount',
     'castNumber', 'companiesNumber', 'averageRating', 'externalLinks',
     'writerCredits', 'directorsCredits', 'totalMedia',
     'totalNominations',
@@ -109,6 +110,8 @@ def plot_3d_outliers(
     # Update the legend to separate columns for titleType and outlier
     # Add PCA loading vectors to the plot
     loadings = pca.components_.T * 10  # Scale up the loadings for better visibility
+    # Update the legend to separate columns for titleType and outlier
+    # Add PCA loading vectors to the plot
     for i, feature in enumerate(feats):
         fig.add_trace(
             go.Scatter3d(
@@ -165,14 +168,18 @@ def plot_pairplot_pca(df: pd.DataFrame, feats: list[str] = feats_to_keep, outlie
     df_pca['outlier'] = df[outlier_col].map({1: 'Inlier', -1: 'Outlier'})
 
     # Plot using seaborn pairplot
-    sns.pairplot(
+    g = sns.pairplot(
         df_pca,
         vars=['PCA1', 'PCA2', 'PCA3', 'PCA4'],
         hue='outlier',
         palette={'Inlier': 'blue', 'Outlier': 'red'},
         diag_kind='kde',
-        plot_kws={'alpha': 0.3, 's': 10, 'edgecolor': 'none'},
+        plot_kws={'alpha': 0.1, 's': 5, 'edgecolor': 'none'},
     )
+    
+    # Add grid to each graph
+    for ax in g.axes.flatten():
+        ax.grid(True)
 
     plt.suptitle("Pairplot of First 4 Principal Components", y=1.02)
     plt.show()

@@ -11,18 +11,17 @@ from h2o.frame import H2OFrame
 
 
 feats_to_keep_iso_forest = [
-    'startYear', 'runtimeMinutes',
-    'totalCredits', 'criticReviewsTotal',
-    'numRegions', 'userReviewsTotal', 'ratingCount',
-    'castNumber', 'companiesNumber', 'averageRating', 'externalLinks',
-    'writerCredits', 'directorsCredits', 'totalMedia',
-    'totalNominations',
-    'regions_freq_enc', 'regions_EU', 'regions_NA', 'regions_AS',
-    'regions_AF', 'regions_OC', 'regions_SA', 'regions_UNK',
-    'countryOfOrigin_freq_enc', 'countryOfOrigin_NA', 'countryOfOrigin_AF',
-    'countryOfOrigin_AS', 'countryOfOrigin_EU', 'countryOfOrigin_OC',
-    'countryOfOrigin_SA', 'countryOfOrigin_UNK',
-    # 'endYear', 
+    'runtimeMinutes', 'totalCredits', 'reviewsTotal',
+    'numRegions', 'ratingCount', 'castNumber',
+    'companiesNumber', 'averageRating', 'externalLinks', 'writerCredits',
+    'directorsCredits', 'totalMedia', 'totalNominations',
+    'regions_freq_enc',
+    'regions_EU', 'regions_NA', 'regions_AS', 'regions_AF', 'regions_OC',
+    'regions_SA', 'regions_UNK',
+    'countryOfOrigin_freq_enc',
+    'countryOfOrigin_NA', 'countryOfOrigin_AF', 'countryOfOrigin_AS',
+    'countryOfOrigin_EU', 'countryOfOrigin_OC', 'countryOfOrigin_SA',
+    'countryOfOrigin_UNK'
 ]
 
 

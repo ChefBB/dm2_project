@@ -7,11 +7,11 @@ import numpy as np
 
 
 to_log = [
-    'criticReviewsTotal',
-    'numRegions', 'userReviewsTotal', 'ratingCount',
+    'reviewsTotal',
+    'numRegions', 'ratingCount',
     'castNumber', 'companiesNumber', 'externalLinks',
     'writerCredits', 'directorsCredits', 'totalMedia',
-    'totalNominations',
+    'totalNominations', 'totalCredits',
     # 'regions_freq_enc', 'regions_EU', 'regions_NA', 'regions_AS',
     # 'regions_AF', 'regions_OC', 'regions_SA', 'regions_UNK',
     # 'countryOfOrigin_freq_enc', 'countryOfOrigin_NA', 'countryOfOrigin_AF',
@@ -25,10 +25,14 @@ def apply_log_scale(df: pd.DataFrame, columns: list[str]=to_log) -> pd.DataFrame
     Applies log transformation to the specified columns in the dataframe.
     
     Parameters:
+    ----------
     df (pd.DataFrame): Input dataframe.
     columns (list): List of column names to apply log transformation.
     
+    
+    
     Returns:
+    ----------
     pd.DataFrame: Dataframe with log-transformed columns.
     """
     result = df.copy()

@@ -7,10 +7,8 @@ required for machine learning pipelines, ensuring consistency and reproducibilit
 
 Steps:
 1. Initialization of the datasets from starting csvs.
-2. Performs outlier detection and removal.
-3. Applies imputation to the datasets.
-4. Applies transformations to the datasets.
-5. Applies encoding to the datasets.
+2. Applies imputation to the datasets.
+3. Applies transformations to the datasets.
 """
 
 import pandas as pd
