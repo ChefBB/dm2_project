@@ -160,9 +160,9 @@ def plot_pairplot_pca(df: pd.DataFrame, feats: list[str] = feats_to_keep, outlie
     None
     """
     # Apply PCA to reduce to 4 components
-    pca = PCA(n_components=4, random_state=42)
+    pca = PCA(n_components=5, random_state=42)
     pca_components = pca.fit_transform(df[feats])
-    df_pca = pd.DataFrame(pca_components, columns=['PCA1', 'PCA2', 'PCA3', 'PCA4'], index=df.index)
+    df_pca = pd.DataFrame(pca_components, columns=['PCA1', 'PCA2', 'PCA3', 'PCA4', 'PC5'], index=df.index)
 
     # Add outlier information
     df_pca['outlier'] = df[outlier_col].map({1: 'Inlier', -1: 'Outlier'})
@@ -170,7 +170,7 @@ def plot_pairplot_pca(df: pd.DataFrame, feats: list[str] = feats_to_keep, outlie
     # Plot using seaborn pairplot
     g = sns.pairplot(
         df_pca,
-        vars=['PCA1', 'PCA2', 'PCA3', 'PCA4'],
+        vars=['PCA1', 'PCA2', 'PCA3', 'PCA4', 'PC5'],
         hue='outlier',
         palette={'Inlier': 'blue', 'Outlier': 'red'},
         diag_kind='kde',

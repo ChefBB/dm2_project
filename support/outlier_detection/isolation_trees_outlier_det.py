@@ -13,7 +13,7 @@ from h2o.frame import H2OFrame
 feats_to_keep_iso_forest = [
     'runtimeMinutes', 'totalCredits', 'reviewsTotal',
     'numRegions', 'ratingCount', 'castNumber',
-    'companiesNumber', 'averageRating', 'externalLinks', 'writerCredits',
+    'companiesNumber', 'averageRating', 'writerCredits',
     'directorsCredits', 'totalMedia', 'totalNominations',
     'regions_freq_enc',
     'regions_EU', 'regions_NA', 'regions_AS', 'regions_AF', 'regions_OC',
