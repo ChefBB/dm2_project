@@ -17,16 +17,20 @@ def impute_data(train: pd.DataFrame, test: pd.DataFrame | None=None) -> tuple[pd
         tuple[pd.DataFrame, pd.DataFrame | None]: The imputed training DataFrame and the imputed testing DataFrame (if provided).
     """
     # Apply imputation to the training dataset
-    train = impute_runtime_minutes(train)()
+    
+    runtime_imputer = impute_runtime_minutes(train)
+    
+    train_res = runtime_imputer(train)
 
+    test_res = None
     # If a testing dataset is provided, apply the same imputation
     if test is not None:
-        test = impute_runtime_minutes(test)()
+        test_res = runtime_imputer(test)
 
-    return train, test
+    return train_res, test_res
 
 
-def impute_runtime_minutes(df: pd.DataFrame, perc: float | None=0.9) -> Callable[[pd.DataFrame], pd.Series]:
+def impute_runtime_minutes(df: pd.DataFrame, perc: float | None=0.99) -> Callable[[pd.DataFrame], pd.Series]:
     """
     Impute missing values in the 'runtimeMinutes' column of the given DataFrame.
     Assigns to missing values randomly sampled data out of the central perc% range.
