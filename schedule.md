@@ -23,6 +23,19 @@ outlier detection
 splits decided prev week
 
 
+### TODO
+finish with feats handling (missing handling, representations etc)
+have some base for outlier det
+start w/ imbalanced learning (just some groundwork)
+    which model?
+
+
+how should we represent genres?
+- word2vec (solve problem of nans)
+- linear comb of one-hot enc
+- one-hot enc (bruno's pick for ML models)
+
+
 ## Imbalanced Learning
 ### Deadline: 06/04
 __tosplit__
