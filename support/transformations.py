@@ -19,6 +19,21 @@ to_log = [
     # 'countryOfOrigin_SA', 'countryOfOrigin_UNK'
 ]
 
+def apply_transformations(
+    train: pd.DataFrame, test: pd.DataFrame | None=None) -> tuple(pd.DataFrame, pd.DataFrame | None):
+    """
+    Applies transformations to the training and testing datasets.
+    This includes log transformations on specified columns.
+
+    Args:
+        train (pd.DataFrame): The training dataset.
+        test (pd.DataFrame | None, optional): The testing dataset. Defaults to None.
+
+    Returns:
+        tuple[pd.DataFrame, pd.DataFrame | None]: The transformed training and testing datasets.
+    """
+    return apply_log_scale(train, to_log), apply_log_scale(test, to_log) if test is not None else None
+
 
 def apply_log_scale(df: pd.DataFrame, columns: list[str]=to_log) -> pd.DataFrame:
     """

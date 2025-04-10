@@ -11,6 +11,43 @@ import networkx as nx
 
 
 
+def embedding(train: pd.DataFrame, test: pd.DataFrame | None=None) -> tuple[pd.DataFrame, pd.DataFrame | None]:
+    """
+    Applies embedding to the training and testing datasets.
+    This includes generating embeddings for the genres using Word2Vec and Node2Vec.
+
+    Parameters
+    ----------
+    train : pd.DataFrame
+        The training dataset.
+    test : pd.DataFrame | None
+        The testing dataset. Defaults to None.
+
+    Returns
+    -------
+    tuple[pd.DataFrame, pd.DataFrame | None]: The training and testing datasets with embeddings.
+    """
+    one_hot_genres = pd.get_dummies(train['genres'].apply(pd.Series).stack()).groupby(level=0).sum()
+    one_hot_genres = one_hot_genres.add_prefix('genre_').astype(int)
+    train = pd.concat([train, one_hot_genres], axis=1)
+    
+    one_hot_titletype = pd.get_dummies(train['titleType'], prefix='titleType')
+    train = pd.concat([train, one_hot_titletype], axis=1)
+    
+    if test is None:
+        return train, None
+    
+    one_hot_genres = pd.get_dummies(test['genres'].apply(pd.Series).stack()).groupby(level=0).sum()
+    one_hot_genres = one_hot_genres.add_prefix('genre_').astype(int)
+    test = pd.concat([test, one_hot_genres], axis=1)
+    
+    one_hot_titletype = pd.get_dummies(test['titleType'], prefix='titleType')
+    test = pd.concat([test, one_hot_titletype], axis=1)
+    
+    return train, test
+
+
+
 # Step 2: Generate Embeddings for Each Sample
 def get_w2v_model(df: pd.DataFrame, name: str='models/genre_w2v_model.model') -> Word2Vec:
     """
