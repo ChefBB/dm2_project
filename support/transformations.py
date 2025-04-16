@@ -20,7 +20,7 @@ to_log = [
 ]
 
 def apply_transformations(
-    train: pd.DataFrame, test: pd.DataFrame | None=None) -> tuple(pd.DataFrame, pd.DataFrame | None):
+    train: pd.DataFrame, test: pd.DataFrame | None=None) -> tuple[pd.DataFrame, pd.DataFrame | None]:
     """
     Applies transformations to the training and testing datasets.
     This includes log transformations on specified columns.
