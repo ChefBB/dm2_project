@@ -10,7 +10,6 @@ from node2vec import Node2Vec
 import networkx as nx
 
 
-
 def embedding(train: pd.DataFrame, test: pd.DataFrame | None=None) -> tuple[pd.DataFrame, pd.DataFrame | None]:
     """
     Applies embedding to the training and testing datasets.
@@ -29,6 +28,7 @@ def embedding(train: pd.DataFrame, test: pd.DataFrame | None=None) -> tuple[pd.D
     """
     one_hot_genres = pd.get_dummies(train['genres'].apply(pd.Series).stack()).groupby(level=0).sum()
     one_hot_genres = one_hot_genres.add_prefix('genre_').astype(int)
+    one_hot_genres = one_hot_genres.reindex(train.index, fill_value=0).astype(int)
     train = pd.concat([train, one_hot_genres], axis=1)
     
     one_hot_titletype = pd.get_dummies(train['titleType'], prefix='titleType')
@@ -39,6 +39,7 @@ def embedding(train: pd.DataFrame, test: pd.DataFrame | None=None) -> tuple[pd.D
     
     one_hot_genres = pd.get_dummies(test['genres'].apply(pd.Series).stack()).groupby(level=0).sum()
     one_hot_genres = one_hot_genres.add_prefix('genre_').astype(int)
+    one_hot_genres = one_hot_genres.reindex(test.index, fill_value=0).astype(int)
     test = pd.concat([test, one_hot_genres], axis=1)
     
     one_hot_titletype = pd.get_dummies(test['titleType'], prefix='titleType')

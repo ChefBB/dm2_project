@@ -53,6 +53,11 @@ def impute_data(train: pd.DataFrame, test: pd.DataFrame | None=None) -> tuple[pd
         if test is not None:
             test_res[feat] = imputer(test_res)
 
+    # Compute endYear
+    train_res['endYear'] = train_res['startYear'] + train_res['deltaYear']
+    if test is not None:
+        test_res['endYear'] = test_res['startYear'] + test_res['deltaYear']
+    
     return train_res, test_res
 
 

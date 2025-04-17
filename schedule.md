@@ -48,6 +48,7 @@ some comparisons with outlier det methods
 ## goals for 18th
 - having a finalized for comparison representation for outlier detection
 - statistical imputation of outliers for all feats
+  - **DONE**
 - knn+DTs for imbalanced learning (both undersampling and oversampling)
   - chiara covered smote, adasyn, decision threshold, and the combination
   - ankit covers class weights, decision threshold
