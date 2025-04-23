@@ -48,8 +48,6 @@ def embedding(train: pd.DataFrame, test: pd.DataFrame | None=None) -> tuple[pd.D
     return train, test
 
 
-
-# Step 2: Generate Embeddings for Each Sample
 def get_w2v_model(df: pd.DataFrame, name: str='models/genre_w2v_model.model') -> Word2Vec:
     """
     Generate the Word2Vec model for the genres column in the given DataFrame.
