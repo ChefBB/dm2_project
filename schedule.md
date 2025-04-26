@@ -61,6 +61,9 @@ some comparisons with outlier det methods
 - think of classif target
   - maybe start doing something?
 - get t-sne to work on more dimensions
-- re tune imbalanced learning for newly defined labels [bruno]
+  - actually doesn't make too much sense; rather, used pairplot to underline the distribution on 2 dims
+- re tune imbalanced learning for newly defined labels [bruno] 
+  - DONE
 - test with class weights for imbalanced [bruno]
+  - DONE
 - in general, be done with module 1
