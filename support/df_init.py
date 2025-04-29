@@ -6,7 +6,7 @@ This module is used to initialize the dataframe.
 import support.conversion as cv
 import pandas as pd
 
-def init(path: str = 'dm2_dataset_2425_imdb/preprocessed_full.csv') -> pd.DataFrame:
+def init(path: str = 'dm2_project/dm2_dataset_2425_imdb/preprocessed_full.csv') -> pd.DataFrame:
     """
     Initializes dataframe from the input csv format.
     """
