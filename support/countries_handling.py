@@ -12,6 +12,31 @@ from collections import Counter
 CONTINENTS = ['AF', 'AS', 'EU', 'NA', 'OC', 'SA', 'UNK']
 
 
+def init_countries_trn_tst(train: pd.DataFrame, test: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]:
+    """
+    Initializes the 'countryOfOrigin' and 'regions' columns for the training and testing datasets.
+    This includes converting country names to ISO 3166-1 alpha-2 codes and handling missing values.
+    
+    Parameters
+    ----------
+    train : pd.DataFrame
+        The training dataset.
+        
+    test : pd.DataFrame
+        The testing dataset.
+        
+    Returns
+    -------
+    tuple[pd.DataFrame, pd.DataFrame]: The modified training and testing datasets.
+    """
+    train_new_feats, freq_enc = explode_continents_and_freq_enc(train)
+    test_new_feats, _ = explode_continents_and_freq_enc(test, freq_enc)
+    train = pd.concat([train, train_new_feats], axis=1)
+    test = pd.concat([test, test_new_feats], axis=1)
+    
+    return train, test
+
+
 def country_to_continent(country_code):
     """
     Converts the country code to the continent name.

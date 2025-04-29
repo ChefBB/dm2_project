@@ -39,3 +39,31 @@ how should we represent genres?
 ## Imbalanced Learning
 ### Deadline: 06/04
 __tosplit__
+
+
+### meeting 11/04
+some comparisons with outlier det methods
+
+
+## goals for 18th
+- having a finalized for comparison representation for outlier detection
+- statistical imputation of outliers for all feats
+  - **DONE**
+- knn+DTs for imbalanced learning (both undersampling and oversampling)
+  - chiara covered smote, adasyn, decision threshold, and the combination
+  - ankit covers class weights, decision threshold
+  - bruno covers undersampling, mix between under/over
+    - random, knn based done
+    - TODO: medoid/centroid based
+
+
+## goals for 29th, 14:00
+- think of classif target
+  - maybe start doing something?
+- get t-sne to work on more dimensions
+  - actually doesn't make too much sense; rather, used pairplot to underline the distribution on 2 dims
+- re tune imbalanced learning for newly defined labels [bruno] 
+  - DONE
+- test with class weights for imbalanced [bruno]
+  - DONE
+- in general, be done with module 1

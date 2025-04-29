@@ -5,6 +5,16 @@ from typing import Callable
 import pandas as pd
 
 
+plaw_like = [
+    # 'startYear', 'endYear', 
+    'deltaYear', 'totalMedia', 'numRegions',
+    'totalNominations', 'deltaCredits', 'reviewsTotal',
+    'ratingCount', 'castNumber', 'companiesNumber',
+    'writerCredits', # Really?
+    'directorsCredits', # Really?
+]
+
+
 def impute_data(train: pd.DataFrame, test: pd.DataFrame | None=None) -> tuple[pd.DataFrame, pd.DataFrame | None]:
     """
     Impute missing values in the training and testing datasets.
@@ -19,14 +29,35 @@ def impute_data(train: pd.DataFrame, test: pd.DataFrame | None=None) -> tuple[pd
     # Apply imputation to the training dataset
     
     runtime_imputer = impute_runtime_minutes(train)
+
+    train_res = train.copy()
     
-    train_res = runtime_imputer(train)
+    train_res['runtimeMinutes'] = runtime_imputer(train)
 
-    test_res = None
+    
+    # compute deltaYear
+    train_res['deltaYear'] = train_res['endYear'] - train_res['startYear']
+
     # If a testing dataset is provided, apply the same imputation
+    test_res = test.copy() if test is not None else None
+    
     if test is not None:
-        test_res = runtime_imputer(test)
+        test_res['runtimeMinutes'] = runtime_imputer(test_res)
+        
+        test_res['deltaYear'] = test_res['endYear'] - test_res['startYear']
+        
+    for feat in plaw_like:
+        imputer = impute_plaw_distrib_feat(train_res, feat)
+        train_res[feat] = imputer(train_res)
+        
+        if test is not None:
+            test_res[feat] = imputer(test_res)
 
+    # Compute endYear
+    train_res['endYear'] = train_res['startYear'] + train_res['deltaYear']
+    if test is not None:
+        test_res['endYear'] = test_res['startYear'] + test_res['deltaYear']
+    
     return train_res, test_res
 
 
@@ -99,3 +130,71 @@ def impute_runtime_minutes(df: pd.DataFrame, perc: float | None=0.99) -> Callabl
         return imputed_runtime
     
     return impute_rt_mins
+
+
+def impute_plaw_distrib_feat(df: pd.DataFrame, feat: str, perc: float=0.995) -> Callable[[pd.DataFrame], pd.Series]:
+    """
+    Sets very high/low values to a threshold for simil-Power Law distribution.
+    The imputation is done separately for each 'titleType' category.
+    
+    
+    Parameters
+    ----------
+    df : pd.DataFrame
+        The input DataFrame containing the data to be imputed.
+    feat : str
+        The name of the feature/column in the DataFrame to be imputed.
+
+    perc : float, optional
+        The percentile threshold for imputing values. Default is 0.995.
+        Values above this percentile will be set to the threshold value.
+
+    Returns
+    -------
+    Callable[[pd.DataFrame], pd.Series]
+        A function that, when applied to a DataFrame, returns a Series with the imputed values for the specified feature.
+    """
+    # Compute the threshold
+    thresholds = df.dropna().groupby('titleType')[feat].quantile(perc)
+    
+    def impute_feat(df: pd.DataFrame) -> pd.Series:
+        """
+        Impute the specified feature in the DataFrame by setting values above a threshold to the threshold value.
+        
+        Parameters
+        ----------
+        df : pd.DataFrame
+            The input DataFrame containing the data to be imputed.
+
+        Returns
+        -------
+        pd.Series
+            A Series with the imputed values for the specified feature.
+        """
+        # Create a copy of the original column to preserve order
+        imputed_feat = df.copy()
+        
+        for type in imputed_feat['titleType'].unique():
+            # Get the threshold for the current titleType
+            threshold = int(thresholds.loc[type])
+            
+            median = int(imputed_feat.loc[
+                imputed_feat['titleType'] == type, feat
+            ].median())
+            
+            # Set values above the threshold to the threshold value
+            imputed_feat.loc[
+                imputed_feat['titleType'] == type, feat
+            ] = imputed_feat.loc[
+                imputed_feat['titleType'] == type, feat
+            ].clip(upper=threshold)
+                
+            imputed_feat.loc[
+                imputed_feat['titleType'] == type, feat
+            ] = imputed_feat.loc[
+                imputed_feat['titleType'] == type, feat
+            ].fillna(median)
+        
+        return imputed_feat[feat]
+    
+    return impute_feat

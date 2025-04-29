@@ -15,6 +15,7 @@ from plotly import graph_objects as go
 from sklearn.decomposition import PCA
 import seaborn as sns
 import matplotlib.pyplot as plt
+from sklearn.manifold import TSNE
 
 
 feats_to_keep = [
@@ -174,7 +175,7 @@ def plot_pairplot_pca(df: pd.DataFrame, feats: list[str] = feats_to_keep, outlie
         hue='outlier',
         palette={'Inlier': 'blue', 'Outlier': 'red'},
         diag_kind='kde',
-        plot_kws={'alpha': 0.1, 's': 5, 'edgecolor': 'none'},
+        plot_kws={'alpha': 0.2, 's': 10, 'edgecolor': 'none'},
     )
     
     # Add grid to each graph
@@ -182,4 +183,59 @@ def plot_pairplot_pca(df: pd.DataFrame, feats: list[str] = feats_to_keep, outlie
         ax.grid(True)
 
     plt.suptitle("Pairplot of First 4 Principal Components", y=1.02)
+    plt.show()
+
+
+def plot_pairplot_tsne(df: pd.DataFrame, feats: list[str] = None, outlier_col: str = 'outlier', perplexity: int = 30, random_state: int = 42):
+    """
+    Plots a pairplot of the 2D t-SNE projection using seaborn, highlighting outliers.
+
+    Parameters
+    ----------
+    df : pd.DataFrame
+        The DataFrame containing the data to be plotted.
+    feats : list[str], optional
+        The features to use for t-SNE. If None, all columns except the outlier_col are used.
+    outlier_col : str, optional
+        The column indicating outliers. Defaults to 'outlier'.
+    perplexity : int, optional
+        Perplexity parameter for t-SNE. Defaults to 30.
+    random_state : int, optional
+        Random seed for reproducibility. Defaults to 42.
+
+    Returns
+    -------
+    None
+    """
+    # If no specific features are given, use all except outlier column
+    if feats is None:
+        feats = [col for col in df.columns if col != outlier_col]
+
+    # Apply t-SNE to reduce to 2 components
+    tsne = TSNE(n_components=2, perplexity=perplexity, random_state=random_state)
+    tsne_components = tsne.fit_transform(df[feats])
+
+    # Create a DataFrame with t-SNE components
+    df_tsne = pd.DataFrame(tsne_components,
+                           columns=['TSNE1', 'TSNE2',],
+                           index=df.index)
+
+    # Add outlier information
+    df_tsne['outlier'] = df[outlier_col].map({1: 'Inlier', -1: 'Outlier'})
+
+    # Plot using seaborn pairplot
+    g = sns.pairplot(
+        df_tsne,
+        vars=['TSNE1', 'TSNE2'],
+        hue='outlier',
+        palette={'Inlier': 'blue', 'Outlier': 'red'},
+        diag_kind='kde',
+        plot_kws={'alpha': 0.1, 's': 10, 'edgecolor': 'none'},
+    )
+    
+    # Add grid to each graph
+    for ax in g.axes.flatten():
+        ax.grid(True)
+
+    plt.suptitle("Pairplot of t-SNE Components", y=1.02)
     plt.show()

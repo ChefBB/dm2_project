@@ -13,8 +13,10 @@ Steps:
 
 import pandas as pd
 from df_init import init
-from outlier_detection.outlier_master import outlier_detection
+# from outlier_detection.outlier_master import outlier_detection
 from imputation import impute_data
+from transformations import apply_transformations
+from embedding import embedding
 
 
 def preprocess_train_test(train: str, test: str) -> tuple[pd.DataFrame, pd.DataFrame]:
@@ -43,13 +45,13 @@ def preprocess_train_test(train: str, test: str) -> tuple[pd.DataFrame, pd.DataF
     test_df = init(test)
     
     # Perform preprocessing steps
-    train_df = outlier_detection(train_df, test_df)
+    # TODO: Implement outlier detection pipeline
+    # train_df = outlier_detection(train_df, test_df)
     
-    train_df = impute_data(train_df, test_df)
+    train_df, test_df = impute_data(train_df, test_df)
     
-    train_df = apply_transformations(train_df)
-    test_df = apply_transformations(test_df)
+    train_df, test_df = apply_transformations(train_df, test_df)
     
-    train_df, test_df = encode_data(train_df, test_df)
+    train_df, test_df = embedding(train_df, test_df)
     
     return train_df, test_df

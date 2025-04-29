@@ -7,20 +7,28 @@ import numpy as np
 
 
 to_log = [
-    'reviewsTotal',
-    'numRegions', 'ratingCount',
-    'castNumber', 'companiesNumber', 'externalLinks',
-    'writerCredits', 'directorsCredits', 'totalMedia',
-    'totalNominations', 'totalCredits',
-    # 'regions_freq_enc', 'regions_EU', 'regions_NA', 'regions_AS',
-    # 'regions_AF', 'regions_OC', 'regions_SA', 'regions_UNK',
-    # 'countryOfOrigin_freq_enc', 'countryOfOrigin_NA', 'countryOfOrigin_AF',
-    # 'countryOfOrigin_AS', 'countryOfOrigin_EU', 'countryOfOrigin_OC',
-    # 'countryOfOrigin_SA', 'countryOfOrigin_UNK'
+    # 'startYear', 'endYear', 
+    'deltaYear', 'totalMedia', 'numRegions',
+    'totalNominations', 'deltaCredits', 'reviewsTotal',
+    'ratingCount', 'castNumber', 'companiesNumber',
+    'writerCredits', # Really?
+    'directorsCredits', # Really?
 ]
+# [
+#     'reviewsTotal',
+#     'numRegions', 'ratingCount',
+#     'castNumber', 'companiesNumber', 'externalLinks',
+#     'writerCredits', 'directorsCredits', 'totalMedia',
+#     'totalNominations', 'totalCredits',
+#     # 'regions_freq_enc', 'regions_EU', 'regions_NA', 'regions_AS',
+#     # 'regions_AF', 'regions_OC', 'regions_SA', 'regions_UNK',
+#     # 'countryOfOrigin_freq_enc', 'countryOfOrigin_NA', 'countryOfOrigin_AF',
+#     # 'countryOfOrigin_AS', 'countryOfOrigin_EU', 'countryOfOrigin_OC',
+#     # 'countryOfOrigin_SA', 'countryOfOrigin_UNK'
+# ]
 
 def apply_transformations(
-    train: pd.DataFrame, test: pd.DataFrame | None=None) -> tuple(pd.DataFrame, pd.DataFrame | None):
+    train: pd.DataFrame, test: pd.DataFrame | None=None) -> tuple[pd.DataFrame, pd.DataFrame | None]:
     """
     Applies transformations to the training and testing datasets.
     This includes log transformations on specified columns.
