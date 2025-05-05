@@ -16,6 +16,8 @@ from sklearn.decomposition import PCA
 import seaborn as sns
 import matplotlib.pyplot as plt
 from sklearn.manifold import TSNE
+import matplotlib.cm as cm
+import matplotlib.colors as mcolors
 
 
 feats_to_keep = [
@@ -177,6 +179,53 @@ def plot_pairplot_pca(df: pd.DataFrame, feats: list[str] = feats_to_keep, outlie
         diag_kind='kde',
         plot_kws={'alpha': 0.2, 's': 10, 'edgecolor': 'none'},
     )
+    
+    # Add grid to each graph
+    for ax in g.axes.flatten():
+        ax.grid(True)
+
+    plt.suptitle("Pairplot of First 4 Principal Components", y=1.02)
+    plt.show()
+    
+
+def plot_pairplot_pca_score(df: pd.DataFrame, feats: list[str] = feats_to_keep, outlier_col: str = 'outlier'):
+    """
+    Plots a pairplot of the first 4 principal components using seaborn, highlighting outliers.
+
+    Parameters
+    ----------
+    df : pd.DataFrame
+        The DataFrame containing the data to be plotted.
+    feats : list[str], optional
+        The features to use for PCA. Defaults to feats_to_keep.
+    outlier_col : str, optional
+        The column indicating outliers. Defaults to 'outlier'.
+
+    Returns
+    -------
+    None
+    """
+    # Apply PCA to reduce to 4 components
+    pca = PCA(n_components=5, random_state=42)
+    pca_components = pca.fit_transform(df[feats])
+    df_pca = pd.DataFrame(pca_components, columns=['PCA1', 'PCA2', 'PCA3', 'PCA4', 'PC5'], index=df.index)
+    df_pca[outlier_col] = df[outlier_col]
+    norm = mcolors.Normalize(vmin=df[outlier_col].min(), vmax=df[outlier_col].max())
+    cmap = cm.get_cmap('coolwarm')  # or 'viridis', 'plasma', etc.
+    colors = df_pca[outlier_col].map(lambda x: cmap(norm(x)))
+
+    # Plot using seaborn pairplot without hue
+    g = sns.pairplot(
+        df_pca,
+        vars=['PCA1', 'PCA2', 'PCA3', 'PCA4', 'PC5'],
+        diag_kind='kde',
+        plot_kws={'alpha': 0.6, 's': 10, 'edgecolor': 'none', 'c': colors}
+    )
+
+    # Add colorbar manually
+    sm = cm.ScalarMappable(cmap=cmap, norm=norm)
+    sm.set_array([])
+    plt.colorbar(sm, ax=g.axes, label='Outlier Score')
     
     # Add grid to each graph
     for ax in g.axes.flatten():

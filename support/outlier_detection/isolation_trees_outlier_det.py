@@ -25,6 +25,40 @@ feats_to_keep_iso_forest = [
 ]
 
 
+def global_iso_forest_scores(df: pd.DataFrame, feats: list[str] = feats_to_keep_iso_forest) -> tuple[pd.Series, IsolationForest]:
+    """
+    Applies Isolation Forest to detect outliers in the entire DataFrame.
+    The outlier predictions are stored in a new column 'outlier'.
+
+    Parameters
+    ----------
+    df : pd.DataFrame
+        The DataFrame containing the data to be processed.
+
+    Returns
+    -------
+    pd.Series: A Series with outlier predictions, maintaining the original order.
+    
+    IsolationForest: The trained Isolation Forest model for the entire dataset.
+    """
+    # Preserve the original index
+    original_index = df.index
+
+    # Reset index for processing
+    df = df.reset_index(drop=True)
+
+    # Apply Isolation Forest
+    iso_forest = IsolationForest(random_state=42, contamination=0.01)
+    iso_forest.fit(df[feats])
+
+    df['outlier_score'] = iso_forest.decision_function(df[feats])
+
+    # Restore the original index
+    df.index = original_index
+
+    return df['outlier_score'], iso_forest
+
+
 def classwise_iso_forest(df: pd.DataFrame,
                          feats: list[str]=feats_to_keep_iso_forest,
                          ) -> tuple[pd.Series, dict]:
