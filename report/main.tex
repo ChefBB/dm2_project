@@ -1,0 +1,128 @@
+\documentclass[a4paper,10pt]{article}
+\linespread{1.0} % Adjust line spacing to avoid font size substitution issues
+% \linespread{1.0} % Removed to avoid font size substitution issues
+\usepackage[T1]{fontenc} %codifica dei font
+\usepackage[utf8]{inputenc} %lettere accentate da tastiera
+\usepackage[english]{babel} %lingua del documento
+%\usepackage{lipsum} %genera testo fittizio
+%\usepackage{tikz}
+\usepackage{lmodern}  % Use scalable Latin Modern font
+\usepackage{url}
+\usepackage{graphicx}
+\graphicspath {  { images/ }  }
+\usepackage{booktabs}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{hyperref}
+%\usepackage{pdfpages}
+%\usepackage{rotating}
+%\usepackage{tabularx}
+%per la tabella
+\usepackage{array}
+\usepackage{float}  % For the [H] option
+\usepackage{xcolor}
+\usepackage{colortbl}
+%\usepackage{gensymb}
+%\usepackage{multirow}
+%\usepackage{pdflscape}
+%\usepackage{etoolbox}
+%\usepackage{color}
+%\usepackage{colortbl}
+\usepackage{dcolumn}
+\usepackage{multirow}
+\usepackage{tablefootnote}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{minted}
+\usepackage{amssymb}
+\usepackage{makecell}
+%\usepackage[margin = 2cm]{geometry} % Almeno abbiamo più spazio
+\newcommand{\facciata}
+{\newpage\shipout\null\stepcounter{page}}
+
+\usepackage[autostyle,italian=guillemets]{csquotes}
+
+% \usepackage[backend=biber,style=apa,sorting=nyt]{biblatex}
+%\usepackage{tocloft}
+
+%\usepackage{titletoc,tocloft}
+%\addbibresource{bibliografia.bib}
+
+%\setlength{\cftsubsecindent}{0.5cm}
+%\dottedcontents{section}[1.5em]{}{1.3em}{.6em}
+%\usepackage{tocloft}
+
+% % Impostazioni per la table of contents
+% \setlength{\cftsecindent}{0pt}          % Nessun rientro per le sezioni
+% \setlength{\cftsubsecindent}{0.5cm}     % Rientro di 0.5cm per le sottosezioni
+% \renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}  % Puntini per le sezioni
+% \renewcommand{\cftsubsecleader}{\cftdotfill{\cftdotsep}}  % Puntini per le sottosezioni
+
+\usepackage{siunitx}
+\usepackage{longtable}
+
+\title{Data Mining I project: \\
+\textbf{Analyzing Data Insights from the IMDb Platform}}
+\author{Giuseppe Turano, Chiara Ferrara, Alissia Biliotti}
+\date{Academic year 2024/2025}
+
+\usepackage{wrapfig}
+
+\begin{document}
+
+\begin{titlepage}
+\setcounter{page}{0} % Imposta il numero di pagina a 0 per questa pagina
+\begin{figure}[htp]
+\centering
+\includegraphics[width=3cm]{cherubino_pant541.pdf} % Logo più piccolo
+\end{figure}
+
+\vspace{2cm} % Spazio tra l'immagine e il titolo
+
+\begin{center}
+\textbf{\fontsize{18pt}{10pt}\selectfont Data Mining II Project:}\\
+\vspace{0.5cm}
+\textit{\fontsize{16pt}{10pt}\selectfont Analyzing Data Insights from the IMDb Platform}\\
+
+\vspace{1cm} % Spazio tra il titolo e gli autori
+\textbf{Authors:}\\
+\vspace{0.3cm}
+
+
+\vspace{10cm} % Spazio tra gli autori e l'anno accademico
+\textit{Academic Year 2024/2025}
+\end{center}
+
+\end{titlepage}
+
+
+\tableofcontents
+
+\clearpage
+
+\section{Introduction}
+
+\clearpage
+
+\section{Data Understanding and Preparation} 
+\clearpage
+
+\section{Outliers}
+\subsection{COF}
+\subsection{Isolation Forest}
+\subsection{ABOD}
+\clearpage
+
+\section{Imbalanced Learning}
+\subsection{Undersampling}
+\subsection{Oversampling}
+\subsubsection{SMOTE}
+\clearpage
+
+\section{Advanced Classification}
+
+\section{Advanced Regression}
+
+
+\end{document}
+
