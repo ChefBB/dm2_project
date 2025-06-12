@@ -164,6 +164,10 @@ INPUT /usr/local/texlive/2024/texmf-dist/tex/latex/amsfonts/amsfonts.sty
 INPUT /usr/local/texlive/2024/texmf-dist/tex/latex/amsfonts/amsfonts.sty
 INPUT /usr/local/texlive/2024/texmf-dist/tex/latex/makecell/makecell.sty
 INPUT /usr/local/texlive/2024/texmf-dist/tex/latex/makecell/makecell.sty
+INPUT /usr/local/texlive/2024/texmf-dist/tex/latex/geometry/geometry.sty
+INPUT /usr/local/texlive/2024/texmf-dist/tex/latex/geometry/geometry.sty
+INPUT /usr/local/texlive/2024/texmf-dist/tex/generic/iftex/ifvtex.sty
+INPUT /usr/local/texlive/2024/texmf-dist/tex/generic/iftex/ifvtex.sty
 INPUT /usr/local/texlive/2024/texmf-dist/tex/latex/csquotes/csquotes.sty
 INPUT /usr/local/texlive/2024/texmf-dist/tex/latex/csquotes/csquotes.sty
 INPUT /usr/local/texlive/2024/texmf-dist/tex/latex/csquotes/csquotes.def
@@ -268,6 +272,15 @@ INPUT introduction.tex
 INPUT ./understanding_preparation.tex
 INPUT ./understanding_preparation.tex
 INPUT understanding_preparation.tex
+INPUT /usr/local/texlive/2024/texmf-dist/tex/latex/lm/t1lmtt.fd
+INPUT /usr/local/texlive/2024/texmf-dist/tex/latex/lm/t1lmtt.fd
+INPUT /usr/local/texlive/2024/texmf-dist/tex/latex/lm/t1lmtt.fd
+INPUT /usr/local/texlive/2024/texmf-dist/fonts/tfm/public/lm/ec-lmtt10.tfm
+INPUT /usr/local/texlive/2024/texmf-dist/tex/latex/lm/ts1lmr.fd
+INPUT /usr/local/texlive/2024/texmf-dist/tex/latex/lm/ts1lmr.fd
+INPUT /usr/local/texlive/2024/texmf-dist/tex/latex/lm/ts1lmr.fd
+INPUT /usr/local/texlive/2024/texmf-dist/fonts/tfm/public/lm/ts1-lmr10.tfm
+INPUT /usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc
 INPUT ./outliers.tex
 INPUT ./outliers.tex
 INPUT outliers.tex
@@ -290,3 +303,4 @@ INPUT /usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmbx12.pfb
 INPUT /usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmr10.pfb
 INPUT /usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmri10.pfb
 INPUT /usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmri12.pfb
+INPUT /usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmtt10.pfb
