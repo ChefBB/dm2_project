@@ -15,9 +15,9 @@ features.
         \texttt{isAdult} & Whether or not the title is for adult \\ \hline
         \texttt{canHaveEpisodes} & Whether the title can have episodes \\ \hline
         \texttt{isRatable} & Whether the title can be rated by users \\ \hline
-        \texttt{titleType} & Type/format of the title (e.g., movie, tvseries) \\ \hline
-        \texttt{countryOfOrigin} & Country where the title was primarily produced \\ \hline
-        \texttt{genres} & Genre(s) associated with the title \\ \hline
+        \texttt{titleType} & Type of the title (e.g., movie, tvseries) \\ \hline
+        \texttt{countryOfOrigin} & Countries where the title was primarily produced \\ \hline
+        \texttt{genres} & Genres associated with the title \\ \hline
         \texttt{regions} & Regions for this version of the title \\ \hline
         \texttt{soundMixes} & Technical specification of sound mixes \\ \hline
         % Ordinal
@@ -50,7 +50,7 @@ Of the initial categorical attributes, the following were removed:
 
 \texttt{soundMixes} was also removed, as it required some domain knowledge to be
 understood, as well as having issues with the values it contained.\\
-Because of their very similar nature, \texttt{regions} and \texttt{countryOfOrigin}
+Because of their very similar meaning, \texttt{regions} and \texttt{countryOfOrigin}
 were merged through a simple uniion operation. The resulting feature was then
 represented trhough frequency encoding on the entire list, as well as
 counts of the number of countries from each continent.
@@ -58,7 +58,7 @@ This resulted in eight new features (six continents, one for unknown country cod
 and the last for the frequency encoding).\\
 While inspecting the \texttt{genre} attribute, it was observed that each record
 contained up to three genres, listed in alphabetical order—indicating that the order
-did not convey any semantic information about the title.  
+did not convey any semantic information about the title.
 To represent this information, three separate features were created, each
 corresponding to one of the genres. These features were encoded using frequency
 encoding, sorted in descending order of frequency across the dataset.  

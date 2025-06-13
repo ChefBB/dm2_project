@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1749741483.80311 "/Users/brunobarbieri/Documents/Uni/master/first/second_sem/dm2/dm2_project/report/main.tex" "main.pdf" "main" 1749741486.04034 0
+["pdflatex"] 1749810425.6112 "/Users/brunobarbieri/Documents/Uni/master/first/second_sem/dm2/dm2_project/report/main.tex" "main.pdf" "main" 1749810427.41848 0
   "/Users/brunobarbieri/Documents/Uni/master/first/second_sem/dm2/dm2_project/report/main.tex" 1749737659.53203 3251 5d9a90471c9edcf7001d8f12aea8f402 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc" 1254269338 2375 baa924870cfb487815765f9094cf3728 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc" 1254269338 3031 6c4d3515bf7115d8518af1c9ab97ca44 ""
@@ -143,12 +143,12 @@
   "cherubino_pant541.pdf" 1746536830.58058 91616 7b7710d7bb6492a9499117b6fe225974 ""
   "imbalanced_learning.tex" 1749726793.65755 105 3347b869d4c83b496789769b31312dc2 ""
   "introduction.tex" 1749734709.90965 373 1ad3af590d5a64b084364873483029f0 ""
-  "main.aux" 1749741485.79003 2203 cfb598ac12ec97a75db0ba3de45d5183 "pdflatex"
-  "main.out" 1749741485.79155 1370 1063ad449520df14ec1f0584f5537aa8 "pdflatex"
+  "main.aux" 1749810427.10458 2203 cfb598ac12ec97a75db0ba3de45d5183 "pdflatex"
+  "main.out" 1749810427.10598 1370 1063ad449520df14ec1f0584f5537aa8 "pdflatex"
   "main.tex" 1749737659.53203 3251 5d9a90471c9edcf7001d8f12aea8f402 ""
-  "main.toc" 1749741485.79213 872 1bb10aa1ada22bb5aada3400136c00d8 "pdflatex"
-  "outliers.tex" 1749726569.18212 83 d5bfde1fc3f625f7315451569dc05029 ""
-  "understanding_preparation.tex" 1749741483.37311 6815 624eceea929f5f3973498bc5f25efeae ""
+  "main.toc" 1749810427.10643 872 1bb10aa1ada22bb5aada3400136c00d8 "pdflatex"
+  "outliers.tex" 1749810425.30255 85 ed34dbe6a8e13c77904eb2b1f889cc8a ""
+  "understanding_preparation.tex" 1749809316.10548 6807 385ca14d486b40c5df21f59b42f4ab98 ""
   (generated)
   "main.aux"
   "main.log"
