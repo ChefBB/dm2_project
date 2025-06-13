@@ -1,3 +1,9 @@
-1. is it fine to handle outliers through statistical single feature 
+1. is it fine to handle outliers through statistical single feature
+    kinda; they are separated; run with all
 2. frequency encoding for genres in 3 columns
+    perfect
 3. can it make sense to combine the scores obtained by the different outlier detection methods for a combined outlier detection
+    we can try; of course we need to normalize and everything but it can roughly make sense
+
+1% is not important; we can detect more/less outliers
+we can try to run on scores, then pick %thresholds and check when the intersection of the 3 methods has a meaning/logic behind it

@@ -33,10 +33,12 @@
 \usepackage{tablefootnote}
 \usepackage{amsmath}
 \usepackage{listings}
-\usepackage{minted}
+% \usepackage{minted}
 \usepackage{amssymb}
 \usepackage{makecell}
 %\usepackage[margin = 2cm]{geometry} % Almeno abbiamo più spazio
+\usepackage[top=2cm, bottom=2cm, left=2cm, right=2cm]{geometry}
+
 \newcommand{\facciata}
 {\newpage\shipout\null\stepcounter{page}}
 
@@ -61,12 +63,15 @@
 \usepackage{siunitx}
 \usepackage{longtable}
 
-\title{Data Mining I project: \\
-\textbf{Analyzing Data Insights from the IMDb Platform}}
-\author{Giuseppe Turano, Chiara Ferrara, Alissia Biliotti}
-\date{Academic year 2024/2025}
+% \title{Data Mining I project: \\
+% \textbf{Analyzing Data Insights from the IMDb Platform}}
+% \author{Giuseppe Turano, Chiara Ferrara, Alissia Biliotti}
+% \date{Academic year 2024/2025}
 
 \usepackage{wrapfig}
+\setlength{\parindent}{0pt}
+
+
 
 \begin{document}
 
@@ -87,6 +92,8 @@
 \vspace{1cm} % Spazio tra il titolo e gli autori
 \textbf{Authors:}\\
 \vspace{0.3cm}
+\text{Bruno Barbieri, Chiara Ferrara, Ankit Kumar Bhagat}
+
 
 
 \vspace{10cm} % Spazio tra gli autori e l'anno accademico
@@ -100,28 +107,18 @@
 
 \clearpage
 
-\section{Introduction}
 
-\clearpage
+\input{introduction.tex}
 
-\section{Data Understanding and Preparation} 
-\clearpage
+\input{understanding_preparation.tex}
 
-\section{Outliers}
-\subsection{COF}
-\subsection{Isolation Forest}
-\subsection{ABOD}
-\clearpage
+\input{outliers.tex}
 
-\section{Imbalanced Learning}
-\subsection{Undersampling}
-\subsection{Oversampling}
-\subsubsection{SMOTE}
-\clearpage
+\input{imbalanced_learning.tex}
 
-\section{Advanced Classification}
+\input{advanced_classification.tex}
 
-\section{Advanced Regression}
+\input{advanced_regression.tex}
 
 
 \end{document}
