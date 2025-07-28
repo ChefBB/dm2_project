@@ -280,6 +280,8 @@ def plot_pairplot_tsne(df: pd.DataFrame, feats: list[str] = None, outlier_col: s
         palette={'Inlier': 'blue', 'Outlier': 'red'},
         diag_kind='kde',
         plot_kws={'alpha': 0.1, 's': 10, 'edgecolor': 'none'},
+        aspect=1.0,
+        height=3
     )
     
     # Add grid to each graph

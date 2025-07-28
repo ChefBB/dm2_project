@@ -11,17 +11,12 @@ from h2o.frame import H2OFrame
 
 
 feats_to_keep_iso_forest = [
-    'runtimeMinutes', 'totalCredits', 'reviewsTotal',
-    'numRegions', 'ratingCount', 'castNumber',
-    'companiesNumber', 'averageRating', 'writerCredits',
-    'directorsCredits', 'totalMedia', 'totalNominations',
-    'regions_freq_enc',
-    'regions_EU', 'regions_NA', 'regions_AS', 'regions_AF', 'regions_OC',
-    'regions_SA', 'regions_UNK',
-    'countryOfOrigin_freq_enc',
-    'countryOfOrigin_NA', 'countryOfOrigin_AF', 'countryOfOrigin_AS',
-    'countryOfOrigin_EU', 'countryOfOrigin_OC', 'countryOfOrigin_SA',
-    'countryOfOrigin_UNK'
+    'startYear', 'runtimeMinutes', 'totalCredits', 'canHaveEpisodes',
+    'numRegions', 'ratingCount', 'castNumber', 'companiesNumber',
+    'averageRating', 'writerCredits', 'directorsCredits',
+    'totalNominations', 'totalMedia', 'totalReviews', 'Asia', 'Africa',
+    'Europe', 'North America', 'South America', 'Australia',
+    'Continent Unknown', 'genre1', 'genre2', 'genre3',
 ]
 
 

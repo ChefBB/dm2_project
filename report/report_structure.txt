@@ -1,0 +1,39 @@
+intro
+[module 0]
+    1. attribute explanation+statistics+distributions
+
+[module 1]
+    2. brief outliers chapter
+        2.x. different methods ...
+    3. imbalanced learning
+        3.x. different methods
+        3.z. combination of some techniques
+
+[module 2]
+    4. advanced classification (5 methods)
+        how are outliers handled?
+        target variable?
+        
+        explainability
+
+    5. advanced regression
+        target variable?
+        
+        explainability
+    
+[module 3: TS]
+    6. attribute explanation+statistics+distributions
+        preprocessing etc
+
+    7. Motifs+anomaly discovery
+        distinguish between global and local outliers
+        maybe merge with clustrering chapter?
+
+    8. clustering
+
+    9. classification
+        xai
+    
+    10. sequential pattern mining
+        maybe use as paragraph in order to get rule based classif?
+        use seq pattern mining for xai?

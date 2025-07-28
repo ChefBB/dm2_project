@@ -67,3 +67,31 @@ some comparisons with outlier det methods
 - test with class weights for imbalanced [bruno]
   - DONE
 - in general, be done with module 1
+
+
+# Classification
+target: titletype
+
+# Regression
+target: avgrating
+
+
+# Tasks
+## Classification
+- nns [bruno]
+- logistic reg [chiara]
+- svm [chiara]
+- ensemble [bruno]
+- GBM [ankit]
+## Regression
+- model 1 [chiara]
+- model 2 [bruno]
+## Explainability
+- exp [ankit]
+
+# Module 3
+- motifs and discords [ankit]
+- clustering 1 [chiara]
+- clustering 2 [ankit]
+- knn [chiara]
+- second classif method [bruno]

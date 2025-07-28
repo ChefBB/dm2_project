@@ -7,3 +7,10 @@
 
 1% is not important; we can detect more/less outliers
 we can try to run on scores, then pick %thresholds and check when the intersection of the 3 methods has a meaning/logic behind it
+
+
+------------SECOND Q&A------------
+1. idea to include a section about outlier det at the beginning, and then
+   small paragraph for each mining task describing which method was used, why
+   i.e. use outlier chapter to describe dataset props ~clustering
+
