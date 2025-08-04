@@ -77,7 +77,7 @@ target: avgrating
 
 
 # Tasks
-## Classification
+## Classification (by next week)
 - nns [bruno]
 - logistic reg [chiara]
 - svm [chiara]
@@ -89,7 +89,7 @@ target: avgrating
 ## Explainability
 - exp [ankit]
 
-# Module 3
+## Module 3
 - motifs and discords [ankit]
 - clustering 1 [chiara]
 - clustering 2 [ankit]
