@@ -95,3 +95,8 @@ target: avgrating
 - clustering 2 [ankit]
 - knn [chiara]
 - second classif method [bruno]
+
+
+
+# open questions
+- how to handle outliers?
