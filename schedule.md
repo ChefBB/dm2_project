@@ -100,3 +100,12 @@ target: avgrating
 
 # open questions
 - how to handle outliers?
+
+# titleType categorization 
+videoGame -> to remove
+movie - tvMovie -> movie 
+tvEpisode
+short - tvShort -> short 
+tvSeries - tvMiniSeries -> tvSeries
+tvSpecial ??
+video 
