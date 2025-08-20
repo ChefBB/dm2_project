@@ -77,6 +77,10 @@ target: avgrating
 
 
 # Tasks
+## outliers
+- get a grid search result on different percentages for the intersection (just the results of the search) [ankit]
+
+
 ## Classification (by next week)
 - nns [bruno]
 - logistic reg [chiara]
@@ -84,22 +88,23 @@ target: avgrating
 - ensemble [bruno]
 - GBM [ankit]
 ## Regression
-- model 1 [chiara]
-- model 2 [bruno]
+- model 1 (logreg) [chiara]
+- model 2 (ensemble) [bruno]
 ## Explainability
-- exp [ankit]
+- exp (just one method) [ankit]
 
 ## Module 3
 - motifs and discords [ankit]
 - clustering 1 [chiara]
 - clustering 2 [ankit]
 - knn [chiara]
-- second classif method [bruno]
+- second classif method (nns probably) [bruno]
 
 
 
 # open questions
 - how to handle outliers?
+  - done (see above)
 
 # titleType categorization 
 videoGame -> to remove

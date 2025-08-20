@@ -7,6 +7,7 @@
 
 1% is not important; we can detect more/less outliers
 we can try to run on scores, then pick %thresholds and check when the intersection of the 3 methods has a meaning/logic behind it
+- also remove the top 0.x% for each method, on top of the intersection
 
 
 ------------SECOND Q&A------------
