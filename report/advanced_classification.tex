@@ -10,3 +10,143 @@ target variables: \texttt{averageRating} (properly binned into
 
 
 \subsection{Neural Networks}
+\label{sec:advanced_classification}
+\textcolor{red}{We then applied multiple classification models using the data as preprocessed ...} 
+The first target variable is \texttt{titleType}, which includes six categories: 
+\textit{movie}, \textit{short}, \textit{tvEpisode}, \textit{tvSeries}, 
+\textit{tvSpecial}, and \textit{video}. 
+The classes are not equally distributed, with \textit{tvSpecial} and \textit{video} 
+being significantly under-represented compared to the others. 
+
+Entries labeled as \textit{videoGame} were removed from both the training and testing sets, 
+as they were too few to be useful for classification. 
+The remaining categories were merged into broader groups according to the following mapping: 
+\textit{movie} and \textit{tvMovie} were grouped as \textit{movie}, 
+\textit{short} and \textit{tvShort} were grouped as \textit{short}, 
+\textit{tvSeries} and \textit{tvMiniSeries} were grouped as \textit{tvSeries}, 
+while \textit{tvEpisode}, \textit{tvSpecial} and \textit{video} were left unchanged. 
+
+All feature columns were standardized using a \texttt{StandardScaler}. 
+
+In addition, the variable \texttt{canHaveEpisodes} was removed prior to training, 
+since it provides direct information about the target \texttt{titleType} 
+and could therefore introduce data leakage.
+
+
+
+
+\subsection{Support Vector Machines}
+\label{subsec:svm}
+
+Support Vector Machines (SVM) were applied to the IMDb classification task to distinguish among six title categories: 
+\textit{movie}, \textit{short}, \textit{tvEpisode}, \textit{tvSeries}, \textit{tvSpecial}, and \textit{video}. 
+Both linear and non-linear kernels were investigated to assess how the flexibility of the decision boundary affects classification performance.  
+
+The first experiment used a Linear SVM trained on the full dataset.  
+A grid search with five-fold cross validation was carried out on the parameters 
+$C \in \{0.01, 0.1, 1, 10, 100\}$ and $max\_iter \in \{1000, 5000, 10000\}$. 
+The optimal configuration, with $C=100$ and $max\_iter=1000$, achieved a test accuracy of 0.81. 
+While precision and recall were high for majority classes (\textit{movie}, \textit{short}, \textit{tvEpisode}), 
+the classifier failed on \textit{tvSeries}, \textit{tvSpecial}, and \textit{video}, 
+indicating that a linear decision boundary is insufficient for this problem.  
+
+Non-linear kernels were then evaluated. 
+Because a full parameter search on the complete training set would be computationally expensive, 
+an exploratory grid search was performed on a stratified 10\% sample of the training data. 
+RBF and polynomial kernels performed well, while the sigmoid kernel consistently underperformed and was discarded. 
+The selected configurations were then retrained on the full dataset. 
+Both RBF and polynomial kernels achieved approximately 0.90 test accuracy, 
+substantially outperforming the linear model. 
+
+ROC curves were used to evaluate class separability (Figure~\ref{fig:roc_four}),
+showing excellent separation for majority classes, although minority categories remained problematic. 
+Confusion matrices (Figure~\ref{fig:rbf_balanced_two}) 
+illustrate that \textit{tvSpecial} and \textit{video} were frequently misclassified.  
+\textcolor{red}{I will change the text and explain the figures better.}
+
+To address class imbalance, the RBF kernel was retrained with \texttt{class\_weight=balanced}, 
+which penalizes misclassification of under-represented classes. 
+This model reached a slightly lower overall accuracy of 0.84, 
+but recall for \textit{tvSpecial} and \textit{video} improved, providing a more equitable classification across categories.  
+
+Analysis of the support vectors confirmed this effect. 
+In the unbalanced RBF, nearly all points of minority classes became support vectors, 
+while in the balanced model the total number of support vectors increased and was more evenly distributed across classes, 
+indicating a more complex but fairer decision function. 
+
+Table~\ref{tab:svm_results} summarizes the main results, including the parameters used for each kernel and the corresponding test performance. 
+This information allows the experiments to be fully reproducible.
+
+\begin{table}[h]
+\centering
+\caption{Comparison of SVM models on the IMDb classification task.}
+\label{tab:svm_results}
+\begin{tabular}{lccc}
+\hline
+\textbf{Model} & \textbf{Best Params (main)} & \textbf{Test Accuracy} & \textbf{Macro F1-score} \\
+\hline
+Linear SVM & $C=100$, $max\_iter=1000$ & 0.81 & 0.45 \\
+RBF kernel & $C=10$, $\gamma=\text{scale}$ & 0.90 & 0.64 \\
+Polynomial kernel & $C=10$, degree=3, $\gamma=\text{auto}$ & 0.90 & 0.64 \\
+Sigmoid kernel & $C=0.1$, $\gamma=\text{auto}$ & 0.65 & 0.36 \\
+RBF (balanced) & $C=10$, $\gamma=\text{scale}$, balanced & 0.84 & 0.65 \\
+\hline
+\end{tabular}
+\end{table}
+
+% --- First figure: four ROC curves side by side ---
+\begin{figure}[h]
+    \centering
+    \begin{subfigure}[b]{0.24\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plotsss/roc_linear.png}
+        \caption{Linear SVM}
+        \label{fig:roc_linear}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.24\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plotsss/roc_poly.png}
+        \caption{Polynomial kernel}
+        \label{fig:roc_poly}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.24\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plotsss/roc_sigmoid.png}
+        \caption{Sigmoid kernel}
+        \label{fig:roc_sigmoid}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.24\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plotsss/roc_rbf.png}
+        \caption{RBF kernel}
+        \label{fig:roc_rbf}
+    \end{subfigure}
+    \caption{...}  
+    \label{fig:roc_four}
+\end{figure}
+
+% --- Second figure: confusion matrix and ROC for RBF balanced ---
+\begin{figure}[h]
+    \centering
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plotsss/cm_rbf_balanced.png}
+        \caption{Confusion Matrix RBF balanced}
+        \label{fig:cm_rbf_balanced}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plotsss/roc_rbf_balanced.png}
+        \caption{ROC RBF balanced}
+        \label{fig:roc_rbf_balanced}
+    \end{subfigure}
+    \caption{...}  
+    \label{fig:rbf_balanced_two}
+\end{figure}
+
+
+
+In conclusion, non-linear kernels were clearly superior to the linear SVM, 
+with RBF and polynomial achieving comparable accuracy. 
+The RBF kernel with balanced class weights provided the best compromise, 
+maintaining strong performance on majority classes while improving recognition of minority ones.

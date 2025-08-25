@@ -11,4 +11,5 @@
 \contentsline {section}{\numberline {4}Advanced Classification}{3}{section.4}%
 \contentsline {subsection}{\numberline {4.1}Ensemble methods}{3}{subsection.4.1}%
 \contentsline {subsection}{\numberline {4.2}Neural Networks}{3}{subsection.4.2}%
-\contentsline {section}{\numberline {5}Advanced Regression}{3}{section.5}%
+\contentsline {subsection}{\numberline {4.3}Support Vector Machines}{4}{subsection.4.3}%
+\contentsline {section}{\numberline {5}Advanced Regression}{5}{section.5}%
