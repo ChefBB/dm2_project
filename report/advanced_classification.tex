@@ -1,39 +1,26 @@
 \section{Advanced Classification}
+\label{sec:advanced_classification}
 
 In this section, classification results are showcased for two
 target variables: \texttt{averageRating} (properly binned into
 5 classes), and \texttt{titleType} (with 6 classes).
 
-
-\subsection{Ensemble methods}
-
-
-
-\subsection{Neural Networks}
-\label{sec:advanced_classification}
-\textcolor{red}{We then applied multiple classification models using the data as preprocessed ...} 
-The first target variable is \texttt{titleType}, which includes six categories: 
+\textcolor{red}{We then applied multiple classification models using the data as preprocessed previously (see Section~\ref{sec:understanding_preparation}).}   
+\textcolor{blue}{The first target variable is \texttt{titleType}, which includes six categories: 
 \textit{movie}, \textit{short}, \textit{tvEpisode}, \textit{tvSeries}, 
 \textit{tvSpecial}, and \textit{video}. 
 The classes are not equally distributed, with \textit{tvSpecial} and \textit{video} 
-being significantly under-represented compared to the others. 
-
-Entries labeled as \textit{videoGame} were removed from both the training and testing sets, 
+being significantly under-represented compared to the others. Entries labeled as \textit{videoGame} were removed from both the training and testing sets, 
 as they were too few to be useful for classification. 
 The remaining categories were merged into broader groups according to the following mapping: 
 \textit{movie} and \textit{tvMovie} were grouped as \textit{movie}, 
 \textit{short} and \textit{tvShort} were grouped as \textit{short}, 
 \textit{tvSeries} and \textit{tvMiniSeries} were grouped as \textit{tvSeries}, 
 while \textit{tvEpisode}, \textit{tvSpecial} and \textit{video} were left unchanged. 
-
-All feature columns were standardized using a \texttt{StandardScaler}. 
-
+All feature columns were standardized using a \textit{StandardScaler}. 
 In addition, the variable \texttt{canHaveEpisodes} was removed prior to training, 
 since it provides direct information about the target \texttt{titleType} 
-and could therefore introduce data leakage.
-
-
-
+and could therefore introduce data leakage.}
 
 \subsection{Support Vector Machines}
 \label{subsec:svm}
@@ -150,3 +137,9 @@ In conclusion, non-linear kernels were clearly superior to the linear SVM,
 with RBF and polynomial achieving comparable accuracy. 
 The RBF kernel with balanced class weights provided the best compromise, 
 maintaining strong performance on majority classes while improving recognition of minority ones.
+
+\subsection{Ensemble methods}
+
+
+
+\subsection{Neural Networks}
