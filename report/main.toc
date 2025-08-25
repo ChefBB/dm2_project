@@ -1,0 +1,16 @@
+\babel@toc {english}{}\relax 
+\contentsline {section}{\numberline {1}Data Understanding and Preparation}{2}{section.1}%
+\contentsline {section}{\numberline {2}Outliers}{3}{section.2}%
+\contentsline {subsection}{\numberline {2.1}COF}{3}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Isolation Forest}{3}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.3}ABOD}{3}{subsection.2.3}%
+\contentsline {section}{\numberline {3}Imbalanced Learning}{3}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Undersampling}{3}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Oversampling}{3}{subsection.3.2}%
+\contentsline {subsubsection}{\numberline {3.2.1}SMOTE}{3}{subsubsection.3.2.1}%
+\contentsline {section}{\numberline {4}Advanced Classification}{3}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Support Vector Machines}{4}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Ensemble methods}{4}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}Neural Networks}{8}{subsection.4.3}%
+\contentsline {subsection}{\numberline {4.4}Model Comparison}{8}{subsection.4.4}%
+\contentsline {section}{\numberline {5}Advanced Regression}{8}{section.5}%
