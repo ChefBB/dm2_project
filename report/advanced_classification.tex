@@ -140,27 +140,143 @@ RBF (balanced) & $C=10$, $\gamma=\text{scale}$, balanced & 0.84 & 0.65 \\
 % The RBF kernel with balanced class weights provided the best compromise, 
 % maintaining strong performance on majority classes while improving recognition of minority ones.
 
-\subsection{Rating classification}
-A binned rating classification task was chosen because of how meaningful
-the feature is.
-Since the feature is continuous, containing float values between 1 and 10,
-it was binned in 5 classes:
 
-\begin{itemize}
-    \item 0: [1.0, 6.0), containing all insufficient ratings; this class
-    represented 
-    \item 1: [6.0, 7.0)
-    \item 2: [7.0, 8.0)
-    \item 3: [8.0, 9.0)
-    \item 4: [9.0, 10.0]
-\end{itemize}
 
-\subsubsection{Ensemble methods}
+\subsection{Ensemble methods}
+Boosting and Random Forest models were trained on the classification,
+while being optimized via Stratified Randomized Search with 5-fold
+cross-validation over a predefined hyperparameter space.\\
 
-\subsubsection{Neural Networks}
+% rf
+% RandomForestClassifier(max_depth=19, max_features=0.7361716094628554,
+                    %    min_samples_leaf=3, min_samples_split=4, n_estimators=42,
+                    %    n_jobs=-1, random_state=42)
+% precision    recall  f1-score   support
 
-\subsection{Title type classification}
+%            0       0.56      0.60      0.58      9717
+%            1       0.44      0.34      0.39     11114
+%            2       0.48      0.68      0.56     14674
+%            3       0.46      0.27      0.34      7640
+%            4       0.60      0.16      0.25      1715
 
-\subsubsection{Ensemble methods}
+%     accuracy                           0.49     44860
+%    macro avg       0.51      0.41      0.42     44860
+% weighted avg       0.49      0.49      0.47     44860
 
-\subsubsection{Neural Networks}
+
+
+On the \texttt{averageRating} classification task, both models
+
+On the \texttt{titleType} classification task, the best hyperparameters
+obtained for the Random Forest model were:
+% {'class_weight': None, 'criterion': 'gini', 'max_depth': 19, 'max_features': 0.7361716094628554, 'min_samples_leaf': 3, 'min_samples_split': 4, 'n_estimators': 42}
+\texttt{n\_estimators=42}, \texttt{max\_depth=19}, \texttt{min\_samples\_split=4},
+\texttt{min\_samples\_leaf=3}, \texttt{max\_features=0.74},
+\texttt{criterion='gini'}, \texttt{class\_weight=None}.
+% precision    recall  f1-score   support
+
+%        movie       0.91      0.95      0.93     12947
+%        short       0.93      0.96      0.95      4994
+%    tvEpisode       0.96      0.98      0.97     21249
+%     tvSeries       0.77      0.70      0.73      3247
+%    tvSpecial       0.69      0.26      0.38       345
+%        video       0.77      0.42      0.55      1545
+
+%     accuracy                           0.92     44327
+%    macro avg       0.84      0.71      0.75     44327
+% weighted avg       0.92      0.92      0.92     44327
+
+
+% adaboost
+% Best parameters found for AdaBoost: {'estimator__max_depth': 10, 'estimator__min_samples_leaf': 16, 'estimator__min_samples_split': 16, 'learning_rate': 0.46606998421703594, 'n_estimators': 56}
+For the AdaBoost model, the best hyperparameters were:
+\texttt{n\_estimators=56}, \texttt{learning\_rate=0.47},
+\texttt{estimator\_\_max\_depth=10},
+\texttt{estimator\_\_min\_samples\_split=16},
+\texttt{estimator\_\_min\_samples\_leaf=16}.
+%            precision    recall  f1-score   support
+
+%        movie       0.87      0.95      0.91     12947
+%        short       0.92      0.95      0.94      4994
+%    tvEpisode       0.96      0.97      0.96     21249
+%     tvSeries       0.75      0.63      0.68      3247
+%    tvSpecial       0.73      0.09      0.16       345
+%        video       0.70      0.32      0.44      1545
+
+The table below summarizes the classification report for both models.
+\begin{table}[H]
+    \centering
+    \label{tab:classification_report}
+    \begin{tabular}{lccccc}
+    \hline
+    \textbf{Model} & \textbf{Accuracy} & \textbf{Macro Precision} & \textbf{Macro Recall} & \textbf{Macro F1-score} \\
+    \hline
+    Random Forest & 0.92 & 0.84 & 0.71 & 0.75 \\
+    AdaBoost & 0.90 & 0.82 & 0.65 & 0.68 \\
+    \hline
+    \end{tabular}
+    \caption{Performances of the models on the \texttt{titleType} classification task.}
+\end{table}
+
+Figure~\ref{fig:cm_rf} and Figure~\ref{fig:cm_ab} show the confusion matrices
+for the models.
+
+\begin{figure}[h]
+    \centering
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plotsss/conf_matr_rf_titletype}
+        \caption{Confusion Matrix - Random Forest}
+        \label{fig:cm_rf}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plotsss/conf_matr_boost_titletype}
+        \caption{Confusion Matrix - AdaBoost}
+        \label{fig:cm_ab}
+    \end{subfigure}
+    \caption{Confusion matrices for the ensemle models on the \texttt{titleType} classification task.}
+    \label{fig:cm_comparison}
+\end{figure}
+Both models perform well on the first four classes, while struggling
+with /texttt{video} and /texttt{tvSpecial}, which are the most
+under-represented classes. In general, the two models show similar
+performances, with Random Forest generally outperforming AdaBoost
+by a slight margin.
+Contrary to the results, the models base their decisions
+on different feature importances: while Random Forest assigns over
+half of the importance to \texttt{runtimeMinutes},
+AdaBoost spreads the importance evenly across multiple features,
+with the top being \texttt{runtimeMinutes} with around 15\%.
+
+
+The ROC curves for the two models are shown in Figure~\ref{fig:roc_rf} and
+Figure~\ref{fig:roc_ab}.
+\begin{figure}[h]
+    \centering
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plotsss/roc_rf_titletype}
+        \caption{ROC Curve - Random Forest}
+        \label{fig:roc_rf}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plotsss/roc_boost_titletype}
+        \caption{ROC Curve - AdaBoost}
+        \label{fig:roc_ab}
+    \end{subfigure}
+    \caption{ROC curves for the ensemble models on the \texttt{titleType} classification task.}
+    \label{fig:roc_comparison}
+\end{figure}
+
+Again, similar performances are observed. The biggest difference
+seems to be found in the under-represented classes, which seem to
+have a bigger difference in Area Under The Curve (AUC).
+
+\subsection{Neural Networks}
+
+
+\subsection{Model Comparison}
