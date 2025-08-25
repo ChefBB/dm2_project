@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1756108786.12754 "/Users/chiaraferrara/Desktop/Unipi/Magistrale/DM 2/dm2_project/report/main.tex" "main.pdf" "main" 1756108786.95849 0
+["pdflatex"] 1756110220.01346 "/Users/chiaraferrara/Desktop/Unipi/Magistrale/DM 2/dm2_project/report/main.tex" "main.pdf" "main" 1756110220.86156 0
   "/Users/chiaraferrara/Desktop/Unipi/Magistrale/DM 2/dm2_project/report/main.tex" 1756107604.12778 3190 22f1450452c14a4e4e3d767543fe55c3 ""
   "/usr/local/texlive/2025basic/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc" 1254269338 2375 baa924870cfb487815765f9094cf3728 ""
   "/usr/local/texlive/2025basic/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc" 1202520719 2405 5dcf2c1b967ee25cc46c58cd52244aed ""
@@ -144,15 +144,15 @@
   "/usr/local/texlive/2025basic/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1746479493 79187 04b17f8738f833a5a5f7867124477b59 ""
   "/usr/local/texlive/2025basic/texmf-var/web2c/pdftex/pdflatex.fmt" 1746479472 2663827 147b7e6714c3c57d854f6d61b2070c4c ""
   "/usr/local/texlive/2025basic/texmf.cnf" 1741448314 628 81d1ada0f601fb1ffa62f1323192d946 ""
-  "advanced_classification.tex" 1756108785.08268 7044 089be1fc18cbbea75afc86b9ebc73b7e ""
+  "advanced_classification.tex" 1756110219.883 7410 9f861f0ff8ea84e97d7ea53e64b0a3bb ""
   "advanced_regression.tex" 1749820197.97926 29 03ddbe8889eb14d36b9384a6f3afaa38 ""
   "cherubino_pant541.pdf" 1746482473.44328 91616 7b7710d7bb6492a9499117b6fe225974 ""
   "imbalanced_learning.tex" 1749820197.97946 105 3347b869d4c83b496789769b31312dc2 ""
   "introduction.tex" 1749820197.97972 373 1ad3af590d5a64b084364873483029f0 ""
-  "main.aux" 1756108786.88029 4296 21e2c27d8ae6199deaef2045a558fbe3 "pdflatex"
-  "main.out" 1756108786.88143 1826 48f922b2757913285d22c838a9bf74b7 "pdflatex"
+  "main.aux" 1756110220.78426 4296 fc42e408f2531744bc5c4229830bfeb2 "pdflatex"
+  "main.out" 1756110220.78541 1826 48f922b2757913285d22c838a9bf74b7 "pdflatex"
   "main.tex" 1756107604.12778 3190 22f1450452c14a4e4e3d767543fe55c3 ""
-  "main.toc" 1756108786.88169 1124 2490117f1b0409487406b526e92f4471 "pdflatex"
+  "main.toc" 1756110220.78564 1124 277840210c8d13e4466eff2333b41f70 "pdflatex"
   "outliers.tex" 1749820197.98517 85 ed34dbe6a8e13c77904eb2b1f889cc8a ""
   "plotsss/cm_rbf_balanced.png" 1756107604.12882 47792 9d5c4175d2bda11174a31dde9235a405 ""
   "plotsss/roc_linear.png" 1756107604.12949 64634 a3990eb1b4a5c43c330b54bf59784aaa ""

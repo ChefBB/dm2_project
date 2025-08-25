@@ -25,9 +25,8 @@ and could therefore introduce data leakage.}
 \subsection{Support Vector Machines}
 \label{subsec:svm}
 
-Support Vector Machines (SVM) were applied to the IMDb classification task to distinguish among six title categories: 
-\textit{movie}, \textit{short}, \textit{tvEpisode}, \textit{tvSeries}, \textit{tvSpecial}, and \textit{video}. 
-Both linear and non-linear kernels were investigated to assess how the flexibility of the decision boundary affects classification performance.  
+We applied Support Vector Machines (SVM) to the \texttt{titleType} classification task.
+Both linear and non-linear kernels were explored in order to evaluate how decision boundary complexity influences predictive performance.
 
 The first experiment used a Linear SVM trained on the full dataset.  
 A grid search with five-fold cross validation was carried out on the parameters 
@@ -38,31 +37,36 @@ the classifier failed on \textit{tvSeries}, \textit{tvSpecial}, and \textit{vide
 indicating that a linear decision boundary is insufficient for this problem.  
 
 Non-linear kernels were then evaluated. 
-Because a full parameter search on the complete training set would be computationally expensive, 
-an exploratory grid search was performed on a stratified 10\% sample of the training data. 
-RBF and polynomial kernels performed well, while the sigmoid kernel consistently underperformed and was discarded. 
-The selected configurations were then retrained on the full dataset. 
-Both RBF and polynomial kernels achieved approximately 0.90 test accuracy, 
-substantially outperforming the linear model. 
+A grid search was first performed on a stratified 10\% subset of the training set to efficiently explore a wide range of hyperparameters for each kernel, 
+since a full search on the complete dataset would have been computationally prohibitive. 
+For the RBF kernel, $C$ was varied from 0.01 to 1000 and $\gamma$ between \texttt{scale} and \texttt{auto}. 
+The polynomial kernel was tested with $C$ from 0.01 to 100, degree 2--4, $\gamma$ as \texttt{scale} or \texttt{auto}, and \texttt{coef0} 0 or 1. 
+The sigmoid kernel was explored over $C$ 0.01--100, $\gamma$ \texttt{scale}/\texttt{auto}, and \texttt{coef0} 0 or 1. 
+\textcolor{blue}{Remember to fix C!}
+
+The best configuration for each kernel, reported in Table~\ref{tab:svm_results}, was then retrained on the full dataset and evaluated on the test set. 
+Both RBF and polynomial kernels reached approximately 0.90 test accuracy, substantially outperforming the linear baseline and sigmoid. 
+The RBF kernel was selected as the reference non-linear model due to slightly more stable results and improved recall on the under-represented classes.
+
 
 ROC curves were used to evaluate class separability (Figure~\ref{fig:roc_four}),
 showing excellent separation for majority classes, although minority categories remained problematic. 
-Confusion matrices (Figure~\ref{fig:rbf_balanced_two}) 
-illustrate that \textit{tvSpecial} and \textit{video} were frequently misclassified.  
+
 \textcolor{red}{I will change the text and explain the figures better.}
 
 To address class imbalance, the RBF kernel was retrained with \texttt{class\_weight=balanced}, 
 which penalizes misclassification of under-represented classes. 
 This model reached a slightly lower overall accuracy of 0.84, 
 but recall for \textit{tvSpecial} and \textit{video} improved, providing a more equitable classification across categories.  
-
+Confusion matrices (Figure~\ref{fig:rbf_balanced_two}) 
+illustrate that \textit{tvSpecial} and \textit{video} ...  
 Analysis of the support vectors confirmed this effect. 
 In the unbalanced RBF, nearly all points of minority classes became support vectors, 
 while in the balanced model the total number of support vectors increased and was more evenly distributed across classes, 
 indicating a more complex but fairer decision function. 
 
 Table~\ref{tab:svm_results} summarizes the main results, including the parameters used for each kernel and the corresponding test performance. 
-This information allows the experiments to be fully reproducible.
+
 
 \begin{table}[h]
 \centering
@@ -80,7 +84,7 @@ RBF (balanced) & $C=10$, $\gamma=\text{scale}$, balanced & 0.84 & 0.65 \\
 \hline
 \end{tabular}
 \end{table}
-
+    
 % --- First figure: four ROC curves side by side ---
 \begin{figure}[h]
     \centering
@@ -131,12 +135,10 @@ RBF (balanced) & $C=10$, $\gamma=\text{scale}$, balanced & 0.84 & 0.65 \\
     \label{fig:rbf_balanced_two}
 \end{figure}
 
-
-
-In conclusion, non-linear kernels were clearly superior to the linear SVM, 
-with RBF and polynomial achieving comparable accuracy. 
-The RBF kernel with balanced class weights provided the best compromise, 
-maintaining strong performance on majority classes while improving recognition of minority ones.
+% In conclusion, non-linear kernels were clearly superior to the linear SVM, 
+% with RBF and polynomial achieving comparable accuracy. 
+% The RBF kernel with balanced class weights provided the best compromise, 
+% maintaining strong performance on majority classes while improving recognition of minority ones.
 
 \subsection{Ensemble methods}
 

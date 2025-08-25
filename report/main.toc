@@ -10,6 +10,6 @@
 \contentsline {subsubsection}{\numberline {3.2.1}SMOTE}{3}{subsubsection.3.2.1}%
 \contentsline {section}{\numberline {4}Advanced Classification}{3}{section.4}%
 \contentsline {subsection}{\numberline {4.1}Support Vector Machines}{4}{subsection.4.1}%
-\contentsline {subsection}{\numberline {4.2}Ensemble methods}{4}{subsection.4.2}%
-\contentsline {subsection}{\numberline {4.3}Neural Networks}{4}{subsection.4.3}%
-\contentsline {section}{\numberline {5}Advanced Regression}{4}{section.5}%
+\contentsline {subsection}{\numberline {4.2}Ensemble methods}{5}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}Neural Networks}{5}{subsection.4.3}%
+\contentsline {section}{\numberline {5}Advanced Regression}{5}{section.5}%
