@@ -5,8 +5,27 @@ target variables: \texttt{averageRating} (properly binned into
 5 classes), and \texttt{titleType} (with 6 classes).
 
 
-\subsection{Ensemble methods}
+\subsection{Rating classification}
+A binned rating classification task was chosen because of how meaningful
+the feature is.
+Since the feature is continuous, containing float values between 1 and 10,
+it was binned in 5 classes:
 
+\begin{itemize}
+    \item 0: [1.0, 6.0), containing all insufficient ratings; this class
+    represented 
+    \item 1: [6.0, 7.0)
+    \item 2: [7.0, 8.0)
+    \item 3: [8.0, 9.0)
+    \item 4: [9.0, 10.0]
+\end{itemize}
 
+\subsubsection{Ensemble methods}
 
-\subsection{Neural Networks}
+\subsubsection{Neural Networks}
+
+\subsection{Title type classification}
+
+\subsubsection{Ensemble methods}
+
+\subsubsection{Neural Networks}
