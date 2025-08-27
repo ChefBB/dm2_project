@@ -371,7 +371,93 @@ Again, similar performances are observed. The biggest difference
 seems to be found in the under-represented classes, which seem to
 have a bigger difference in Area Under The Curve (AUC).
 
+
+
+
 \subsection{Neural Networks}
+
+\begin{figure}
+    \centering
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plotsss/loss_rating}
+        \caption{Loss - Neural Network}
+        \label{fig:loss_nn_rating}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plotsss/accuracy_rating.png}
+        \caption{Accuracy - Neural Network}
+        \label{fig:accuracy_nn_rating}
+    \end{subfigure}
+    \caption{Training and validation loss and accuracy for the neural network on the \texttt{averageRating} classification task.}
+    \label{fig:nn_performance_rating}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \begin{subfigure}[b]{0.44\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plotsss/cm_nn_rating.png}
+        \caption{Confusion Matrix - Neural Network}
+        \label{fig:cm_nn_rating}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.52\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plotsss/roc_nn_rating.png}
+        \caption{ROC Curve - Neural Network}
+        \label{fig:roc_nn_rating}
+    \end{subfigure}
+    \caption{Confusion Matrix and ROC Curve for the Neural Network on the \texttt{averageRating} classification task.}
+    \label{fig:cm_nn_rating}
+\end{figure}
+
+
+% titletype task
+
+\begin{figure}
+    \centering
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plotsss/loss_titletype}
+        \caption{Loss - Neural Network}
+        \label{fig:loss_nn_titletype}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plotsss/accuracy_titletype.png}
+        \caption{Accuracy - Neural Network}
+        \label{fig:accuracy_nn_titletype}
+    \end{subfigure}
+    \caption{Training and validation loss and accuracy for the neural network on the \texttt{titleType} classification task.}
+    \label{fig:nn_performance_titletype}
+\end{figure}
+
+% conf matrix and roc titletype
+
+\begin{figure}
+    \centering
+    \begin{subfigure}[b]{0.44\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plotsss/cm_nn_titletype.png}
+        \caption{Confusion Matrix - Neural Network}
+        \label{fig:cm_nn_titletype}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.52\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plotsss/roc_nn_titletype.png}
+        \caption{ROC Curve - Neural Network}
+        \label{fig:roc_nn_titletype}
+    \end{subfigure}
+    \caption{Confusion Matrix and ROC Curve for the Neural Network on the \texttt{titleType} classification task.}
+    \label{fig:cm_nn_titletype}
+\end{figure}
+
+
 
 
 \subsection{Model Comparison}
