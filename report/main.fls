@@ -360,6 +360,7 @@ INPUT ./plotsss/loss_rating.png
 INPUT ./plotsss/loss_rating.png
 INPUT ./plotsss/loss_rating.png
 INPUT ./plotsss/loss_rating.png
+INPUT ./plotsss/loss_rating.png
 INPUT ./plotsss/accuracy_rating.png
 INPUT ./plotsss/accuracy_rating.png
 INPUT ./plotsss/accuracy_rating.png
@@ -375,6 +376,7 @@ INPUT ./plotsss/roc_nn_rating.png
 INPUT ./plotsss/roc_nn_rating.png
 INPUT ./plotsss/roc_nn_rating.png
 INPUT ./plotsss/roc_nn_rating.png
+INPUT ./plotsss/loss_titletype.png
 INPUT ./plotsss/loss_titletype.png
 INPUT ./plotsss/loss_titletype.png
 INPUT ./plotsss/loss_titletype.png
