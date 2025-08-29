@@ -25,6 +25,10 @@ and could therefore introduce data leakage.}
 \subsection{Support Vector Machines}
 \label{subsec:svm}
 
+%-------------------------------------------------------------------------------
+% titleType
+%-------------------------------------------------------------------------------
+
 We applied Support Vector Machines (SVM) to the \texttt{titleType} classification task.
 Both linear and non-linear kernels were explored in order to evaluate how decision boundary complexity influences predictive performance.
 
@@ -49,7 +53,8 @@ Both RBF and polynomial kernels reached approximately 0.90 test accuracy, substa
 The RBF kernel was selected as the reference non-linear model due to slightly more stable results and improved recall on the under-represented classes.
 
 
-ROC curves were used to evaluate class separability (Figure~\ref{fig:roc_four}),
+ROC curves were used to evaluate class separability 
+%(Figure~\ref{fig:roc_four}),
 showing excellent separation for majority classes, although minority categories remained problematic. 
 
 \textcolor{red}{I will change the text and explain the figures better.}
@@ -119,19 +124,19 @@ RBF (balanced) & $C=10$, $\gamma=\text{scale}$, balanced & 0.84 & 0.65 \\
 % --- Second figure: confusion matrix and ROC for RBF balanced ---
 \begin{figure}[h]
     \centering
-    \begin{subfigure}[b]{0.48\textwidth}
+    \begin{subfigure}[b]{0.47\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{plotsss/cm_rbf_balanced.png}
+        \includegraphics[width=\textwidth]{plotsss/new_cm_rbf_balanced.png}
         \caption{Confusion Matrix RBF balanced}
         \label{fig:cm_rbf_balanced}
     \end{subfigure}
-    \begin{subfigure}[b]{0.48\textwidth}
+    \begin{subfigure}[b]{0.43\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{plotsss/roc_rbf_balanced.png}
+        \includegraphics[width=\textwidth]{plotsss/new_roc_rbf_balanced.png}
         \caption{ROC RBF balanced}
         \label{fig:roc_rbf_balanced}
     \end{subfigure}
-    \caption{...}  
+    \caption{Confusion Matrix and ROC Curve for the SVM (kernel rbf and balanced class weight) on the \texttt{titleType} classification task.}  
     \label{fig:rbf_balanced_two}
 \end{figure}
 
@@ -140,6 +145,38 @@ RBF (balanced) & $C=10$, $\gamma=\text{scale}$, balanced & 0.84 & 0.65 \\
 % The RBF kernel with balanced class weights provided the best compromise, 
 % maintaining strong performance on majority classes while improving recognition of minority ones.
 
+%-------------------------------------------------------------------------------
+% rating
+%-------------------------------------------------------------------------------
+
+We also applied SVM to the \texttt{averageRating} classification task.
+The same kernels and hyperparameter search strategies were used as for \texttt{titleType}.
+
+We then applied the same methodology to the \texttt{rating} classification task.
+% Here the output space is ordinal, ranging from $[1,6)$ to $[9,10)$, with strong class imbalance: 
+% intermediate ranges are frequent, while extreme categories are under-represented.
+
+A Linear SVM was first tested using the same hyperparameter grid as before.
+The best configuration ($C=100$, $max_iter=1000$) achieved only 0.37 accuracy 
+and a macro F1-score of 0.28, confirming (perchè confirming?) that a linear decision 
+boundary is inadequate for this task.
+
+We therefore moved to non-linear kernels.
+As for the previous experiment, a grid search on a stratified 10\% subset of 
+the training set was conducted. The optimal configurations were $C=10$, $\gamma=\text{auto}$ 
+for the RBF kernel, $C=10$, degree=2, $\gamma=\text{scale}$, $\text{coef0}=1$ for the polynomial 
+kernel, and $C=0.1$, $\gamma=\text{auto}$, $\text{coef0}=0$ for the sigmoid kernel.
+These models were then retrained on the full dataset.
+
+Results were generally lower than in the \texttt{titleType} task, with the RBF and polynomial 
+kernels both reaching around 0.42 macro F1, while sigmoid performed substantially worse (macro F1 $\approx 0.36$).
+Confusion matrices showed that the models correctly identified the most populated bins, but failed on the tails 
+(\textit{[1,6)} and \textit{[9,10)}).
+
+Finally, to mitigate imbalance, the RBF kernel was retrained with \texttt{$class\_weight=balanced$}.
+This increased recall on minority classes, at the cost of a slight drop in overall accuracy, 
+producing a fairer but more complex decision function.
+However, even the balanced model struggled to capture the extremes of the rating distribution.
 
 
 \subsection{Ensemble methods}
@@ -380,7 +417,7 @@ have a bigger difference in Area Under The Curve (AUC).
     \centering
     \begin{subfigure}[b]{0.48\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{plotsss/loss_rating}
+        \includegraphics[width=\textwidth]{plotsss/loss_rating.png}
         \caption{Loss - Neural Network}
         \label{fig:loss_nn_rating}
     \end{subfigure}
@@ -421,7 +458,7 @@ have a bigger difference in Area Under The Curve (AUC).
     \centering
     \begin{subfigure}[b]{0.48\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{plotsss/loss_titletype}
+        \includegraphics[width=\textwidth]{plotsss/loss_titletype.png}
         \caption{Loss - Neural Network}
         \label{fig:loss_nn_titletype}
     \end{subfigure}
