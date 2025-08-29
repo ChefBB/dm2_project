@@ -53,7 +53,8 @@ Both RBF and polynomial kernels reached approximately 0.90 test accuracy, substa
 The RBF kernel was selected as the reference non-linear model due to slightly more stable results and improved recall on the under-represented classes.
 
 
-ROC curves were used to evaluate class separability (Figure~\ref{fig:roc_four}),
+ROC curves were used to evaluate class separability 
+%(Figure~\ref{fig:roc_four}),
 showing excellent separation for majority classes, although minority categories remained problematic. 
 
 \textcolor{red}{I will change the text and explain the figures better.}
@@ -123,19 +124,19 @@ RBF (balanced) & $C=10$, $\gamma=\text{scale}$, balanced & 0.84 & 0.65 \\
 % --- Second figure: confusion matrix and ROC for RBF balanced ---
 \begin{figure}[h]
     \centering
-    \begin{subfigure}[b]{0.48\textwidth}
+    \begin{subfigure}[b]{0.47\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{plotsss/cm_rbf_balanced.png}
+        \includegraphics[width=\textwidth]{plotsss/new_cm_rbf_balanced.png}
         \caption{Confusion Matrix RBF balanced}
         \label{fig:cm_rbf_balanced}
     \end{subfigure}
-    \begin{subfigure}[b]{0.48\textwidth}
+    \begin{subfigure}[b]{0.43\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{plotsss/roc_rbf_balanced.png}
+        \includegraphics[width=\textwidth]{plotsss/new_roc_rbf_balanced.png}
         \caption{ROC RBF balanced}
         \label{fig:roc_rbf_balanced}
     \end{subfigure}
-    \caption{...}  
+    \caption{Confusion Matrix and ROC Curve for the SVM (kernel rbf and balanced class weight) on the \texttt{titleType} classification task.}  
     \label{fig:rbf_balanced_two}
 \end{figure}
 
