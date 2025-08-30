@@ -306,6 +306,12 @@ INPUT ./plotsss/log_roc_curves_t.png
 INPUT /usr/local/texlive/2025basic/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc
 INPUT /usr/local/texlive/2025basic/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc
 INPUT /usr/local/texlive/2025basic/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc
+INPUT /usr/local/texlive/2025basic/texmf-dist/fonts/tfm/public/lm/ec-lmtt9.tfm
+INPUT ./plotsss/log_roc_curves_rating.png
+INPUT ./plotsss/log_roc_curves_rating.png
+INPUT ./plotsss/log_roc_curves_rating.png
+INPUT ./plotsss/log_roc_curves_rating.png
+INPUT ./plotsss/log_roc_curves_rating.png
 INPUT /usr/local/texlive/2025basic/texmf-dist/fonts/tfm/public/lm/ec-lmr7.tfm
 INPUT /usr/local/texlive/2025basic/texmf-dist/fonts/tfm/public/lm/ec-lmr5.tfm
 INPUT ./plotsss/roc_linear.png
@@ -439,3 +445,4 @@ INPUT /usr/local/texlive/2025basic/texmf-dist/fonts/type1/public/lm/lmsy10.pfb
 INPUT /usr/local/texlive/2025basic/texmf-dist/fonts/type1/public/lm/lmsy7.pfb
 INPUT /usr/local/texlive/2025basic/texmf-dist/fonts/type1/public/lm/lmtt10.pfb
 INPUT /usr/local/texlive/2025basic/texmf-dist/fonts/type1/public/lm/lmtt8.pfb
+INPUT /usr/local/texlive/2025basic/texmf-dist/fonts/type1/public/lm/lmtt9.pfb

@@ -39,7 +39,7 @@ We also tested the \textit{multinomial} strategy, but it was significantly slowe
 produced comparable results, so OVR was selected for efficiency.
 
 To optimize the model, a hyperparameter search was performed using 
-\texttt{RandomizedSearchCV} with \texttt{StratifiedKFold}, ensuring that the class 
+\texttt{RandomizedSearchCV} with \texttt{StratifiedKFold} (5 folds), ensuring that the class 
 distribution was preserved in each fold. The solver was set to \texttt{saga}, and the 
 parameters tested included the regularization term $C$ (50 values logarithmically spaced 
 between $10^{-3}$ and $10^2$), \texttt{penalty} (\texttt{l2} and \texttt{l1}), and 
@@ -98,6 +98,9 @@ Overall, the model reaches an accuracy of 0.75,
 a macro-average F1 of 0.54, and a weighted F1 of 0.78. These results highlight that 
 while the model discriminates well among the more common classes, its performance is still
 limited for rarer classes. 
+This pattern is also reflected in the ROC curves shown in Figure~\ref{fig:log_roc_curves_t}, 
+where the model clearly separates the more frequent classes, while discrimination is more limited 
+for the less common categories.
 
 % Coefficient analysis provided insight into the influence of each feature on the probability of belonging to different classes. 
 % For each OVR classifier, the coefficients indicate how much a feature increases or decreases the probability of class membership 
@@ -114,10 +117,81 @@ For individual classes, for example, \texttt{movie} is positively influenced by 
 \texttt{tvEpisode} is positively influenced by \texttt{Europe} and negatively by \texttt{numRegions}.
 
 
-
 %-------------------------------------------------------------------------------
 % rating logistic 
 %-------------------------------------------------------------------------------
+
+Building upon the approach described for \texttt{titleType}, we trained a 
+Logistic Regression model for the multi-class \texttt{rating\_class} variable. 
+All numerical features were scaled and, in addition, the categorical variable 
+\texttt{titleType} was included as a predictor and processed via \textit{One-Hot Encoding}.
+
+Hyperparameters were optimized using again \texttt{RandomizedSearchCV} with \texttt{StratifiedKFold} (5 folds), 
+performed on a 10\% stratified sample of the data for computational efficiency. 
+The scoring metric was \texttt{f1\_macro}, and the search explored the same set of parameters used for \texttt{titleType}. 
+The optimal configuration was found to be: \textbf{C = 0.08}, \textbf{penalty = l2 }, and \textbf{class\_weight = balanced}.
+
+The best parameters were then used to fit the model on the full dataset, and evaluation on the test set was carried out. 
+
+% From the results, we observe that the model shows limited overall performance on the \texttt{rating\_class} test set,
+% achieving an accuracy of 0.27, a macro-average F1 of 0.25, and a weighted F1 of 0.27. 
+% Performance varies considerably across classes: the model predicts relatively better the mid-range ratings 
+% (\texttt{[7, 8)}), with an F1-score of 0.40, while predictions for the lower and higher extremes 
+% (\texttt{[1, 5)}, \texttt{[9, 10)}) are notably weaker. 
+
+
+The results for the \texttt{rating\_class} target are reported in 
+Table~\ref{tab:logistic_report_rating} and Figure~\ref{fig:log_roc_curves_rating}. 
+Overall, the model shows limited predictive ability 
+(\textbf{accuracy = 0.27}, \textbf{macro F1 = 0.25}), with marked variability across classes. 
+The extreme intervals, \texttt{[1,5)} and \texttt{[9,10)}, are detected with relatively high recall 
+(0.44 and 0.57), but their low precision yields modest F1-scores. 
+In contrast, the central ranges, which dominate the distribution, prove more difficult to classify: 
+\texttt{[6,7)} reaches only 0.13 in F1, while \texttt{[7,8)} performs slightly better at 0.40. 
+
+Regarding ROC curves: discrimination is stronger for the extreme categories 
+(AUCs of 0.75 and 0.76), whereas separability is weaker in the central intervals 
+(\texttt{[6,7)}: 0.60, \texttt{[7,8)}: 0.64). 
+This suggests that Logistic Regression tends to identify outlier ratings more effectively, 
+while struggling to capture subtle differences in the middle of the rating scale.
+
+ 
+
+\begin{figure}[ht]
+    \centering
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \captionof{table}{Classification report for \texttt{rating\_class}}
+        \label{tab:logistic_report_rating}
+        \small
+        \begin{tabular}{lccc}
+        \hline
+        \textbf{Class} & \textbf{Precision} & \textbf{Recall} & \textbf{F1-score}\\
+        \hline
+        \texttt{[1, 5)}   & 0.20 & 0.44 & 0.27 \\
+        \texttt{[5, 6)}   & 0.26 & 0.32 & 0.29 \\
+        \texttt{[6, 7)}   & 0.39 & 0.08 & 0.13 \\
+        \texttt{[7, 8)}   & 0.48 & 0.34 & 0.40 \\
+        \texttt{[8, 9)}   & 0.25 & 0.22 & 0.24 \\
+        \texttt{[9, 10)}  & 0.09 & 0.57 & 0.16 \\
+        \hline
+        \textbf{Accuracy}    & \multicolumn{3}{c}{0.27} \\
+        \textbf{Macro avg}   & 0.28 & 0.33 & 0.25 \\
+        \textbf{Weighted avg}& 0.35 & 0.27 & 0.27 \\
+        \hline
+        \end{tabular}
+        \end{minipage}
+    \hfill
+    \begin{minipage}{0.4\textwidth} 
+    \centering
+    \includegraphics[width=\textwidth]{plotsss/log_roc_curves_rating.png} 
+    \captionof{figure}{ROC curves for \texttt{rating\_class} (OvR)}
+    \label{fig:log_roc_curves_rating} 
+    \end{minipage}
+\end{figure}
+
+
+
 
 
 %-------------------------------------------------------------------------------
