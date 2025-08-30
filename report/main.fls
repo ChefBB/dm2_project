@@ -303,11 +303,11 @@ INPUT ./plotsss/log_roc_curves_t.png
 INPUT ./plotsss/log_roc_curves_t.png
 INPUT ./plotsss/log_roc_curves_t.png
 INPUT ./plotsss/log_roc_curves_t.png
-INPUT /usr/local/texlive/2025basic/texmf-dist/fonts/tfm/public/lm/ec-lmr7.tfm
-INPUT /usr/local/texlive/2025basic/texmf-dist/fonts/tfm/public/lm/ec-lmr5.tfm
 INPUT /usr/local/texlive/2025basic/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc
 INPUT /usr/local/texlive/2025basic/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc
 INPUT /usr/local/texlive/2025basic/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc
+INPUT /usr/local/texlive/2025basic/texmf-dist/fonts/tfm/public/lm/ec-lmr7.tfm
+INPUT /usr/local/texlive/2025basic/texmf-dist/fonts/tfm/public/lm/ec-lmr5.tfm
 INPUT ./plotsss/roc_linear.png
 INPUT ./plotsss/roc_linear.png
 INPUT ./plotsss/roc_linear.png

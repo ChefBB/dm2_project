@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1756568969.83267 "/Users/chiaraferrara/Desktop/Unipi/Magistrale/DM 2/dm2_project/report/main.tex" "main.pdf" "main" 1756568971.42534 0
+["pdflatex"] 1756571958.37958 "/Users/chiaraferrara/Desktop/Unipi/Magistrale/DM 2/dm2_project/report/main.tex" "main.pdf" "main" 1756571959.9414 0
   "/Users/chiaraferrara/Desktop/Unipi/Magistrale/DM 2/dm2_project/report/main.tex" 1756107604.12778 3190 22f1450452c14a4e4e3d767543fe55c3 ""
   "/usr/local/texlive/2025basic/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc" 1254269338 2375 baa924870cfb487815765f9094cf3728 ""
   "/usr/local/texlive/2025basic/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc" 1202520719 2405 5dcf2c1b967ee25cc46c58cd52244aed ""
@@ -159,15 +159,15 @@
   "/usr/local/texlive/2025basic/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1746479493 79187 04b17f8738f833a5a5f7867124477b59 ""
   "/usr/local/texlive/2025basic/texmf-var/web2c/pdftex/pdflatex.fmt" 1746479472 2663827 147b7e6714c3c57d854f6d61b2070c4c ""
   "/usr/local/texlive/2025basic/texmf.cnf" 1741448314 628 81d1ada0f601fb1ffa62f1323192d946 ""
-  "advanced_classification.tex" 1756568967.9138 27124 d995b1414428a64066834392b8b86764 ""
+  "advanced_classification.tex" 1756571956.60747 27668 4f9de70383cb9255d42f32b5ea3be53d ""
   "advanced_regression.tex" 1756551462.21967 4127 8c7e9a515a6d0855438a2acd86da03c9 ""
   "cherubino_pant541.pdf" 1746482473.44328 91616 7b7710d7bb6492a9499117b6fe225974 ""
   "imbalanced_learning.tex" 1749820197.97946 105 3347b869d4c83b496789769b31312dc2 ""
   "introduction.tex" 1749820197.97972 373 1ad3af590d5a64b084364873483029f0 ""
-  "main.aux" 1756568971.31645 12881 dc5325f1d74ec341ed209ce7f56ea62a "pdflatex"
-  "main.out" 1756568971.3188 2463 2c7cf92f38101391d5fca711342fc5d3 "pdflatex"
+  "main.aux" 1756571959.83455 12885 a6d42df847ec021ee4bfed8bbd391add "pdflatex"
+  "main.out" 1756571959.83612 2463 2c7cf92f38101391d5fca711342fc5d3 "pdflatex"
   "main.tex" 1756107604.12778 3190 22f1450452c14a4e4e3d767543fe55c3 ""
-  "main.toc" 1756568971.319 1466 6dc7a14aa0ae9a1caba9bc5ad5ec5aa0 "pdflatex"
+  "main.toc" 1756571959.83633 1466 c23a20d669073c4ad34843aca3823b1f "pdflatex"
   "outliers.tex" 1756502100.61391 85 cfdd6039227bdcbb7c1b1e2f6f6782da ""
   "plotsss/accuracy_rating.png" 1756389461.01396 54930 9b2b93bc3728bd27cdc900c291dbdf1a ""
   "plotsss/accuracy_titletype.png" 1756389461.01491 42041 4ce3f7d844217ee9084eb0ab4bc61cbc ""
