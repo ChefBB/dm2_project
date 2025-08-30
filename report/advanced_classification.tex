@@ -21,7 +21,105 @@ All feature columns were standardized using a \textit{StandardScaler}.
 In addition, the variable \texttt{canHaveEpisodes} was removed prior to training, 
 since it provides direct information about the target \texttt{titleType} 
 and could therefore introduce data leakage.}
+%-------------------------------------------------------------------------------
 
+\subsection{Logistic Regression}
+\label{subsec:logistic}
+
+%-------------------------------------------------------------------------------
+% titleType logistic
+%-------------------------------------------------------------------------------
+For the classification of the \texttt{titleType} variable, the target was transformed 
+into numerical labels using \textit{LabelEncoder} and all numerical features were scaled 
+with \texttt{StandardScaler} to ensure comparability across variables.
+
+Since the problem is multi-class, we chose to present the results using the 
+\textit{One-vs-Rest (OVR)} approach, which trains a binary classifier for each class. 
+We also tested the \textit{multinomial} strategy, but it was significantly slower and 
+produced comparable results, so OVR was selected for efficiency.
+
+To optimize the model, a hyperparameter search was performed using 
+\texttt{RandomizedSearchCV} with \texttt{StratifiedKFold}, ensuring that the class 
+distribution was preserved in each fold. The solver was set to \texttt{saga}, and the 
+parameters tested included the regularization term $C$ (50 values logarithmically spaced 
+between $10^{-3}$ and $10^2$), \texttt{penalty} (\texttt{l2} and \texttt{l1}), and 
+\texttt{class\_weight} (\texttt{None} and \texttt{balanced}). The hyperparameter 
+search was performed using \texttt{f1\_macro} as the scoring metric to balance 
+performance across all classes. The best parameters selected by the search were 
+\textbf{C = 6.16}, \textbf{penalty = l1}, and \textbf{class\_weight = balanced}.
+
+For computational efficiency, the search was conducted on a 10\% stratified sample 
+of the dataset, which was approximately representative of the original class distribution. The final 
+model was then refitted on the full dataset using the best parameters. Evaluation on 
+the test set was carried out using the confusion matrix, classification report, and 
+one-vs-rest ROC curves for each class. The main performance metrics are summarized in 
+Table~\ref{tab:logistic_report_t}, and the corresponding ROC curves are shown in 
+Figure~\ref{fig:log_roc_curves_t}. 
+
+\begin{figure}[ht]
+    \centering
+    \begin{minipage}{0.45\textwidth} % tabella a sinistra, 45% larghezza
+    \centering
+    \captionof{table}{Classification report for \texttt{titleType}}
+    \label{tab:logistic_report_t}
+    \small % riduce leggermente la dimensione del testo
+    \begin{tabular}{lccc}
+    \hline
+    \textbf{Class} & \textbf{Precision} & \textbf{Recall} & \textbf{F1-score}\\
+    \hline
+    tvEpisode  & 0.89 & 0.88 & 0.89  \\
+    movie      & 0.92 & 0.64 & 0.76  \\
+    short      & 0.75 & 0.87 & 0.81  \\
+    tvSeries   & 0.51 & 0.35 & 0.41  \\
+    video      & 0.20 & 0.48 & 0.28  \\
+    tvSpecial  & 0.07 & 0.49 & 0.11  \\
+    \hline
+    \textbf{Accuracy}    & \multicolumn{3}{c}{0.75} \\
+    \textbf{Macro avg}   & 0.56 & 0.62 & 0.54  \\
+    \textbf{Weighted avg}& 0.83 & 0.75 & 0.78  \\
+    \hline
+    \end{tabular}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.4\textwidth} 
+    \centering
+    \includegraphics[width=\textwidth]{plotsss/log_roc_curves_t.png} 
+    \captionof{figure}{ROC Logistic Regression}
+    \label{fig:log_roc_curves_t} 
+    \end{minipage}
+    \end{figure}
+
+
+From the results, we observe that the model achieves high performance for the 
+\texttt{movie}, \texttt{short}, and \texttt{tvEpisode} classes, with F1-scores of 0.76, 
+0.81, and 0.89, respectively. The model performs less well on \texttt{tvSeries}, 
+\texttt{tvSpecial}, and \texttt{video}, likely due to lower support in the dataset.
+Overall, the model reaches an accuracy of 0.75, 
+a macro-average F1 of 0.54, and a weighted F1 of 0.78. These results highlight that 
+while the model discriminates well among the more common classes, its performance is still
+limited for rarer classes. 
+
+% Coefficient analysis provided insight into the influence of each feature on the probability of belonging to different classes. 
+% For each OVR classifier, the coefficients indicate how much a feature increases or decreases the probability of class membership 
+% relative to the others. Globally, the most influential features were \texttt{budget}, \texttt{duration}, and \texttt{votes}. 
+% Examining individual classes, for the \textit{film} class, \texttt{votes} and \texttt{budget} positively contribute, while 
+% \texttt{duration} has a negative effect; for the \textit{series} class, \texttt{actors\_popularity} is positive, 
+% while \texttt{budget} is negative; for the \textit{documentary} class, \texttt{duration} is positive, whereas
+%  \texttt{votes} is negative. 
+%  This interpretation was visualized through a coefficient heatmap and can also be summarized in a table of the top positive and negative features for each class.
+
+
+
+
+
+
+
+%-------------------------------------------------------------------------------
+% rating logistic 
+%-------------------------------------------------------------------------------
+
+
+%-------------------------------------------------------------------------------
 \subsection{Support Vector Machines}
 \label{subsec:svm}
 
