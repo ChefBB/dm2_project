@@ -94,7 +94,7 @@ target: avgrating
 - exp (just one method) [ankit]
 
 ## Module 3
-- motifs and discords [ankit]
+- motifs and discords [bruno]
 - clustering 1 [chiara]
 - clustering 2 [ankit]
 - knn [chiara]
