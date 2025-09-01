@@ -357,36 +357,6 @@ Boosting and Random Forest models were trained on the classification,
 while being optimized via Stratified Randomized Search with 5-fold
 cross-validation over a predefined hyperparameter space.\\
 
-% rf
-% RandomForestClassifier(max_depth=19, max_features=0.7361716094628554,
-                    %    min_samples_leaf=3, min_samples_split=4, n_estimators=42,
-                    %    n_jobs=-1, random_state=42)
-% precision    recall  f1-score   support
-
-%            0       0.56      0.60      0.58      9717
-%            1       0.44      0.34      0.39     11114
-%            2       0.48      0.68      0.56     14674
-%            3       0.46      0.27      0.34      7640
-%            4       0.60      0.16      0.25      1715
-
-%     accuracy                           0.49     44860
-%    macro avg       0.51      0.41      0.42     44860
-% weighted avg       0.49      0.49      0.47     44860
-
-
-% adaboost
-% best_params = {'estimator__max_depth': 10, 'estimator__min_samples_leaf': 16, 'estimator__min_samples_split': 16, 'learning_rate': 0.46606998421703594, 'n_estimators': 56}
-% precision    recall  f1-score   support
-
-%            0       0.48      0.40      0.43      9717
-%            1       0.33      0.31      0.32     11114
-%            2       0.42      0.55      0.47     14674
-%            3       0.31      0.28      0.29      7640
-%            4       0.44      0.11      0.18      1715
-
-%     accuracy                           0.39     44860
-%    macro avg       0.40      0.33      0.34     44860
-% weighted avg       0.39      0.39      0.38     44860
 
 For the \texttt{averageRating} classification task, the best
 hyperparameters for the Random Forest model were:
@@ -403,7 +373,7 @@ For the AdaBoost model, the best hyperparameters were:
 The table below summarizes the classification report for both models.
 \begin{table}[H]
     \centering
-    \label{tab:classification_report}
+    \label{tab:classification_report_ensemble}
     \begin{tabular}{lccccc}
     \hline
     \textbf{Model} & \textbf{Accuracy} & \textbf{Macro Precision} & \textbf{Macro Recall} & \textbf{Macro F1-score} \\
@@ -418,58 +388,31 @@ The table below summarizes the classification report for both models.
 The Random Forest model outperforms AdaBoost in all metrics.
 The biggest difference is found in the recall.
 
-Figure~\ref{fig:cm_rf} and Figure~\ref{fig:cm_ab} show the confusion matrices
-for the models.
+Figures~\ref{fig:cm_rf} and \ref{fig:roc_rf} show the confusion matrix and ROC curve
+for Random Forest.
 \begin{figure}[H]
     \centering
-    \begin{subfigure}[b]{0.45\textwidth}
+    \begin{subfigure}[b]{0.40\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{plotsss/conf_matr_rf_rating}
+        \includegraphics[width=\textwidth]{plotsss/conf_matr_rf_rating.png}
         \caption{Confusion Matrix - Random Forest}
         \label{fig:cm_rf}
     \end{subfigure}
     \hfill
-    \begin{subfigure}[b]{0.45\textwidth}
+    \begin{subfigure}[b]{0.47\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{plotsss/conf_matr_boost_rating}
-        \caption{Confusion Matrix - AdaBoost}
-        \label{fig:cm_ab}
-    \end{subfigure}
-    \caption{Confusion matrices for the ensemle models on the \texttt{averageRating} classification task.}
-    \label{fig:cm_comparison}
-\end{figure}
-
-From these, it can be seen why the recall is much lower for AdaBoost,
-with regards to Random Forest: the former tends to classify less
-aggressively as the most represented class.
-It's also worth noting that Random Forest tends to assign
-most of the misclassifications to the adjacent classes,
-while AdaBoost spreads them more evenly across all classes.
-
-Figures ~\ref{fig:roc_rf} and ~\ref{fig:roc_ab} show the ROC curves
-for the two models.
-\begin{figure}[h]
-    \centering
-    \begin{subfigure}[b]{0.45\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{plotsss/roc_rf_rating}
+        \includegraphics[width=\textwidth]{plotsss/roc_rf_rating.png}
         \caption{ROC Curve - Random Forest}
         \label{fig:roc_rf}
     \end{subfigure}
-    \hfill
-    \begin{subfigure}[b]{0.45\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{plotsss/roc_boost_rating}
-        \caption{ROC Curve - AdaBoost}
-        \label{fig:roc_ab}
-    \end{subfigure}
-    \caption{ROC curves for the ensemble models on the \texttt{averageRating} classification task.}
-    \label{fig:roc_comparison}
+    \caption{Confusion matrix and ROC Curve for Random Forest on the \texttt{averageRating} classification task.}
+    \label{fig:cm_roc_rating}
 \end{figure}
-From these representations, it can be seen that AdaBoost has
-poorer performances in all classes, but especially struggles
-with the under-represented ones, which lead to the biggest
-difference in Area Under The Curve (AUC).
+
+From the confusion matrix, it can be observed 
+
+
+
 
 
 On the \texttt{titleType} classification task, the best hyperparameters
@@ -523,8 +466,10 @@ The table below summarizes the classification report for both models.
     \caption{Performances of the models on the \texttt{titleType} classification task.}
 \end{table}
 
-Figure~\ref{fig:cm_rf} and Figure~\ref{fig:cm_ab} show the confusion matrices
-for the models.
+The Random Forest model again outperforms AdaBoost in all metrics.
+The biggest difference is found in the recall.
+Figures~\ref{fig:cm_rf_titletype} and \ref{fig:roc_rf} show the confusion matrix and ROC curve
+for Random Forest.
 
 \begin{figure}[H]
     \centering
@@ -532,16 +477,16 @@ for the models.
         \centering
         \includegraphics[width=\textwidth]{plotsss/conf_matr_rf_titletype}
         \caption{Confusion Matrix - Random Forest}
-        \label{fig:cm_rf}
+        \label{fig:cm_rf_titletype}
     \end{subfigure}
     \hfill
-    \begin{subfigure}[b]{0.49\textwidth}
+    \begin{subfigure}[b]{0.45\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{plotsss/conf_matr_boost_titletype}
-        \caption{Confusion Matrix - AdaBoost}
-        \label{fig:cm_ab}
+        \includegraphics[width=\textwidth]{plotsss/roc_rf_titletype}
+        \caption{ROC Curve - Random Forest}
+        \label{fig:roc_rf}
     \end{subfigure}
-    \caption{Confusion matrices for the ensemle models on the \texttt{titleType} classification task.}
+    \caption{Confusion matrix and ROC Curve for Random Forest on the \texttt{titleType} classification task.}
     \label{fig:cm_comparison}
 \end{figure}
 Both models perform well on the first four classes, while struggling
@@ -556,37 +501,11 @@ AdaBoost spreads the importance evenly across multiple features,
 with the top being \texttt{runtimeMinutes} with around 15\%.
 
 
-The ROC curves for the two models are shown in Figure~\ref{fig:roc_rf} and
-Figure~\ref{fig:roc_ab}.
-\begin{figure}[h]
-    \centering
-    \begin{subfigure}[b]{0.45\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{plotsss/roc_rf_titletype}
-        \caption{ROC Curve - Random Forest}
-        \label{fig:roc_rf}
-    \end{subfigure}
-    \hfill
-    \begin{subfigure}[b]{0.45\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{plotsss/roc_boost_titletype}
-        \caption{ROC Curve - AdaBoost}
-        \label{fig:roc_ab}
-    \end{subfigure}
-    \caption{ROC curves for the ensemble models on the \texttt{titleType} classification task.}
-    \label{fig:roc_comparison}
-\end{figure}
-
-Again, similar performances are observed. The biggest difference
-seems to be found in the under-represented classes, which seem to
-have a bigger difference in Area Under The Curve (AUC).
-
-
 
 
 \subsection{Neural Networks}
 
-\begin{figure}
+\begin{figure}[H]
     \centering
     \begin{subfigure}[b]{0.48\textwidth}
         \centering
@@ -605,7 +524,7 @@ have a bigger difference in Area Under The Curve (AUC).
     \label{fig:nn_performance_rating}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[H]
     \centering
     \begin{subfigure}[b]{0.44\textwidth}
         \centering
@@ -621,13 +540,13 @@ have a bigger difference in Area Under The Curve (AUC).
         \label{fig:roc_nn_rating}
     \end{subfigure}
     \caption{Confusion Matrix and ROC Curve for the Neural Network on the \texttt{averageRating} classification task.}
-    \label{fig:cm_nn_rating}
+    \label{fig:cm_roc_nn}
 \end{figure}
 
 
 % titletype task
 
-\begin{figure}
+\begin{figure}[H]
     \centering
     \begin{subfigure}[b]{0.48\textwidth}
         \centering
@@ -648,7 +567,7 @@ have a bigger difference in Area Under The Curve (AUC).
 
 % conf matrix and roc titletype
 
-\begin{figure}
+\begin{figure}[H]
     \centering
     \begin{subfigure}[b]{0.44\textwidth}
         \centering
