@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1756827183.00609 "d:/BOOKS/UNIPI/Sem 2/Data Mining 2/Project/dm2_project/report/main.tex" "main.pdf" "main" 1756827186.1551 0
+["pdflatex"] 1756827580.83593 "d:/BOOKS/UNIPI/Sem 2/Data Mining 2/Project/dm2_project/report/main.tex" "main.pdf" "main" 1756827584.20842 0
   "C:/Users/tanya/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map" 1756481773 80909 eab91d9745dd2edfd62a31d53cd5fe15 ""
   "C:/Users/tanya/AppData/Local/MiKTeX/miktex/data/le/pdftex/pdflatex.fmt" 1756481081 13257295 6c038350787b62dacf39f9783194b7da ""
   "C:/Users/tanya/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-ec.enc" 1256929440 2375 baa924870cfb487815765f9094cf3728 ""
@@ -162,12 +162,12 @@
   "advanced_regression.tex" 1756656411 4195 8c7e9a515a6d0855438a2acd86da03c9 ""
   "cherubino_pant541.pdf" 1756656411 91616 e1fd79a3dd22f7bfbaae7134978d5d3f ""
   "d:/BOOKS/UNIPI/Sem 2/Data Mining 2/Project/dm2_project/report/main.tex" 1756656411 3314 22f1450452c14a4e4e3d767543fe55c3 ""
-  "imbalanced_learning.tex" 1756827174 10397 e4fb96e6736c75cb05eda99fc385a0ba ""
+  "imbalanced_learning.tex" 1756827576 10394 5a42d24468d7d02d23135892e34b8b92 ""
   "introduction.tex" 1756656411 382 1ad3af590d5a64b084364873483029f0 ""
-  "main.aux" 1756827185 14954 23266ea854fe1abcf4c4ddf9733c1b05 "pdflatex"
-  "main.out" 1756827185 2944 7457e7153d59cd188888aeded136f508 "pdflatex"
+  "main.aux" 1756827583 14944 a6eef8746841f459c4ee68bea014d66d "pdflatex"
+  "main.out" 1756827583 2934 100e307df716f33f20a9c6d2745ff110 "pdflatex"
   "main.tex" 1756656411 3314 22f1450452c14a4e4e3d767543fe55c3 ""
-  "main.toc" 1756827185 1618 11055cb775db3c1ed76498b05b47eea6 "pdflatex"
+  "main.toc" 1756827583 1608 624c4b0fe651cb6d299437bc8d393b8c "pdflatex"
   "outliers.tex" 1756827174 6477 719b36b52237b0e808f4a9510aba26d6 ""
   "plotsss/ABOD.png" 1756657140 515712 0532dac293364ba90f2b5932223e058c ""
   "plotsss/ISF.png" 1756657125 493346 1b20762f1cc51115da24641e680960ff ""

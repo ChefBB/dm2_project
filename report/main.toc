@@ -8,8 +8,8 @@
 \contentsline {section}{\numberline {3}Imbalanced Learning}{5}{section.3}%
 \contentsline {subsection}{\numberline {3.1}Oversampling}{6}{subsection.3.1}%
 \contentsline {subsection}{\numberline {3.2}Undersampling}{6}{subsection.3.2}%
-\contentsline {subsubsection}{\numberline {3.2.1}Decision Threshold}{7}{subsubsection.3.2.1}%
-\contentsline {subsection}{\numberline {3.3}Imbalanced Learning Conclusion}{7}{subsection.3.3}%
+\contentsline {subsection}{\numberline {3.3}Decision Threshold}{7}{subsection.3.3}%
+\contentsline {subsection}{\numberline {3.4}Imbalanced Learning Conclusion}{7}{subsection.3.4}%
 \contentsline {section}{\numberline {4}Advanced Classification}{7}{section.4}%
 \contentsline {subsection}{\numberline {4.1}Logistic Regression}{8}{subsection.4.1}%
 \contentsline {subsection}{\numberline {4.2}Support Vector Machines}{9}{subsection.4.2}%
