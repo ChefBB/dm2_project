@@ -353,25 +353,23 @@ However, even the balanced model struggled to capture the extremes of the rating
 
 
 \subsection{Ensemble methods}
-\begin{figure}[H]
+\begin{table}[H]
     \centering
     \begin{minipage}{0.55\textwidth}
         Boosting and Random Forest models were trained on the
         classification tasks, while being optimized via Stratified
         Randomized Search with 5-fold
         cross-validation over a predefined hyperparameter space.
-
         Table~\ref{tab:ensemble_param} shows the best
-        hyperparameters found for Random Forest and AdaBoost.
+        hyperparameters found for Random Forest and AdaBoost on the
+        \texttt{averageRating} task.\\
 
         For Random Forest, a relatively high maximum depth as well
         as low values for minimum samples per split and leaf
         indicate that the individual trees are quite complex.\\
 
         For AdaBoost, the learning rate is very low, leading to
-        slow, incremental
-        learning.
-        
+        slow, incremental learning.
         The base estimator is a decision tree with
         considerable depth and high minimum samples per split and
         leaf, indicating that each weak learner is relatively
@@ -384,13 +382,14 @@ However, even the balanced model struggled to capture the extremes of the rating
         \centering
         \begin{tabular}{lc}
         \hline
+        % Best parameters found for Random Forest: {'class_weight': None, 'criterion': 'gini', 'max_depth': 19, 'max_features': 0.9137428250443735, 'min_samples_leaf': 6, 'min_samples_split': 2, 'n_estimators': 97}
         \multicolumn{2}{c}{\textbf{Random Forest}} \\
         \hline
-        \texttt{n\_estimators} & 42 \\
+        \texttt{n\_estimators} & 97 \\
         \texttt{max\_depth} & 19 \\
-        \texttt{min\_samples\_split} & 4 \\
-        \texttt{min\_samples\_leaf} & 3 \\
-        \texttt{max\_features} & 0.74 \\
+        \texttt{min\_samples\_split} & 2 \\
+        \texttt{min\_samples\_leaf} & 6 \\
+        \texttt{max\_features} & 0.91 \\
         \texttt{criterion} & gini \\
         \texttt{class\_weight} & \texttt{None} \\
         \hline
@@ -406,7 +405,7 @@ However, even the balanced model struggled to capture the extremes of the rating
         \caption{Hyperparameters found for ensemble models.}
         \label{tab:ensemble_param}
     \end{minipage}
-\end{figure}
+\end{table}
 The two models use very different numbers of estimators,
 with Random Forest employing a much larger ensemble. This
 makes it so that the two models follow different strategies:
@@ -453,8 +452,6 @@ also shows that many of the misclassifications occur within
 adjacent classes, which is expected given the ordinal nature of
 the target variable.\\
 
-Figures~\ref{fig:cm_rf} and \ref{fig:roc_rf} show the confusion matrix and ROC curve
-for AdaBoost.
 \begin{figure}[H]
     \centering
     \begin{subfigure}[b]{0.44\textwidth}
@@ -468,21 +465,48 @@ for AdaBoost.
         \centering
         \includegraphics[width=\textwidth]{plotsss/roc_boost_rating.png}
         \caption{ROC Curve - AdaBoost}
-        \label{fig:roc_rf}
+        \label{fig:roc_rating}
     \end{subfigure}
     \caption{Confusion matrix and ROC Curve for AdaBoost on the \texttt{averageRating} classification task.}
     \label{fig:cm_roc_rating}
 \end{figure}
+Figure~\ref{fig:roc_rating} shows the ROC curve for AdaBoost.
+% Min AUC: 70
+AUCs are generally high, with the lowest ones being 0.70 and 0.72,
+although these correspond to the highest-represented classes.
+This suggests that the models are better at separating the
+extreme classes, while the more frequent
+intermediate ones are more difficult to distinguish.
 
 
+%-------------------------------------------------------------------------------
+% titleType ensemble
+%-------------------------------------------------------------------------------
 
-\begin{figure}[H]
+
+\begin{table}[H]
     \centering
     \begin{minipage}{0.55\textwidth}
-        \small
         Table \ref{tab:ensemble_param_titletype} shows the best hyperparameter
-        configurations found for Random Forest and AdaBoost.
-        The parameters are quite similar to the ones found for the
+        configurations found for Random Forest and AdaBoost on the
+        \texttt{titleType} task.\\
+
+        For Random Forest, the trees are quite deep and complex,
+        with low minimum samples per split and leaf.\\
+
+        For AdaBoost, the learning rate is very low, leading to
+        slow, incremental learning.
+        The base estimator is a decision tree with
+        considerable depth and higher minimum samples per split and
+        leaf than Random Forest's trees, indicating that each weak
+        learner is slightly less complex.\\
+
+        Again, the two models use a very different number of
+        estimators, with Random Forest employing a much larger
+        ensemble. For feature importances, both models assign
+        over half of the importance to \texttt{runtimeMinutes},
+        indicating a high dependence on this feature for
+        classification.
 
     \end{minipage}
     \hfill
@@ -513,12 +537,11 @@ for AdaBoost.
         \label{tab:ensemble_param_titletype}
     \end{minipage}
     
-\end{figure}
+\end{table}
 
-The table below summarizes the classification report for both models.
+Table~\ref{tab:classification_report} summarizes the classification report for both models.
 \begin{table}[H]
     \centering
-    \label{tab:classification_report}
     \begin{tabular}{lccccc}
     \hline
     \textbf{Model} & \textbf{Accuracy} & \textbf{Macro Precision} & \textbf{Macro Recall} & \textbf{Macro F1-score} \\
@@ -528,11 +551,20 @@ The table below summarizes the classification report for both models.
     \hline
     \end{tabular}
     \caption{Performances of the models on the \texttt{titleType} classification task.}
+    \label{tab:classification_report}
 \end{table}
 
 
-Figures~\ref{fig:cm_rf_titletype} and \ref{fig:roc_rf} show the confusion matrix and ROC curve
+Figures~\ref{fig:cm_rf_titletype} shows the confusion matrix
 for Random Forest.
+Consistently good performances can be observed across the most
+represented classes. \texttt{video} and \texttt{tvSpecial} are the
+classes that cause the most problems, since they are often
+misclassified as the more frequent classes. The class \texttt{movie}
+attracts most of these misclassifications, likely due to
+similar durations of the products in these categories.
+Likely due to the same reason, \texttt{video} is also often
+misclassified as \texttt{short}.\\
 
 \begin{figure}[H]
     \centering
@@ -552,16 +584,12 @@ for Random Forest.
     \caption{Confusion matrix and ROC Curve for Random Forest on the \texttt{titleType} classification task.}
     \label{fig:cm_comparison}
 \end{figure}
-Both models perform well on the first four classes, while struggling
-with /texttt{video} and /texttt{tvSpecial}, which are the most
-under-represented classes. In general, the two models show similar
-performances, with Random Forest generally outperforming AdaBoost
-by a slight margin.
-Contrary to the results, the models base their decisions
-on different feature importances: while Random Forest assigns over
-half of the importance to \texttt{runtimeMinutes},
-AdaBoost spreads the importance evenly across multiple features,
-with the top being \texttt{runtimeMinutes} with around 15\%.
+
+The ROC curve shows high AUCs for all classes, with the lowest ones
+being for the aformentioned less represented classes, both
+achieving 0.96. This indicates that the model is very good at
+maintaining a low false positive rate for these, while
+correctly identifying the more represented classes.
 
 
 
