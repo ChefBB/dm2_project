@@ -77,24 +77,29 @@ of the data distribution, reinforcing the importance of combining multiple appro
 comprehensive anomaly detection strategy. Therefore, we combined the results of all three methods to identify the common outliers.
 
 
-
-
-
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.7\textwidth]{plotsss/LOF.png} % path to your image
-    \caption{T-SNE visualization showing LOF outlier detection patterns.}
-    \label{fig:LOF}
+    \begin{subfigure}{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plotsss/LOF.png}
+        \caption{Local Outlier Factor}
+        \label{fig:LOF}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plotsss/ISF.png}
+        \caption{Isolation Forest}
+        \label{fig:ISF}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plotsss/ABOD.png}
+        \caption{Angle-Based Outlier Detection}
+        \label{fig:ABOD}
+    \end{subfigure}
+    \caption{Comparison of T-SNE visualizations for different outlier detection methods.}
+    \label{fig:outlier_methods}
 \end{figure}
-\begin{figure}[htbp]
-    \centering
-    \includegraphics[width=0.7\textwidth]{plotsss/ISF.png} % path to your image
-    \caption{T-SNE visualization showing IF outlier detection patterns.}
-    \label{fig:ISF}
-\end{figure}
-\begin{figure}[htbp]
-    \centering
-    \includegraphics[width=0.7\textwidth]{plotsss/ABOD.png} % path to your image
-    \caption{T-SNE visualization showing ABOD outlier detection patterns.}
-    \label{fig:ABOD}
-\end{figure}
+
