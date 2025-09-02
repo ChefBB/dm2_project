@@ -228,12 +228,14 @@ Both RBF and polynomial kernels reached approximately 0.90 test accuracy, substa
 The RBF kernel was selected as the reference non-linear model due to slightly more stable results and improved recall on the under-represented classes.
 
 
-ROC curves were used to evaluate class separability 
-%(Figure~\ref{fig:roc_four}),
-showing excellent separation for majority classes, although minority categories remained problematic. 
-???????????????????????????????????????????????????????????????
+% ROC curves were used to evaluate class separability 
+% %(Figure~\ref{fig:roc_four}),
+% showing excellent separation for majority classes, although minority categories remained problematic. 
+% ???????????????????????????????????????????????????????????????
+% ???????????????????????????????????????????????????????????????
+% ???????????????????????????????????????????????????????????????
 
-\textcolor{red}{I will change the text and explain the figures better.}
+% \textcolor{red}{I will change the text and explain the figures better.}
 
 To address class imbalance, the RBF kernel was retrained with \texttt{class\_weight=balanced}.
 This model reached a slightly lower overall accuracy of 0.84, 
@@ -270,36 +272,36 @@ RBF (balanced) & $C=10$, $\gamma=\text{scale}$, balanced & 0.84 & 0.65 \\
 \end{tabular}
 \end{table}
     
-% --- First figure: four ROC curves side by side ---
-\begin{figure}[h]
-    \centering
-    \begin{subfigure}[b]{0.24\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{plotsss/roc_linear.png}
-        \caption{Linear SVM}
-        \label{fig:roc_linear}
-    \end{subfigure}
-    \begin{subfigure}[b]{0.24\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{plotsss/roc_poly.png}
-        \caption{Polynomial kernel}
-        \label{fig:roc_poly}
-    \end{subfigure}
-    \begin{subfigure}[b]{0.24\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{plotsss/roc_sigmoid.png}
-        \caption{Sigmoid kernel}
-        \label{fig:roc_sigmoid}
-    \end{subfigure}
-    \begin{subfigure}[b]{0.24\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{plotsss/roc_rbf.png}
-        \caption{RBF kernel}
-        \label{fig:roc_rbf}
-    \end{subfigure}
-    \caption{...}  
-    \label{fig:roc_four}
-\end{figure}
+% % --- First figure: four ROC curves side by side ---
+% \begin{figure}[h]
+%     \centering
+%     \begin{subfigure}[b]{0.24\textwidth}
+%         \centering
+%         \includegraphics[width=\textwidth]{plotsss/roc_linear.png}
+%         \caption{Linear SVM}
+%         \label{fig:roc_linear}
+%     \end{subfigure}
+%     \begin{subfigure}[b]{0.24\textwidth}
+%         \centering
+%         \includegraphics[width=\textwidth]{plotsss/roc_poly.png}
+%         \caption{Polynomial kernel}
+%         \label{fig:roc_poly}
+%     \end{subfigure}
+%     \begin{subfigure}[b]{0.24\textwidth}
+%         \centering
+%         \includegraphics[width=\textwidth]{plotsss/roc_sigmoid.png}
+%         \caption{Sigmoid kernel}
+%         \label{fig:roc_sigmoid}
+%     \end{subfigure}
+%     \begin{subfigure}[b]{0.24\textwidth}
+%         \centering
+%         \includegraphics[width=\textwidth]{plotsss/roc_rbf.png}
+%         \caption{RBF kernel}
+%         \label{fig:roc_rbf}
+%     \end{subfigure}
+%     \caption{...}  
+%     \label{fig:roc_four}
+% \end{figure}
 
 % --- Second figure: confusion matrix and ROC for RBF balanced ---
 \begin{figure}[h]
