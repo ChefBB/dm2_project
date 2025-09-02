@@ -359,7 +359,8 @@ However, even the balanced model struggled to capture the extremes of the rating
         Boosting and Random Forest models were trained on the
         classification tasks, while being optimized via Stratified
         Randomized Search with 5-fold
-        cross-validation over a predefined hyperparameter space.
+        cross-validation over a predefined hyperparameter space.\\
+
         Table~\ref{tab:ensemble_param} shows the best
         hyperparameters found for Random Forest and AdaBoost on the
         \texttt{averageRating} task.\\
@@ -368,14 +369,9 @@ However, even the balanced model struggled to capture the extremes of the rating
         as low values for minimum samples per split and leaf
         indicate that the individual trees are quite complex.\\
 
-        For AdaBoost, the learning rate is very low, leading to
-        slow, incremental learning.
-        The base estimator is a decision tree with
-        considerable depth and high minimum samples per split and
-        leaf, indicating that each weak learner is relatively
-        complex and robust to overfitting. This configuration
-        allows AdaBoost to focus on correcting errors made by
-        these strong base learners.        
+        For AdaBoost, the base estimator is again characterized by
+        high complexity. The learning rate is moderate, leading to
+        reasonably fast learning.
     \end{minipage}
     \hfill
     \begin{minipage}{0.4\textwidth}
@@ -395,43 +391,45 @@ However, even the balanced model struggled to capture the extremes of the rating
         \hline
         \multicolumn{2}{c}{\textbf{AdaBoost}} \\
         \hline
-        \texttt{n\_estimators} & 3 \\
-        \texttt{learning\_rate} & 0.03 \\
-        \texttt{estimator\_\_max\_depth} & 14 \\
-        \texttt{estimator\_\_min\_samples\_split} & 18 \\
-        \texttt{estimator\_\_min\_samples\_leaf} & 10 \\
+        \texttt{n\_estimators} & 67 \\
+        \texttt{learning\_rate} & 0.45 \\
+        \texttt{estimator\_\_max\_depth} & 17 \\
+        \texttt{estimator\_\_min\_samples\_split} & 7 \\
+        \texttt{estimator\_\_min\_samples\_leaf} & 1 \\
         \hline
         \end{tabular}
         \caption{Hyperparameters found for ensemble models.}
         \label{tab:ensemble_param}
     \end{minipage}
 \end{table}
-The two models use very different numbers of estimators,
-with Random Forest employing a much larger ensemble. This
-makes it so that the two models follow different strategies:
-Random Forest relies on averaging many diverse trees to
-reduce variance, while AdaBoost focuses on sequentially
-improving a smaller number of strong learners.\\
+The two models use a different number of estimators,
+with Random Forest employing a larger ensemble.
+This is likely due to the fact that Random Forest builds
+trees independently, while AdaBoost adds weak learners
+sequentially, focusing on correcting previous errors.
 
-Another interesting difference between the two is how
-feature importances are distributed.
-In Random Forest, importance is spread across
-many features, with the top four most important ones
-accounting for 50\% of the total importance.
-These were \texttt{ratingCount}, \texttt{startYear}, \texttt{runtimeMinutes}
-and \texttt{deltaCredits}.
-In contrast, AdaBoost assings 50\% of the total importance to
-\texttt{runtimeMinuts} alone.
+Another interesting aspect is the distribution of feature importances.
+Both models assign most of the importance to the same set of features:
+\begin{itemize}
+    \item \texttt{ratingCount}
+    \item \texttt{startYear}
+    \item \texttt{runtimeMinutes}
+    \item \texttt{deltaCredits}
+\end{itemize}
+Random Forest assigns about 50\% of the total importance to these
+features, spreading it evenly among them.
+AdaBoost assigns about 75\%, 41 of which is
+attributed to \texttt{ratingCount} and \texttt{startYear}.
+
 
 
 Table~\ref{tab:report_ensemble} summarizes the
 classification report for both models.
-Although the accuracy of the two models is the same,
-AdaBoost outperforms Random Forest in the macro-averaged
-metrics, as well as the weighted ones (here not reported).
-This indicates that AdaBoost is better at handling the
-class imbalance in the dataset, achieving slightly higher precision
-and recall across all classes.
+Although the performances of the two models are similar,
+Random Forest outperforms AdaBoost in all metrics but Macro-averaged
+Precision. The weighted averaged metrics, here not reported,
+also give the edge to Random Forest.
+
 \begin{table}[H]
     \centering
     \begin{tabular}{lccccc}
@@ -439,7 +437,7 @@ and recall across all classes.
     \textbf{Model} & \textbf{Accuracy} & \textbf{Macro Precision} & \textbf{Macro Recall} & \textbf{Macro F1-score} \\
     \hline
     Random Forest & 0.45 & 0.47 & 0.35 & 0.37 \\
-    AdaBoost & 0.45 & 0.50 & 0.36 & 0.39 \\
+    AdaBoost & 0.43 & 0.49 & 0.33 & 0.35 \\
     \hline
     \end{tabular}
     \caption{Performances of the models on the \texttt{averageRating} classification task.}
@@ -447,27 +445,35 @@ and recall across all classes.
 \end{table}
 Performances of both models are limited, and the results show that
 the different classes are not well separated. This can be observed
-in the confusion matrix in figure~\ref{fig:cm_rf}. The matrix
-also shows that many of the misclassifications occur within
-adjacent classes, which is expected given the ordinal nature of
-the target variable.\\
+in Random Forest's confusion matrix in figure~\ref{fig:cm_rf}.
+The matrix also shows that many of the misclassifications occur
+within adjacent classes, which is expected given the ordinal
+nature of the target variable.
+In particular, a lot of confusion occurs between the most
+represented classes, \texttt{[6,7)}, \texttt{[7,8)} and
+\texttt{[8,9)}. This is likely due to the fact that these classes
+cover a wide variety of titles that perform similarly in terms
+of ratings. Additionally, as seen in graph~\ref{fig:rating_dist},
+Many of the titles have ratings that fall close to the
+boundaries between these classes, making it more difficult for the
+model to distinguish between them.
 
 \begin{figure}[H]
     \centering
     \begin{subfigure}[b]{0.44\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{plotsss/conf_matr_boost_rating.png}
-        \caption{Confusion Matrix - AdaBoost}
+        \includegraphics[width=\textwidth]{plotsss/conf_matr_rf_rating.png}
+        \caption{Confusion Matrix - Random Forest}
         \label{fig:cm_rf}
     \end{subfigure}
     \hfill
     \begin{subfigure}[b]{0.52\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{plotsss/roc_boost_rating.png}
-        \caption{ROC Curve - AdaBoost}
+        \includegraphics[width=\textwidth]{plotsss/roc_rf_rating.png}
+        \caption{ROC Curve - Random Forest}
         \label{fig:roc_rating}
     \end{subfigure}
-    \caption{Confusion matrix and ROC Curve for AdaBoost on the \texttt{averageRating} classification task.}
+    \caption{Confusion matrix and ROC Curve for Random Forest on the \texttt{averageRating} classification task.}
     \label{fig:cm_roc_rating}
 \end{figure}
 Figure~\ref{fig:roc_rating} shows the ROC curve for AdaBoost.
@@ -592,9 +598,46 @@ maintaining a low false positive rate for these, while
 correctly identifying the more represented classes.
 
 
-
-
 \subsection{Neural Networks}
+
+For both classification tasks, a feedforward neural network was
+implemented.\\
+
+% Input(shape=(X_train.shape[1],)),
+    % Dense(8, activation='relu'),
+    % Dense(16, activation='relu'),
+    % Dense(32, activation='relu'),
+    % Dense(64, activation='relu'),
+    % Dense(32, activation='relu'),
+    % Dropout(0.2),
+    % Dense(16, activation='relu'),
+    % Dense(8, activation='relu'),
+    % Dense(6, activation='softmax')
+For the \texttt{averageRating} task, the architecture consists of
+an input layer, six hidden layers with ReLU activation, forming a
+diamond shape (increasing and then decreasing number of neurons),
+a dropout layer (rate 0.2) to prevent overfitting, and an output
+layer with softmax activation for multi-class classification.\\
+The model was compiled with the Adam optimizer, categorical
+cross-entropy loss, and accuracy as the evaluation metric.
+No early stopping was used, in order to observe the full
+training dynamics. Training was set to last for 500 epochs, with a
+batch size of 64 and a validation split of 20\%.
+
+
+Figures~\ref{fig:loss_nn_rating} and~\ref{fig:accuracy_nn_rating}
+show the training and validation loss and accuracy over epochs.
+The training loss shows a steady decrease, while the validation loss
+stops improving after around 100 to 150 epochs.
+A similar trend is observed in the accuracy plot, although the
+end of the the rise can be found after around 200 epochs.
+Neither graph shows particular signs of overfitting, but
+the stagnation of the validation metrics suggests that the model
+could benefit from further regularization.
+Experiments were made with different dropout rates and configurations,
+as well as different training batch sizes and learning rates,
+in an attempt to improve generalizaiton, but this remained the
+best configuration found.\\
 
 \begin{figure}[H]
     \centering
@@ -635,7 +678,27 @@ correctly identifying the more represented classes.
 \end{figure}
 
 
+\begin{table}
+    \centering
+    \begin{tabular}{lccc}
+    \hline
+     & \textbf{Precision} & \textbf{Recall} & \textbf{F1-score}\\
+    \hline
+    \textbf{Macro avg}   & 0.39 & 0.29 & 0.29 \\
+    \textbf{Weighted avg}& 0.39 & 0.40 & 0.36 \\
+    \hline
+    \textbf{Accuracy}    & & & 0.40 \\
+    \hline
+    \end{tabular}
+    \caption{Classification performances for the neural network on the \texttt{averageRating} classification task.}
+    \label{tab:nn_report_rating}
+\end{table}
+
+
+% -------------------------------------------------------------------------------
 % titletype task
+% -------------------------------------------------------------------------------
+
 
 \begin{figure}[H]
     \centering

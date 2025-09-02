@@ -53,7 +53,7 @@ Of the initial categorical attributes, the following were removed:
 Table~\ref{tab:initial_features_numerical} lists the initial numerical features.
 
 
-\begin{table}[h]
+\begin{table}[H]
     \centering
     \begin{tabular}{|p{4cm}|p{9cm}|}
         \hline
@@ -91,6 +91,19 @@ non-Series titles, and having around 50\% of missing values for \textit{tvSeries
 \textit{tvMiniSeries};
     \item \texttt{numVotes}, as it had a very high correlation with \texttt{ratingCount};
 \end{itemize}
+
+
+Figure~\ref{fig:rating_dist} shows the distribution of the
+\texttt{averageRating} attribute.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{plotsss/rating_distrib.png}
+    \caption{Distribution of the \texttt{averageRating} attribute}
+    \label{fig:rating_dist}
+\end{figure}
+The distribution is Normal-like, with a peak around 7.
+This graph is particularly important because of the centrality
+of the feature in the classification and regression tasks.
 
 \subsection{Feature Engineering}
 \begin{itemize}
