@@ -46,7 +46,7 @@ between $10^{-3}$ and $10^2$), \texttt{penalty} (\texttt{l2} and \texttt{l1}), a
 \texttt{class\_weight} (\texttt{None} and \texttt{balanced}). The hyperparameter 
 search was performed using \texttt{f1\_macro} as the scoring metric to balance 
 performance across all classes. The best parameters selected by the search were 
-\textbf{C = 6.16}, \textbf{penalty = l1}, and \textbf{class\_weight = balanced}.
+\textbf{C = 2.95}, \textbf{penalty = l1}, and \textbf{class\_weight = balanced}.
 
 For computational efficiency, the search was conducted on a 10\% stratified sample 
 of the dataset, which was approximately representative of the original class distribution. The final 
@@ -58,21 +58,21 @@ Figure~\ref{fig:log_roc_curves_t}.
 
 \begin{figure}[ht]
     \centering
-    \begin{minipage}{0.45\textwidth} % tabella a sinistra, 45% larghezza
+    \begin{minipage}{0.45\textwidth} 
     \centering
     \captionof{table}{Classification report for \texttt{titleType}}
     \label{tab:logistic_report_t}
-    \small % riduce leggermente la dimensione del testo
+    \small 
     \begin{tabular}{lccc}
     \hline
     \textbf{Class} & \textbf{Precision} & \textbf{Recall} & \textbf{F1-score}\\
     \hline
-    tvEpisode  & 0.89 & 0.88 & 0.89  \\
-    movie      & 0.92 & 0.64 & 0.76  \\
-    short      & 0.75 & 0.87 & 0.81  \\
-    tvSeries   & 0.51 & 0.35 & 0.41  \\
-    video      & 0.20 & 0.48 & 0.28  \\
-    tvSpecial  & 0.07 & 0.49 & 0.11  \\
+    tvEpisode  & 0.90 & 0.88 & 0.89  \\
+    movie      & 0.92 & 0.65 & 0.76  \\
+    short      & 0.74 & 0.87 & 0.80  \\
+    tvSeries   & 0.50 & 0.35 & 0.41  \\
+    video      & 0.21 & 0.47 & 0.29  \\
+    tvSpecial  & 0.07 & 0.52 & 0.12  \\
     \hline
     \textbf{Accuracy}    & \multicolumn{3}{c}{0.75} \\
     \textbf{Macro avg}   & 0.56 & 0.62 & 0.54  \\
@@ -92,7 +92,7 @@ Figure~\ref{fig:log_roc_curves_t}.
 
 From the results, we observe that the model achieves high performance for the 
 \texttt{movie}, \texttt{short}, and \texttt{tvEpisode} classes, with F1-scores of 0.76, 
-0.81, and 0.89, respectively. The model performs less well on \texttt{tvSeries}, 
+0.80, and 0.89, respectively. The model performs less well on \texttt{tvSeries}, 
 \texttt{tvSpecial}, and \texttt{video}, likely due to lower support in the dataset.
 Overall, the model reaches an accuracy of 0.75, 
 a macro-average F1 of 0.54, and a weighted F1 of 0.78. These results highlight that 
@@ -147,14 +147,13 @@ Overall, the model shows limited predictive ability
 The extreme intervals, \texttt{[1,5)} and \texttt{[9,10)}, are detected with relatively high recall 
 (0.44 and 0.57), but their low precision yields modest F1-scores. 
 In contrast, the central ranges, which dominate the distribution, prove more difficult to classify: 
-\texttt{[6,7)} reaches only 0.13 in F1, while \texttt{[7,8)} performs slightly better at 0.40. 
+\texttt{[6,7)} reaches only 0.13 in F1, while \texttt{[7,8)} performs better at 0.40. 
 
 Regarding ROC curves: discrimination is stronger for the extreme categories 
 (AUCs of 0.75 and 0.76), whereas separability is weaker in the central intervals 
 (\texttt{[6,7)}: 0.60, \texttt{[7,8)}: 0.64). 
-This suggests that Logistic Regression tends to identify outlier ratings more effectively, 
-while struggling to capture subtle differences in the middle of the rating scale.
-
+This suggests that Logistic Regression tends to distinguishing the most polarized cases,
+while it struggles to capture subtle differences in the middle of the rating scale.
  
 
 \begin{figure}[ht]
@@ -216,10 +215,13 @@ indicating that a linear decision boundary is insufficient for this problem.
 Non-linear kernels were then evaluated. 
 A grid search was first performed on a stratified 10\% subset of the training set to efficiently explore a wide range of hyperparameters for each kernel, 
 since a full search on the complete dataset would have been computationally prohibitive. 
-For the RBF kernel, $C$ was varied from 0.01 to 1000 and $\gamma$ between \texttt{scale} and \texttt{auto}. 
-The polynomial kernel was tested with $C$ from 0.01 to 100, degree 2--4, $\gamma$ as \texttt{scale} or \texttt{auto}, and \texttt{coef0} 0 or 1. 
-The sigmoid kernel was explored over $C$ 0.01--100, $\gamma$ \texttt{scale}/\texttt{auto}, and \texttt{coef0} 0 or 1. 
-\textcolor{blue}{Remember to fix C!}
+All kernels were tested with $C$ ranging from 0.01 to 100 and $\gamma$ set to \texttt{scale} or \texttt{auto}.
+For the polynomial kernel, the degree was varied between 2 and 4 and \texttt{coef0} set to 0 or 1.
+For the sigmoid kernel, \texttt{coef0} was also explored at 0 and 1.
+% $C$ was varied from 0.01 to 100 for all kernels.
+% For the RBF kernel, $\gamma$ was set to \texttt{scale} or \texttt{auto}.
+% The polynomial kernel was tested with degrees 2, 3 and 4, $\gamma$ as \texttt{scale} or \texttt{auto}, and \texttt{coef0} 0 or 1.
+% The sigmoid kernel was explored with $\gamma$ \texttt{scale}/\texttt{auto} and \texttt{coef0} 0 or 1.
 
 The best configuration for each kernel, reported in Table~\ref{tab:svm_results}, was then retrained on the full dataset and evaluated on the test set. 
 Both RBF and polynomial kernels reached approximately 0.90 test accuracy, substantially outperforming the linear baseline and sigmoid. 
@@ -229,18 +231,23 @@ The RBF kernel was selected as the reference non-linear model due to slightly mo
 ROC curves were used to evaluate class separability 
 %(Figure~\ref{fig:roc_four}),
 showing excellent separation for majority classes, although minority categories remained problematic. 
+???????????????????????????????????????????????????????????????
 
 \textcolor{red}{I will change the text and explain the figures better.}
 
-To address class imbalance, the RBF kernel was retrained with \texttt{class\_weight=balanced}, 
-which penalizes misclassification of under-represented classes. 
+To address class imbalance, the RBF kernel was retrained with \texttt{class\_weight=balanced}.
 This model reached a slightly lower overall accuracy of 0.84, 
 but recall for \textit{tvSpecial} and \textit{video} improved, providing a more equitable classification across categories.  
-Confusion matrices (Figure~\ref{fig:rbf_balanced_two}) 
-illustrate that \textit{tvSpecial} and \textit{video} ...  
-Analysis of the support vectors confirmed this effect. 
+% Confusion matrices (Figure~\ref{fig:rbf_balanced_two}) 
+% illustrate that \textit{tvSpecial} and \textit{video} ... 
+The corresponding ROC curves (Figure~\ref{fig:rbf_balanced_two}b) show high separability for all classes, 
+with AUC values of 0.99 for \textit{movie}, \textit{short}, and \textit{tvEpisode}, and 0.95 for \textit{tvSeries}, 
+\textit{tvSpecial}, and \textit{video}, confirming that the balanced model achieves good discrimination 
+for the minority categories too. 
+
+Then an analysis of the support vectors was conducted.
 In the unbalanced RBF, nearly all points of minority classes became support vectors, 
-while in the balanced model the total number of support vectors increased and was more evenly distributed across classes, 
+while in the balanced model the total number of support vectors increased but was more evenly distributed across classes, 
 indicating a more complex but fairer decision function. 
 
 Table~\ref{tab:svm_results} summarizes the main results, including the parameters used for each kernel and the corresponding test performance. 
@@ -351,7 +358,7 @@ This increased recall on minority classes, at the cost of a slight drop in overa
 producing a fairer but more complex decision function.
 However, even the balanced model struggled to capture the extremes of the rating distribution.
 
-
+%------------------------------
 \subsection{Ensemble methods}
 \begin{table}[H]
     \centering
