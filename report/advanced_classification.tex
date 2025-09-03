@@ -3,7 +3,7 @@
 
 In this section, classification results are showcased for two
 target variables: \texttt{averageRating} (properly binned into
-5 classes), and \texttt{titleType} (with 6 classes).
+6 classes), and \texttt{titleType} (with 6 classes).
 
 \textcolor{red}{We then applied multiple classification models using the data as preprocessed previously (see Section~\ref{sec:understanding_preparation}).}   
 \textcolor{blue}{The first target variable is \texttt{titleType}, which includes six categories: 
@@ -744,6 +744,177 @@ best configuration found.\\
     \label{fig:cm_nn_titletype}
 \end{figure}
 
+\subsection{Gradient Boosting Machines}
+Next, we applied a \texttt{Gradient Boosting Machine (GBM)} to evaluate its ability to classify the \texttt{titleType} and \texttt{rating\_bin} variable. 
+\texttt{GBM} is an ensemble method that builds a series of decision trees sequentially, where each tree attempts to correct 
+the errors of its predecessor. Unlike \texttt{Random Forest}, which builds trees independently and averages their predictions, 
+\texttt{GBM} focuses on minimizing the loss function through gradient descent, making it highly adaptive to complex patterns in the data.
+The baseline accuracy to predict \texttt{titleType} was found out to be 0.94, while for \texttt{rating\_bin} it was 0.40.
+For both tasks, we sampled the data to 10\% of the training set to perform hyperparameter tuning, 
+due to the high computational cost of training GBM models on large datasets.
+The hyperparameter tuning was performed using \texttt{RandomizedSearchCV} with 5-fold stratified cross-validation.
+Table \ref{tab:GBM_param} shows the best parameters found for the \texttt{titleType} and \texttt{rating\_bin}.
+\begin{table}[H]
+    \centering
+    \begin{minipage}{0.4\textwidth}
+        \centering
+        \begin{tabular}{lc}
+        \hline
+        \multicolumn{2}{c}{\textbf{titleType}} \\
+        \hline
+        \texttt{subsample} & 0.8 \\
+        \texttt{n\_estimators} & 500 \\
+        \texttt{max\_depth} & 6 \\
+        \texttt{min\_samples\_split} & 10 \\
+        \texttt{min\_samples\_leaf} & 1 \\
+        \texttt{max\_features} & None \\
+        \texttt{learning\_rate} & 0.1 \\
+        \hline
+        \multicolumn{2}{c}{\textbf{rating\_bin}} \\
+        \hline
+        \texttt{subsample} & 0.6 \\
+        \texttt{n\_estimators} & 400 \\
+        \texttt{max\_depth} & 5 \\
+        \texttt{min\_samples\_split} & 10 \\
+        \texttt{min\_samples\_leaf} & 2 \\
+        \texttt{max\_features} & sqrt \\
+        \texttt{learning\_rate} & 0.05 \\
+        \hline
+        \end{tabular}
+        \caption{Hyperparameter search space for GBM.}
+        \label{tab:GBM_param}
+    \end{minipage}
+    
+\end{table}
+
+% \begin{center}
+%     'subsample': 0.8, 'n\_estimators': 500, 'min\_samples\_split': 10, 'min\_samples\_leaf': 1, 'max\_features': None, 'max\_depth': 6, 'learning\_rate': 0.1
+% \end{center}
+% The best parameters found for the \texttt{rating\_bin} task were:
+% \begin{center}
+%     'subsample': 0.6, 'n\_estimators': 400, 'min\_samples\_split': 10, 'min\_samples\_leaf': 2, 'max\_features': 'sqrt', 'max\_depth': 5, 'learning\_rate': 0.05
+% \end{center}
+
+\begin{figure}[ht]
+    \centering
+    \begin{minipage}{0.45\textwidth} 
+    \centering
+    \captionof{table}{Classification report for \texttt{titleType}}
+    \label{tab:GBM_report_t}
+    \small 
+    \begin{tabular}{lccc}
+    \hline
+    \textbf{Class} & \textbf{Precision} & \textbf{Recall} & \textbf{F1-score}\\
+    \hline
+    tvEpisode  & 0.94 & 0.97 & 0.96  \\
+    movie      & 0.95 & 0.98 & 0.97  \\
+    short      & 0.98 & 0.98 & 0.98  \\
+    tvSeries   & 0.94 & 0.97 & 0.96  \\
+    video      & 0.77 & 0.45 & 0.57  \\
+    tvSpecial  & 0.79 & 0.55 & 0.65  \\
+    \hline
+    \textbf{Accuracy}    & \multicolumn{3}{c}{0.96} \\
+    \textbf{Macro avg}   & 0.90 & 0.82 & 0.85  \\
+    \textbf{Weighted avg}& 0.96 & 0.96 & 0.96  \\
+    \hline
+    \end{tabular}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.4\textwidth} 
+    \centering
+    \includegraphics[width=\textwidth]{plotsss/GBM_confusion_title.png} 
+    \captionof{figure}{Confusion Gradient Boosting Machine}
+    \label{fig:GBM_confusion_title} 
+    \end{minipage}
+    \begin{minipage}{0.4\textwidth} 
+    \centering
+    \includegraphics[width=\textwidth]{plotsss/GBM_ROC_title.png} 
+    \captionof{figure}{ROC Gradient Boosting Machine}
+    \label{fig:GBM_ROC_title} 
+    \end{minipage}
+
+    \end{figure}
+
+From the table \ref{tab:GBM_report_t}, we can see that GBM performs very well on the \texttt{titleType} task, achieving an accuracy of 0.96.
+The confusion matrix (Figure~\ref{fig:GBM_confusion_title}) shows that the model is able to correctly classify most of the classes, 
+with only a few misclassifications recorded for the less represented classes \texttt{video} and \texttt{tvSpecial}.
+The ROC curves (Figure~\ref{fig:GBM_ROC_title}) also show high AUC values for all classes, 
+indicating that the model is able to separate the classes well.
+The differences in ROC curve suggest that the model is more effective at distinguishing structured and well-documented 
+categories such as \textit{tvEpisode}, \textit{tvSeries}, and \textit{movie}, 
+To further investigate, we examined feature importance and found that \texttt{runtimeMinutes}, \texttt{numRegions}, 
+and \texttt{directorCredits} were among the most influential features. 
+Titles with longer runtimes and broader regional distribution were more likely to be classified as \textit{movies} or \textit{tvSeries}, 
+while shorter or regionally limited titles tended to fall into categories like \textit{short} or \textit{video}. 
+The number of director credits also served as a proxy for production quality and documentation, 
+helping the model differentiate between professionally produced content and less formal formats. 
+Interestingly, the \textit{Europe} feature emerged as a strong predictor, 
+possibly due to cultural or market-specific trends in title type distribution. 
+
+
+\begin{figure}[ht]
+    \centering
+    \begin{minipage}{0.45\textwidth} 
+    \centering
+    \captionof{table}{Classification report for \texttt{titleType}}
+    \label{tab:GBM_report_r}
+    \small 
+    \begin{tabular}{lccc}
+    \hline
+    \textbf{Class} & \textbf{Precision} & \textbf{Recall} & \textbf{F1-score}\\
+    \hline
+    0  & 0.49 & 0.38 & 0.43  \\
+    1      & 0.37 & 0.26 & 0.31  \\
+    2      & 0.41 & 0.39 & 0.40  \\
+    3   & 0.47 & 0.67 & 0.56  \\
+    4      & 0.43 & 0.30 & 0.35  \\
+    5  & 0.44 & 0.22 & 0.29  \\
+    \hline
+    \textbf{Accuracy}    & \multicolumn{3}{c}{0.44} \\
+    \textbf{Macro avg}   & 0.44 & 0.37 & 0.39  \\
+    \textbf{Weighted avg}& 0.44 & 0.44 & 0.43  \\
+    \hline
+    \end{tabular}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.4\textwidth} 
+    \centering
+    \includegraphics[width=\textwidth]{plotsss/GBM_confusion_rating.png} 
+    \captionof{figure}{Confusion Matrix Gradient Boosting Machine}
+    \label{fig:GBM_confusion_rating} 
+    \end{minipage}
+    \begin{minipage}{0.4\textwidth} 
+    \centering
+    \includegraphics[width=\textwidth]{plotsss/GBM_ROC_rating.png} 
+    \captionof{figure}{ROC Gradient Boosting Machine}
+    \label{fig:GBM_ROC_rating} 
+    \end{minipage}
+
+    \end{figure}
+
+From the table \ref{tab:GBM_report_r}, it is evident that the Gradient Boosting Machine performs moderately on the 
+\texttt{rating\_bin} classification task, achieving an overall accuracy of 0.44. While this is less than 50\%, 
+considering that the task involves six classes, the model exceeds the baseline accuracy of 1/6, indicating that it is 
+capturing some underlying patterns in the data. Examination of the confusion matrix (Figure~\ref{fig:GBM_confusion_rating}) 
+reveals that the model correctly classifies rating class 3 more reliably than others, while classes 2 and 4 are often misclassified 
+as 3, and classes 0, 1, and 5 exhibit similar tendencies. A noteworthy observation is that misclassifications tend to 
+occur between neighboring classes, whereas classes that are further apart, such as 0 and 5, are rarely confused. 
+This suggests that the model is not producing random predictions, but rather that the proximity and overlap of 
+class distributions present inherent challenges in distinguishing closely spaced ratings.
+
+The ROC curves (Figure~\ref{fig:GBM_ROC_rating}) reinforce this observation, 
+showing relatively low AUC values of approximately 0.54 for all classes, which indicates limited 
+separability among the rating bins. Compared to tasks such as \textit{titleType}, the model struggles to distinguish \textit{rating\_bin}, 
+likely due to the continuous and overlapping nature of ratings as opposed to the more discrete and structured categories of title types. 
+Feature importance analysis provides additional insight: \textit{ratingCount} emerges as the strongest predictor, 
+which is intuitive since titles with higher ratings are more likely to be correctly classified. 
+\textit{StartYear} appears influential, potentially reflecting temporal trends in ratings, 
+while \textit{runtimeMinutes} indicates that longer titles tend to receive higher ratings. 
+Other features such as \textit{totalCredits}, \textit{castNumber}, \textit{totalMedia}, and \textit{tvEpisode} also contribute significantly, 
+with \textit{tvEpisode} being more impactful than other TV formats like \textit{tvMiniseries}, \textit{tvSpecial}, or \textit{tvShort}, 
+possibly due to greater representation in the dataset.
+Overall, the results suggest that while the model captures broad patterns such as the tendency for longer or more regionally distributed titles to receive higher ratings, 
+it struggles with fine-grained distinctions between closely spaced rating bins. 
 
 
 
