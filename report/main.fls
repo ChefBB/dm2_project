@@ -412,6 +412,9 @@ INPUT ./plotsss/rf_top18_actual_vs_predicted.png
 INPUT ./plotsss/rf_top18_actual_vs_predicted.png
 INPUT ./plotsss/rf_top18_actual_vs_predicted.png
 INPUT ./plotsss/rf_top18_actual_vs_predicted.png
+INPUT ./ts.tex
+INPUT ./ts.tex
+INPUT ts.tex
 INPUT main.aux
 INPUT ./main.out
 INPUT ./main.out

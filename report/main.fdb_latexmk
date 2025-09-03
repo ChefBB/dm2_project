@@ -1,6 +1,6 @@
 # Fdb version 4
-["pdflatex"] 1756858817.6797 "/Users/chiaraferrara/Desktop/Unipi/Magistrale/DM 2/dm2_project/report/main.tex" "main.pdf" "main" 1756858819.55932 0
-  "/Users/chiaraferrara/Desktop/Unipi/Magistrale/DM 2/dm2_project/report/main.tex" 1756107604.12778 3190 22f1450452c14a4e4e3d767543fe55c3 ""
+["pdflatex"] 1756885008.21173 "/Users/chiaraferrara/Desktop/Unipi/Magistrale/DM 2/dm2_project/report/main.tex" "main.pdf" "main" 1756885010.06924 0
+  "/Users/chiaraferrara/Desktop/Unipi/Magistrale/DM 2/dm2_project/report/main.tex" 1756885007.95063 3206 6d68b59c071961050c3ee2c0765dadc7 ""
   "/usr/local/texlive/2025basic/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc" 1254269338 2375 baa924870cfb487815765f9094cf3728 ""
   "/usr/local/texlive/2025basic/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc" 1202520719 2405 5dcf2c1b967ee25cc46c58cd52244aed ""
   "/usr/local/texlive/2025basic/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc" 1202520719 2840 216e6e45ad352e2456e1149f28885bee ""
@@ -165,10 +165,10 @@
   "cherubino_pant541.pdf" 1746482473.44328 91616 7b7710d7bb6492a9499117b6fe225974 ""
   "imbalanced_learning.tex" 1756846038.30622 10274 5a42d24468d7d02d23135892e34b8b92 ""
   "introduction.tex" 1749820197.97972 373 1ad3af590d5a64b084364873483029f0 ""
-  "main.aux" 1756858819.43619 14178 d228551fbb223a4e4588848e87cd6216 "pdflatex"
-  "main.out" 1756858819.43791 2934 100e307df716f33f20a9c6d2745ff110 "pdflatex"
-  "main.tex" 1756107604.12778 3190 22f1450452c14a4e4e3d767543fe55c3 ""
-  "main.toc" 1756858819.43819 1608 e525fcca2ad64fd35301925a071bdcc7 "pdflatex"
+  "main.aux" 1756885009.94886 14178 d228551fbb223a4e4588848e87cd6216 "pdflatex"
+  "main.out" 1756885009.95034 2934 100e307df716f33f20a9c6d2745ff110 "pdflatex"
+  "main.tex" 1756885007.95063 3206 6d68b59c071961050c3ee2c0765dadc7 ""
+  "main.toc" 1756885009.95055 1608 e525fcca2ad64fd35301925a071bdcc7 "pdflatex"
   "outliers.tex" 1756846038.33444 6372 719b36b52237b0e808f4a9510aba26d6 ""
   "plotsss/ABOD.png" 1756750275.97314 515712 ece55f75b22e1a45577e9ec0af53b8b2 ""
   "plotsss/ISF.png" 1756750275.97674 493346 372cdae09db107764e84a73a0acfa80c ""
@@ -191,6 +191,7 @@
   "plotsss/roc_nn_titletype.png" 1756750275.99624 63485 b8cca07f66ae0d3740ee6fa79ed01237 ""
   "plotsss/roc_rf_rating.png" 1756750275.99729 77287 cf50d20b5c95185be23ce842dae04f7a ""
   "plotsss/roc_rf_titletype.png" 1756750275.99822 62065 4f2d16bb03c395edb1027e54e547df75 ""
+  "ts.tex" 1756884986.93221 0 d41d8cd98f00b204e9800998ecf8427e ""
   "understanding_preparation.tex" 1756846038.33914 7632 303ce5e14ac889017df56830dc545193 ""
   (generated)
   "main.aux"
