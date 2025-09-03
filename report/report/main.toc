@@ -1,0 +1,29 @@
+\babel@toc {english}{}\relax 
+\contentsline {section}{\numberline {1}Data Understanding and Preparation}{2}{section.1}%
+\contentsline {subsection}{\numberline {1.1}Feature Engineering}{3}{subsection.1.1}%
+\contentsline {section}{\numberline {2}Outliers}{4}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Finding Baseline}{4}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Finding Threshold}{4}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.3}Outlier Detection Conclusion}{5}{subsection.2.3}%
+\contentsline {section}{\numberline {3}Imbalanced Learning}{5}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Oversampling}{6}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Undersampling}{6}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}Decision Threshold}{7}{subsection.3.3}%
+\contentsline {subsection}{\numberline {3.4}Imbalanced Learning Conclusion}{7}{subsection.3.4}%
+\contentsline {section}{\numberline {4}Advanced Classification}{7}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Logistic Regression}{8}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Support Vector Machines}{9}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}Ensemble methods}{11}{subsection.4.3}%
+\contentsline {subsection}{\numberline {4.4}Neural Networks}{13}{subsection.4.4}%
+\contentsline {subsection}{\numberline {4.5}Gradient Boosting Machines}{15}{subsection.4.5}%
+\contentsline {subsection}{\numberline {4.6}Model Comparison}{18}{subsection.4.6}%
+\contentsline {subsection}{\numberline {4.7}Explainable AI}{18}{subsection.4.7}%
+\contentsline {subsubsection}{\numberline {4.7.1}titleType}{18}{subsubsection.4.7.1}%
+\contentsline {subsubsection}{\numberline {4.7.2}averageRating}{19}{subsubsection.4.7.2}%
+\contentsline {section}{\numberline {5}Advanced Regression}{20}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Random Forest Regression}{20}{subsection.5.1}%
+\contentsline {section}{\numberline {6}Time Series Analysis}{21}{section.6}%
+\contentsline {subsection}{\numberline {6.1}Data Understanding}{21}{subsection.6.1}%
+\contentsline {subsection}{\numberline {6.2}Motifs and Anomalies Discovery}{22}{subsection.6.2}%
+\contentsline {subsection}{\numberline {6.3}Clustering}{22}{subsection.6.3}%
+\contentsline {subsection}{\numberline {6.4}Classification}{22}{subsection.6.4}%

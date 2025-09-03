@@ -1,10 +1,10 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.4) (preloaded format=pdflatex 2025.8.29)  3 SEP 2025 21:18
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.4) (preloaded format=pdflatex 2025.8.29)  3 SEP 2025 22:41
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**"d:/BOOKS/UNIPI/Sem 2/Data Mining 2/Project/dm2_project/report/main.tex"
-(d:/BOOKS/UNIPI/Sem 2/Data Mining 2/Project/dm2_project/report/main.tex
+**"d:/BOOKS/UNIPI/Sem 2/Data Mining 2/Project/Bruno NN SHAP/report/report/main.tex"
+(d:/BOOKS/UNIPI/Sem 2/Data Mining 2/Project/Bruno NN SHAP/report/report/main.tex
 LaTeX2e <2025-06-01> patch level 1
 L3 programming layer <2025-07-20>
 (C:\Users\tanya\AppData\Local\Programs\MiKTeX\tex/latex/base\article.cls
@@ -525,8 +525,11 @@ File: t1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 ) (C:\Users\tanya\AppData\Local\Programs\MiKTeX\tex/latex/l3backend\l3backend-pdftex.def
 File: l3backend-pdftex.def 2025-06-09 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count361
+) (main.aux
+
+LaTeX Warning: Label `fig:cm_nn_titletype' multiply defined.
+
 )
-No file main.aux.
 \openout1 = `main.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 75.
@@ -547,7 +550,7 @@ LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 75.
 LaTeX Font Info:    ... okay on input line 75.
 LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 75.
 LaTeX Font Info:    ... okay on input line 75.
-(C:\Users\tanya\AppData\Local\Programs\MiKTeX\tex/context/base/mkii\supp-pdf.mkii
+ (C:\Users\tanya\AppData\Local\Programs\MiKTeX\tex/context/base/mkii\supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count362
 \scratchdimen=\dimen268
@@ -577,6 +580,7 @@ Package: ltcaption 2021/01/08 v1.4c longtable captions (AR)
 Package caption Info: wrapfig package is loaded.
 Package caption Info: End \AtBeginDocument code.
 Package hyperref Info: Link coloring OFF on input line 75.
+ (main.out) (main.out)
 \@outlinefile=\write3
 \openout3 = `main.out'.
 
@@ -620,7 +624,7 @@ Package hyperref Info: Link coloring OFF on input line 75.
 File: translations-basic-dictionary-english.trsl (english translation file `translations-basic-dictionary')
 )
 Package translations Info: loading dictionary `translations-basic-dictionary' for `english'. on input line 75.
-<cherubino_pant541.pdf, id=3, 288.07625pt x 294.09875pt>
+<cherubino_pant541.pdf, id=115, 288.07625pt x 294.09875pt>
 File: cherubino_pant541.pdf Graphic file (type pdf)
 <use cherubino_pant541.pdf>
 Package pdftex.def Info: cherubino_pant541.pdf  used on input line 81.
@@ -629,8 +633,37 @@ Package pdftex.def Info: cherubino_pant541.pdf  used on input line 81.
 
 [0
 
-{C:/Users/tanya/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}{C:/Users/tanya/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-ec.enc} <./cherubino_pant541.pdf>]
-No file main.toc.
+{C:/Users/tanya/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}{C:/Users/tanya/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-ec.enc} <./cherubino_pant541.pdf>] (main.toc
+LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 3.
+ (C:\Users\tanya\AppData\Local\Programs\MiKTeX\tex/latex/lm\ot1lmr.fd
+File: ot1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+)
+LaTeX Font Info:    Trying to load font information for OML+lmm on input line 3.
+ (C:\Users\tanya\AppData\Local\Programs\MiKTeX\tex/latex/lm\omllmm.fd
+File: omllmm.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+)
+LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 3.
+ (C:\Users\tanya\AppData\Local\Programs\MiKTeX\tex/latex/lm\omslmsy.fd
+File: omslmsy.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+)
+LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 3.
+ (C:\Users\tanya\AppData\Local\Programs\MiKTeX\tex/latex/lm\omxlmex.fd
+File: omxlmex.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+)
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <10> on input line 3.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <7> on input line 3.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <5> on input line 3.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 3.
+ (C:\Users\tanya\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsa.fd
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+LaTeX Font Info:    Trying to load font information for U+msb on input line 3.
+ (C:\Users\tanya\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsb.fd
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+))
 \tf@toc=\write4
 \openout4 = `main.toc'.
 
@@ -641,47 +674,10 @@ LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 5.
  (C:\Users\tanya\AppData\Local\Programs\MiKTeX\tex/latex/lm\t1lmtt.fd
 File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )) (understanding_preparation.tex
-
-LaTeX Warning: Reference `tab:initial_categorical_features' on page 2 undefined on input line 4.
-
-LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 8.
-(C:\Users\tanya\AppData\Local\Programs\MiKTeX\tex/latex/lm\ot1lmr.fd
-File: ot1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
-)
-LaTeX Font Info:    Trying to load font information for OML+lmm on input line 8.
- (C:\Users\tanya\AppData\Local\Programs\MiKTeX\tex/latex/lm\omllmm.fd
-File: omllmm.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
-)
-LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 8.
- (C:\Users\tanya\AppData\Local\Programs\MiKTeX\tex/latex/lm\omslmsy.fd
-File: omslmsy.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
-)
-LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 8.
- (C:\Users\tanya\AppData\Local\Programs\MiKTeX\tex/latex/lm\omxlmex.fd
-File: omxlmex.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
-)
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 8.
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 8.
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5> on input line 8.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 8.
- (C:\Users\tanya\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsa.fd
-File: umsa.fd 2013/01/14 v3.01 AMS symbols A
-)
-LaTeX Font Info:    Trying to load font information for U+msb on input line 8.
- (C:\Users\tanya\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsb.fd
-File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-)
 LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 34.
  (C:\Users\tanya\AppData\Local\Programs\MiKTeX\tex/latex/lm\ts1lmr.fd
 File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-
-LaTeX Warning: Reference `tab:initial_features_numerical' on page 2 undefined on input line 50.
-
-
 
 [2
 
@@ -689,127 +685,74 @@ LaTeX Warning: Reference `tab:initial_features_numerical' on page 2 undefined on
 
 LaTeX Warning: Reference `fig:skewness' on page 3 undefined on input line 91.
 
-<plotsss/distribution-2.png, id=33, 1144.0341pt x 698.1282pt>
-File: plotsss/distribution-2.png Graphic file (type png)
-<use plotsss/distribution-2.png>
-Package pdftex.def Info: plotsss/distribution-2.png  used on input line 96.
-(pdftex.def)             Requested size: 290.22107pt x 177.09888pt.
-
-LaTeX Warning: Reference `fig:rating_dist' on page 3 undefined on input line 100.
-
-<plotsss/rating_distrib.png, id=35, 403.2666pt x 284.0211pt>
+<plotsss/rating_distrib.png, id=176, 403.2666pt x 284.0211pt>
 File: plotsss/rating_distrib.png Graphic file (type png)
 <use plotsss/rating_distrib.png>
-Package pdftex.def Info: plotsss/rating_distrib.png  used on input line 104.
+Package pdftex.def Info: plotsss/rating_distrib.png  used on input line 99.
 (pdftex.def)             Requested size: 290.22107pt x 204.40836pt.
 
-Underfull \hbox (badness 5504) in paragraph at lines 120--122
-[]\T1/lmtt/m/n/10 awardWins \T1/lmr/m/n/10 and \T1/lmtt/m/n/10 awardNominations\T1/lmr/m/n/10 , were merged with the same pro-ce-dure as above into
+Overfull \hbox (5.60744pt too wide) in paragraph at lines 113--115
+[]\T1/lmtt/m/n/10 awardWins \T1/lmr/m/n/10 and \T1/lmtt/m/n/10 awardNominations\T1/lmr/m/n/10 , were merged with the same pro-ce-dure as above into \T1/lmtt/m/n/10 totalNominations\T1/lmr/m/n/10 ,
+ []
+
+
+
+[3 <./plotsss/rating_distrib.png>]
+Overfull \hbox (27.1907pt too wide) in paragraph at lines 115--117
+[]\T1/lmtt/m/n/10 userReviewsTotal \T1/lmr/m/n/10 and\T1/lmtt/m/n/10 criticReviewsTotal\T1/lmr/m/n/10 ,were merged with the same pro-ce-dure as above into \T1/lmtt/m/n/10 reviewsTotal\T1/lmr/m/n/10 ,
+ []
+
+
+Overfull \hbox (4.52591pt too wide) in paragraph at lines 123--131
+[]\T1/lmtt/m/n/10 genre\T1/lmr/m/n/10 , it was ob-served that each record con-tained up to three gen-res, listed in al-pha-bet-i-cal or-der^^Vindicating
+ []
+
+
+Overfull \hbox (26.80513pt too wide) in paragraph at lines 133--138
+[]\T1/lmtt/m/n/10 deltaCredits\T1/lmr/m/n/10 , was cre-ated as the dif-fer-ence be-tween \T1/lmtt/m/n/10 totalCredits \T1/lmr/m/n/10 and the sum of \T1/lmtt/m/n/10 castNumber\T1/lmr/m/n/10 , \T1/lmtt/m/n/10 writerCredits
  []
 
 ) (outliers.tex
 
-LaTeX Warning: Reference `tab: threshold' on page 3 undefined on input line 34.
-
+[4]
 
 LaTeX Warning: No positions in optional float specifier.
                Default added (so using `tbp') on input line 42.
 
-
-outliers.tex:42: LaTeX Error: Not in outer par mode.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.42 \begin{table}[]
-                    
-You've lost some text.  Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-LaTeX Warning: Reference `fig:LOF' on page 3 undefined on input line 63.
-
-
-LaTeX Warning: Reference `fig:ISF' on page 3 undefined on input line 64.
-
-
-LaTeX Warning: Reference `fig:ABOD' on page 3 undefined on input line 65.
-
-
-LaTeX Warning: Reference `tab: threshold' on page 3 undefined on input line 74.
-
-
-outliers.tex:80: LaTeX Error: Not in outer par mode.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.80 \begin{figure}[htbp]
-                         
-You've lost some text.  Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-<plotsss/LOF.png, id=36, 829.59938pt x 505.13719pt>
+<plotsss/LOF.png, id=193, 634.5306pt x 407.6028pt>
 File: plotsss/LOF.png Graphic file (type png)
 <use plotsss/LOF.png>
 Package pdftex.def Info: plotsss/LOF.png  used on input line 84.
-(pdftex.def)             Requested size: 154.78653pt x 94.24281pt.
-<plotsss/ISF.png, id=37, 829.59938pt x 511.15968pt>
+(pdftex.def)             Requested size: 154.78653pt x 99.43129pt.
+<plotsss/ISF.png, id=194, 622.9674pt x 393.8715pt>
 File: plotsss/ISF.png Graphic file (type png)
 <use plotsss/ISF.png>
 Package pdftex.def Info: plotsss/ISF.png  used on input line 91.
-(pdftex.def)             Requested size: 154.78653pt x 95.36641pt.
-<plotsss/ABOD.png, id=38, 827.34094pt x 509.65407pt>
+(pdftex.def)             Requested size: 154.78653pt x 97.86061pt.
+<plotsss/ABOD.png, id=195, 622.9674pt x 393.8715pt>
 File: plotsss/ABOD.png Graphic file (type png)
 <use plotsss/ABOD.png>
 Package pdftex.def Info: plotsss/ABOD.png  used on input line 98.
-(pdftex.def)             Requested size: 154.78653pt x 95.34993pt.
+(pdftex.def)             Requested size: 154.78653pt x 97.86061pt.
 ) (imbalanced_learning.tex
 
-LaTeX Warning: Reference `tab:Imbalance_Learning' on page 3 undefined on input line 13.
-
+[5 <./plotsss/LOF.png> <./plotsss/ISF.png> <./plotsss/ABOD.png>]
 
 LaTeX Warning: No positions in optional float specifier.
                Default added (so using `tbp') on input line 17.
 
 
-imbalanced_learning.tex:17: LaTeX Error: Not in outer par mode.
 
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.17 \begin{table}[]
-                    
-You've lost some text.  Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
+[6]) (advanced_classification.tex
+
+LaTeX Warning: Reference `sec:understanding_preparation' on page 7 undefined on input line 8.
 
 
-LaTeX Warning: Reference `tab:Imbalance_Learning' on page 3 undefined on input line 40.
 
-) (advanced_classification.tex
-
-LaTeX Warning: Reference `sec:understanding_preparation' on page 3 undefined on input line 8.
-
-
-LaTeX Warning: Reference `tab:logistic_report_t' on page 3 undefined on input line 56.
-
-
-LaTeX Warning: Reference `fig:log_roc_curves_t' on page 3 undefined on input line 57.
-
-
-advanced_classification.tex:59: LaTeX Error: Not in outer par mode.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.59 \begin{figure}[ht]
-                       
-You've lost some text.  Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
+[7]
+Overfull \hbox (12.24997pt too wide) in paragraph at lines 41--50
+[]\T1/lmr/m/n/10 To op-ti-mize the model, a hy-per-pa-ram-e-ter search was per-formed us-ing \T1/lmtt/m/n/10 RandomizedSearchCV \T1/lmr/m/n/10 with \T1/lmtt/m/n/10 StratifiedKFold
+ []
 
 LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <9> on input line 66.
@@ -820,92 +763,50 @@ Overfull \hbox (4.10635pt too wide) in paragraph at lines 66--82
  [][] 
  []
 
-<plotsss/log_roc_curves_t.png, id=39, 387.3672pt x 338.2236pt>
+<plotsss/log_roc_curves_t.png, id=220, 387.3672pt x 338.2236pt>
 File: plotsss/log_roc_curves_t.png Graphic file (type png)
 <use plotsss/log_roc_curves_t.png>
 Package pdftex.def Info: plotsss/log_roc_curves_t.png  used on input line 86.
 (pdftex.def)             Requested size: 193.47578pt x 168.93076pt.
 
-LaTeX Warning: Reference `fig:log_roc_curves_t' on page 3 undefined on input line 101.
+Overfull \hbox (5.9144pt too wide) in paragraph at lines 114--118
+\T1/lmr/m/n/10 and neg-a-tively by \T1/lmtt/m/n/10 companiesNumber\T1/lmr/m/n/10 ; \T1/lmtt/m/n/10 tvEpisode \T1/lmr/m/n/10 is pos-i-tively in-flu-enced by \T1/lmtt/m/n/10 Europe \T1/lmr/m/n/10 and neg-a-tively by \T1/lmtt/m/n/10 numRegions\T1/lmr/m/n/10 . 
+ []
 
 
-LaTeX Warning: Reference `tab:logistic_report_rating' on page 3 undefined on input line 144.
 
-
-LaTeX Warning: Reference `fig:log_roc_curves_rating' on page 3 undefined on input line 144.
-
-
-advanced_classification.tex:159: LaTeX Error: Not in outer par mode.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.159 \begin{figure}[ht]
-                        
-You've lost some text.  Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
+[8{C:/Users/tanya/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathit.enc}{C:/Users/tanya/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-rm.enc}{C:/Users/tanya/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathsy.enc} <./plotsss/log_roc_curves_t.png>]
 Overfull \hbox (4.10635pt too wide) in paragraph at lines 166--182
  [][] 
  []
 
-<plotsss/log_roc_curves_rating.png, id=40, 387.3672pt x 338.2236pt>
+<plotsss/log_roc_curves_rating.png, id=236, 387.3672pt x 338.2236pt>
 File: plotsss/log_roc_curves_rating.png Graphic file (type png)
 <use plotsss/log_roc_curves_rating.png>
 Package pdftex.def Info: plotsss/log_roc_curves_rating.png  used on input line 186.
 (pdftex.def)             Requested size: 193.47578pt x 168.93076pt.
 
-LaTeX Warning: Reference `tab:svm_results' on page 3 undefined on input line 226.
+LaTeX Warning: `h' float specifier changed to `ht'.
 
-
-LaTeX Warning: Reference `fig:rbf_balanced_two' on page 3 undefined on input line 245.
-
-
-LaTeX Warning: Reference `tab:svm_results' on page 3 undefined on input line 255.
-
-
-advanced_classification.tex:258: LaTeX Error: Not in outer par mode.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.258 \begin{table}[h]
-                      
-You've lost some text.  Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-advanced_classification.tex:307: LaTeX Error: Not in outer par mode.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.307 \begin{figure}[h]
-                       
-You've lost some text.  Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-<plotsss/new_cm_rbf_balanced.png, id=41, 391.7034pt x 327.3831pt>
+<plotsss/new_cm_rbf_balanced.png, id=240, 391.7034pt x 327.3831pt>
 File: plotsss/new_cm_rbf_balanced.png Graphic file (type png)
 <use plotsss/new_cm_rbf_balanced.png>
 Package pdftex.def Info: plotsss/new_cm_rbf_balanced.png  used on input line 311.
 (pdftex.def)             Requested size: 227.3381pt x 190.0122pt.
-<plotsss/new_roc_rbf_balanced.png, id=42, 387.3672pt x 338.2236pt>
+<plotsss/new_roc_rbf_balanced.png, id=241, 387.3672pt x 338.2236pt>
 File: plotsss/new_roc_rbf_balanced.png Graphic file (type png)
 <use plotsss/new_roc_rbf_balanced.png>
 Package pdftex.def Info: plotsss/new_roc_rbf_balanced.png  used on input line 317.
 (pdftex.def)             Requested size: 207.9861pt x 181.6007pt.
 
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+
+
+[9 <./plotsss/log_roc_curves_rating.png>]
 Underfull \hbox (badness 10000) in paragraph at lines 363--367
 
  []
-
-
-LaTeX Warning: Reference `tab:ensemble_param' on page 3 undefined on input line 368.
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 368--371
@@ -918,36 +819,21 @@ Underfull \hbox (badness 10000) in paragraph at lines 372--375
  []
 
 
-LaTeX Warning: Reference `tab:report_ensemble' on page 3 undefined on input line 430.
 
-
-LaTeX Warning: Reference `fig:cm_rf' on page 3 undefined on input line 452.
-
-
-LaTeX Warning: Reference `fig:rating_dist' on page 3 undefined on input line 460.
-
-<plotsss/conf_matr_rf_rating.png, id=43, 312.2064pt x 328.8285pt>
+[10 <./plotsss/new_cm_rbf_balanced.png> <./plotsss/new_roc_rbf_balanced.png>]
+<plotsss/conf_matr_rf_rating.png, id=261, 312.2064pt x 328.8285pt>
 File: plotsss/conf_matr_rf_rating.png Graphic file (type png)
 <use plotsss/conf_matr_rf_rating.png>
 Package pdftex.def Info: plotsss/conf_matr_rf_rating.png  used on input line 469.
 (pdftex.def)             Requested size: 212.82779pt x 224.15736pt.
-<plotsss/roc_rf_rating.png, id=44, 387.3672pt x 339.669pt>
+<plotsss/roc_rf_rating.png, id=262, 387.3672pt x 339.669pt>
 File: plotsss/roc_rf_rating.png Graphic file (type png)
 <use plotsss/roc_rf_rating.png>
 Package pdftex.def Info: plotsss/roc_rf_rating.png  used on input line 476.
 (pdftex.def)             Requested size: 251.52443pt x 220.55418pt.
 
-LaTeX Warning: Reference `fig:roc_rating' on page 3 undefined on input line 483.
 
-
-LaTeX Warning: Reference `tab:ensemble_param_titletype' on page 3 undefined on input line 500.
-
-
-Underfull \hbox (badness 1242) in paragraph at lines 500--503
-[]\T1/lmr/m/n/10 Table [] shows the best hy-per-pa-ram-e-ter con-fig-u-ra-tions
- []
-
-
+[11]
 Underfull \hbox (badness 10000) in paragraph at lines 500--503
 
  []
@@ -963,293 +849,164 @@ Underfull \hbox (badness 10000) in paragraph at lines 507--513
  []
 
 
-LaTeX Warning: Reference `tab:classification_report' on page 3 undefined on input line 552.
+Underfull \hbox (badness 10000) in paragraph at lines 568--578
 
+ []
 
-LaTeX Warning: Reference `fig:cm_rf_titletype' on page 3 undefined on input line 568.
-
-<plotsss/conf_matr_rf_titletype.png, id=45, 352.6776pt x 328.8285pt>
+<plotsss/conf_matr_rf_titletype.png, id=274, 352.6776pt x 328.8285pt>
 File: plotsss/conf_matr_rf_titletype.png Graphic file (type png)
 <use plotsss/conf_matr_rf_titletype.png>
 Package pdftex.def Info: plotsss/conf_matr_rf_titletype.png  used on input line 583.
 (pdftex.def)             Requested size: 227.3381pt x 211.96481pt.
-<plotsss/roc_rf_titletype.png, id=46, 387.3672pt x 339.669pt>
+<plotsss/roc_rf_titletype.png, id=275, 387.3672pt x 339.669pt>
 File: plotsss/roc_rf_titletype.png Graphic file (type png)
 <use plotsss/roc_rf_titletype.png>
 Package pdftex.def Info: plotsss/roc_rf_titletype.png  used on input line 590.
 (pdftex.def)             Requested size: 241.84843pt x 212.06973pt.
 
-LaTeX Warning: Reference `fig:loss_nn_rating' on page 3 undefined on input line 632.
+
+[12 <./plotsss/conf_matr_rf_rating.png> <./plotsss/roc_rf_rating.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 607--609
+
+ []
 
 
-LaTeX Warning: Reference `fig:accuracy_nn_rating' on page 3 undefined on input line 632.
+Underfull \hbox (badness 10000) in paragraph at lines 632--645
 
-<plotsss/loss_rating.png, id=47, 399.6531pt x 284.0211pt>
+ []
+
+<plotsss/loss_rating.png, id=288, 399.6531pt x 284.0211pt>
 File: plotsss/loss_rating.png Graphic file (type png)
 <use plotsss/loss_rating.png>
 Package pdftex.def Info: plotsss/loss_rating.png  used on input line 650.
 (pdftex.def)             Requested size: 232.17242pt x 165.00104pt.
-<plotsss/accuracy_rating.png, id=48, 393.8715pt x 284.0211pt>
+<plotsss/accuracy_rating.png, id=289, 393.8715pt x 284.0211pt>
 File: plotsss/accuracy_rating.png Graphic file (type png)
 <use plotsss/accuracy_rating.png>
 Package pdftex.def Info: plotsss/accuracy_rating.png  used on input line 657.
 (pdftex.def)             Requested size: 232.17242pt x 167.42365pt.
-<plotsss/cm_nn_rating.png, id=49, 312.2064pt x 328.8285pt>
+
+
+[13 <./plotsss/conf_matr_rf_titletype.png> <./plotsss/roc_rf_titletype.png>]
+<plotsss/cm_nn_rating.png, id=297, 312.2064pt x 328.8285pt>
 File: plotsss/cm_nn_rating.png Graphic file (type png)
 <use plotsss/cm_nn_rating.png>
 Package pdftex.def Info: plotsss/cm_nn_rating.png  used on input line 669.
 (pdftex.def)             Requested size: 217.66211pt x 229.25014pt.
-<plotsss/roc_nn_rating.png, id=50, 387.3672pt x 339.669pt>
+<plotsss/roc_nn_rating.png, id=298, 387.3672pt x 339.669pt>
 File: plotsss/roc_nn_rating.png Graphic file (type png)
 <use plotsss/roc_nn_rating.png>
 Package pdftex.def Info: plotsss/roc_nn_rating.png  used on input line 676.
 (pdftex.def)             Requested size: 256.35875pt x 224.80418pt.
-
-advanced_classification.tex:686: LaTeX Error: Not in outer par mode.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.686     \centering
-                    
-You've lost some text.  Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-<plotsss/loss_titletype.png, id=51, 393.1488pt x 284.0211pt>
+<plotsss/loss_titletype.png, id=299, 393.1488pt x 284.0211pt>
 File: plotsss/loss_titletype.png Graphic file (type png)
 <use plotsss/loss_titletype.png>
 Package pdftex.def Info: plotsss/loss_titletype.png  used on input line 711.
 (pdftex.def)             Requested size: 232.17242pt x 167.727pt.
-<plotsss/accuracy_titletype.png, id=52, 393.8715pt x 284.0211pt>
+<plotsss/accuracy_titletype.png, id=300, 393.8715pt x 284.0211pt>
 File: plotsss/accuracy_titletype.png Graphic file (type png)
 <use plotsss/accuracy_titletype.png>
 Package pdftex.def Info: plotsss/accuracy_titletype.png  used on input line 718.
 (pdftex.def)             Requested size: 232.17242pt x 167.42365pt.
-<plotsss/cm_nn_titletype.png, id=53, 352.6776pt x 328.8285pt>
+
+
+[14 <./plotsss/loss_rating.png> <./plotsss/accuracy_rating.png> <./plotsss/cm_nn_rating.png> <./plotsss/roc_nn_rating.png>]
+<plotsss/cm_nn_titletype.png, id=311, 352.6776pt x 328.8285pt>
 File: plotsss/cm_nn_titletype.png Graphic file (type png)
 <use plotsss/cm_nn_titletype.png>
 Package pdftex.def Info: plotsss/cm_nn_titletype.png  used on input line 732.
 (pdftex.def)             Requested size: 227.3381pt x 211.96481pt.
-<plotsss/roc_nn_titletype.png, id=54, 387.3672pt x 339.669pt>
+<plotsss/roc_nn_titletype.png, id=312, 387.3672pt x 339.669pt>
 File: plotsss/roc_nn_titletype.png Graphic file (type png)
 <use plotsss/roc_nn_titletype.png>
 Package pdftex.def Info: plotsss/roc_nn_titletype.png  used on input line 739.
 (pdftex.def)             Requested size: 241.84843pt x 212.06973pt.
 
-LaTeX Warning: Reference `tab:GBM_param' on page 3 undefined on input line 756.
 
-
-advanced_classification.tex:798: LaTeX Error: Not in outer par mode.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.798 \begin{figure}[ht]
-                        
-You've lost some text.  Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
+[15 <./plotsss/loss_titletype.png> <./plotsss/accuracy_titletype.png> <./plotsss/cm_nn_titletype.png> <./plotsss/roc_nn_titletype.png>]
 Overfull \hbox (4.10635pt too wide) in paragraph at lines 805--821
  [][] 
  []
 
-<plotsss/GBM_confusion_title.png, id=55, 422.7795pt x 400.3758pt>
+<plotsss/GBM_confusion_title.png, id=325, 422.7795pt x 400.3758pt>
 File: plotsss/GBM_confusion_title.png Graphic file (type png)
 <use plotsss/GBM_confusion_title.png>
 Package pdftex.def Info: plotsss/GBM_confusion_title.png  used on input line 825.
 (pdftex.def)             Requested size: 193.47578pt x 183.22816pt.
-<plotsss/GBM_ROC_title.png, id=56, 390.258pt x 341.8371pt>
+<plotsss/GBM_ROC_title.png, id=326, 390.258pt x 341.8371pt>
 File: plotsss/GBM_ROC_title.png Graphic file (type png)
 <use plotsss/GBM_ROC_title.png>
 Package pdftex.def Info: plotsss/GBM_ROC_title.png  used on input line 831.
 (pdftex.def)             Requested size: 193.47578pt x 169.47328pt.
 
-LaTeX Warning: Reference `tab:GBM_report_t' on page 3 undefined on input line 838.
 
-
-LaTeX Warning: Reference `fig:GBM_confusion_title' on page 3 undefined on input line 839.
-
-
-LaTeX Warning: Reference `fig:GBM_ROC_title' on page 3 undefined on input line 841.
-
-
-advanced_classification.tex:855: LaTeX Error: Not in outer par mode.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.855 \begin{figure}[ht]
-                        
-You've lost some text.  Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
+[16 <./plotsss/GBM_confusion_title.png> <./plotsss/GBM_ROC_title.png>]
 Overfull \hbox (4.10635pt too wide) in paragraph at lines 862--878
  [][] 
  []
 
-<plotsss/GBM_confusion_rating.png, id=57, 401.8212pt x 422.0568pt>
+<plotsss/GBM_confusion_rating.png, id=337, 401.8212pt x 422.0568pt>
 File: plotsss/GBM_confusion_rating.png Graphic file (type png)
 <use plotsss/GBM_confusion_rating.png>
 Package pdftex.def Info: plotsss/GBM_confusion_rating.png  used on input line 882.
 (pdftex.def)             Requested size: 193.47578pt x 203.22252pt.
 
 Underfull \hbox (badness 2903) in paragraph at lines 883--883
-[]\T1/lmr/m/n/10 Figure 15: |Con-fu-sion Ma-trix Gra-di-ent
+[]\T1/lmr/m/n/10 Figure 14: |Con-fu-sion Ma-trix Gra-di-ent
  []
 
-<plotsss/GBM_ROC_rating.png, id=58, 390.258pt x 341.8371pt>
+<plotsss/GBM_ROC_rating.png, id=338, 390.258pt x 341.8371pt>
 File: plotsss/GBM_ROC_rating.png Graphic file (type png)
 <use plotsss/GBM_ROC_rating.png>
 Package pdftex.def Info: plotsss/GBM_ROC_rating.png  used on input line 888.
 (pdftex.def)             Requested size: 193.47578pt x 169.47328pt.
 
-LaTeX Warning: Reference `tab:GBM_report_r' on page 3 undefined on input line 895.
 
-
-LaTeX Warning: Reference `fig:GBM_confusion_rating' on page 3 undefined on input line 898.
-
-
-LaTeX Warning: Reference `fig:GBM_ROC_rating' on page 3 undefined on input line 905.
-
-
-advanced_classification.tex:935: LaTeX Error: Not in outer par mode.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.935 \begin{figure}[htbp]
-                          
-You've lost some text.  Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-<plotsss/Lime_title.png, id=59, 954.56625pt x 498.36188pt>
+[17 <./plotsss/GBM_confusion_rating.png> <./plotsss/GBM_ROC_rating.png>]
+<plotsss/Lime_title.png, id=349, 954.56625pt x 498.36188pt>
 File: plotsss/Lime_title.png Graphic file (type png)
 <use plotsss/Lime_title.png>
 Package pdftex.def Info: plotsss/Lime_title.png  used on input line 937.
 (pdftex.def)             Requested size: 483.69687pt x 252.52625pt.
 
-LaTeX Warning: Reference `fig:LIME_title' on page 3 undefined on input line 941.
+Underfull \hbox (badness 10000) in paragraph at lines 941--956
+
+ []
 
 
-LaTeX Warning: Reference `fig:title_coeff' on page 3 undefined on input line 957.
 
-
-advanced_classification.tex:972: LaTeX Error: Not in outer par mode.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.972     \centering
-                    
-You've lost some text.  Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-<plotsss/title_coeff.png, id=60, 444.15938pt x 116.68594pt>
+[18 <./plotsss/Lime_title.png>]
+<plotsss/title_coeff.png, id=360, 444.15938pt x 116.68594pt>
 File: plotsss/title_coeff.png Graphic file (type png)
 <use plotsss/title_coeff.png>
 Package pdftex.def Info: plotsss/title_coeff.png  used on input line 973.
 (pdftex.def)             Requested size: 338.58632pt x 88.9493pt.
-
-advanced_classification.tex:980: LaTeX Error: Not in outer par mode.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.980 \begin{figure}[htbp]
-                          
-You've lost some text.  Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-<plotsss/Lime_rating.png, id=61, 870.25125pt x 523.20468pt>
+<plotsss/Lime_rating.png, id=361, 870.25125pt x 523.20468pt>
 File: plotsss/Lime_rating.png Graphic file (type png)
 <use plotsss/Lime_rating.png>
 Package pdftex.def Info: plotsss/Lime_rating.png  used on input line 982.
 (pdftex.def)             Requested size: 483.69687pt x 290.81314pt.
 
-LaTeX Warning: Reference `fig:LIME_rating' on page 3 undefined on input line 987.
 
-
-advanced_classification.tex:1003: LaTeX Error: Not in outer par mode.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.1003     \centering
-                     
-You've lost some text.  Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-<plotsss/rating_coeff.png, id=62, 470.50781pt x 118.94438pt>
+[19 <./plotsss/title_coeff.png> <./plotsss/Lime_rating.png>]
+<plotsss/rating_coeff.png, id=370, 470.50781pt x 118.94438pt>
 File: plotsss/rating_coeff.png Graphic file (type png)
 <use plotsss/rating_coeff.png>
 Package pdftex.def Info: plotsss/rating_coeff.png  used on input line 1004.
 (pdftex.def)             Requested size: 338.58632pt x 85.5945pt.
-
-LaTeX Warning: Reference `fig:rating_coeff' on page 3 undefined on input line 1010.
-
 ) (advanced_regression.tex
 
-LaTeX Warning: Reference `tab:rf_metrics' on page 3 undefined on input line 25.
-
-
-advanced_regression.tex:30: LaTeX Error: Not in outer par mode.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.30 \begin{table}[h]
-                     
-You've lost some text.  Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-LaTeX Warning: Reference `tab:rf_metrics' on page 3 undefined on input line 45.
-
-
-advanced_regression.tex:56: LaTeX Error: Not in outer par mode.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.56 \begin{figure}[h]
-                      
-You've lost some text.  Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-<plotsss/rf_top18_actual_vs_predicted.png, id=63, 409.0482pt x 336.7782pt>
+[20 <./plotsss/rating_coeff.png>]
+<plotsss/rf_top18_actual_vs_predicted.png, id=383, 409.0482pt x 336.7782pt>
 File: plotsss/rf_top18_actual_vs_predicted.png Graphic file (type png)
 <use plotsss/rf_top18_actual_vs_predicted.png>
 Package pdftex.def Info: plotsss/rf_top18_actual_vs_predicted.png  used on input line 58.
 (pdftex.def)             Requested size: 338.58632pt x 278.77556pt.
+) (ts.tex
 
-LaTeX Warning: Reference `fig:rf_top18_actual_vs_predicted' on page 3 undefined on input line 64.
+[21 <./plotsss/rf_top18_actual_vs_predicted.png>])
 
-) (ts.tex)
-
-d:/BOOKS/UNIPI/Sem 2/Data Mining 2/Project/dm2_project/report/main.tex:134: LaTeX Error: \begin{figure} on input line 94 ended by \end{document}.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.134 \end{document}
-                    
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
-(main.aux)
+[22] (main.aux)
  ***********
 LaTeX2e <2025-06-01> patch level 1
 L3 programming layer <2025-07-20>
@@ -1259,63 +1016,23 @@ L3 programming layer <2025-07-20>
 LaTeX Warning: There were undefined references.
 
 
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+LaTeX Warning: There were multiply-defined labels.
 
-
-Package rerunfilecheck Warning: File `main.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `main.out':
-(rerunfilecheck)             Before: <no file>
-(rerunfilecheck)             After:  A0B52831A231DA99791AE5B07BF88D00;325.
-d:/BOOKS/UNIPI/Sem 2/Data Mining 2/Project/dm2_project/report/main.tex:134: You can't use `\end' in internal vertical mode.
-\enddocument ...cument/end}\deadcycles \z@ \@@end 
-                                                  
-l.134 \end{document}
-                    
-Sorry, but I'm not programmed to handle this case;
-I'll just pretend that you didn't ask for it.
-If you're in the wrong mode, you might be able to
-return to the right one by typing `I}' or `I$' or `I\par'.
-
-
-d:/BOOKS/UNIPI/Sem 2/Data Mining 2/Project/dm2_project/report/main.tex:134: LaTeX Error: \begin{figure} on input line 94 ended by \end{document}.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.134 \end{document}
-                    
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
-d:/BOOKS/UNIPI/Sem 2/Data Mining 2/Project/dm2_project/report/main.tex:134: Missing } inserted.
-<inserted text> 
-                }
-l.134 \end{document}
-                    
-I've inserted something that you may have forgotten.
-(See the <inserted text> above.)
-With luck, this will get me unwedged. But if you
-really didn't forget anything, try typing `2' now; then
-my insertion and my current dilemma will both disappear.
-
-)
-! Emergency stop.
-<*> ...ning 2/Project/dm2_project/report/main.tex"
-                                                  
-*** (job aborted, no legal \end found)
-
- 
+Package rerunfilecheck Info: File `main.out' has not changed.
+(rerunfilecheck)             Checksum: A4FBECF3557CE3AC0C1F5992B0C1FC56;4259.
+ ) 
 Here is how much of TeX's memory you used:
- 20699 strings out of 468134
- 395256 string characters out of 5430740
- 913387 words of memory out of 5000000
- 49006 multiletter control sequences out of 15000+600000
+ 20847 strings out of 468134
+ 397762 string characters out of 5430740
+ 796191 words of memory out of 5000000
+ 49067 multiletter control sequences out of 15000+600000
  693653 words of font info for 85 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,16n,79p,433b,1335s stack positions out of 10000i,1000n,20000p,200000b,200000s
-!  ==> Fatal error occurred, no output PDF file produced!
+ 75i,13n,79p,442b,1167s stack positions out of 10000i,1000n,20000p,200000b,200000s
+<C:/Users/tanya/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbx10.pfb><C:/Users/tanya/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbx12.pfb><C:/Users/tanya/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbx7.pfb><C:/Users/tanya/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbx9.pfb><C:/Users/tanya/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi10.pfb><C:/Users/tanya/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr10.pfb><C:/Users/tanya/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr7.pfb><C:/Users/tanya/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr9.pfb><C:/Users/tanya/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmri10.pfb><C:/Users/tanya/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmri12.pfb><C:/Users/tanya/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy10.pfb><C:/Users/tanya/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy7.pfb><C:/Users/tanya/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtt10.pfb><C:/Users/tanya/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtt8.pfb><C:/Users/tanya/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtt9.pfb>
+Output written on main.pdf (23 pages, 2345122 bytes).
+PDF statistics:
+ 490 PDF objects out of 1000 (max. 8388607)
+ 85 named destinations out of 1000 (max. 500000)
+ 375 words of extra memory for PDF output out of 10000 (max. 10000000)
+

@@ -90,13 +90,8 @@ Of the initial numerical attributes, the following were removed:
 
 Figure~\ref{fig:skewness} shows the skewness of some of the numerical features.
 It can be observed that many features exhibit a heavy right skew, with a long tail of high values.
-Feat
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.6\textwidth]{plotsss/distribution-2.png}
-    \caption{Skewness of some numerical features}
-    \label{fig:skewness}
 
+    
 Figure~\ref{fig:rating_dist} shows the distribution of the
 \texttt{averageRating} attribute.
 \begin{figure}[H]
@@ -108,8 +103,6 @@ Figure~\ref{fig:rating_dist} shows the distribution of the
 The distribution is Normal-like, with a peak around 7.
 This graph is particularly important because of the centrality
 of the feature in the classification and regression tasks.
-
-
 
 \subsection{Feature Engineering}
 \begin{itemize}
@@ -135,17 +128,20 @@ corresponding to one of the genres. These features were encoded using frequency
 encoding, sorted in descending order of frequency across the dataset.  
 A value of 0 was used to indicate missing genres—either when no genres were present or
 to fill the remaining slots when fewer than three were available;
-    \item \texttt{titleType}, was one-hot encoded, as it was a nominal categorical
+\item \texttt{titleType}, was one-hot encoded, as it was a nominal categorical
 feature with no intrinsic order;
     \item \texttt{deltaCredits}, was created as the difference between
-\texttt{totalCredits} and the sum of \texttt{castNumber}, \texttt{writerCredits} and \texttt{directorCredits}. This feature aimed to capture the number of other types of credits
+\texttt{totalCredits} and the sum of \texttt{castNumber}, \texttt{writerCredits} and \texttt{directorCredits}. 
+This feature aimed to capture the number of other types of credits
 (such as producers, editors, etc.) associated with a title, which could be relevant for
-understanding its production scale and complexity.
+understanding its production scale and complexity;
     \item \texttt{runtimeMinutes}, had a very high number of missing values approx ~27\%. 
     Since the feature had high relevance in the domain, it was
 imputed with the interquartile range, separately for each title
-type. For advanced classification, in order to avoid any correlation with the target variable, we imputed the feature with random integers within the global interquartile range.
-
+type. For advanced classification, in order to avoid any correlation with the target variable, 
+we imputed the feature with random integers within the global interquartile range.
 
 \end{itemize}
+
+
 
