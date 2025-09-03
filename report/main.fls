@@ -344,8 +344,6 @@ INPUT ./plotsss/new_roc_rbf_balanced.png
 INPUT ./plotsss/new_roc_rbf_balanced.png
 INPUT ./plotsss/new_roc_rbf_balanced.png
 INPUT ./plotsss/new_roc_rbf_balanced.png
-INPUT /usr/local/texlive/2025basic/texmf-dist/fonts/tfm/public/lm/ec-lmtt8.tfm
-INPUT /usr/local/texlive/2025basic/texmf-dist/fonts/tfm/public/lm/ec-lmtt8.tfm
 INPUT ./plotsss/conf_matr_rf_rating.png
 INPUT ./plotsss/conf_matr_rf_rating.png
 INPUT ./plotsss/conf_matr_rf_rating.png
@@ -407,6 +405,7 @@ INPUT ./plotsss/roc_nn_titletype.png
 INPUT ./advanced_regression.tex
 INPUT ./advanced_regression.tex
 INPUT advanced_regression.tex
+INPUT /usr/local/texlive/2025basic/texmf-dist/fonts/tfm/public/lm/ec-lmtt8.tfm
 INPUT /usr/local/texlive/2025basic/texmf-dist/fonts/tfm/public/lm/ec-lmbx7.tfm
 INPUT ./plotsss/rf_top18_actual_vs_predicted.png
 INPUT ./plotsss/rf_top18_actual_vs_predicted.png
@@ -421,7 +420,6 @@ INPUT /usr/local/texlive/2025basic/texmf-dist/fonts/type1/public/lm/lmbx12.pfb
 INPUT /usr/local/texlive/2025basic/texmf-dist/fonts/type1/public/lm/lmbx7.pfb
 INPUT /usr/local/texlive/2025basic/texmf-dist/fonts/type1/public/lm/lmbx9.pfb
 INPUT /usr/local/texlive/2025basic/texmf-dist/fonts/type1/public/lm/lmmi10.pfb
-INPUT /usr/local/texlive/2025basic/texmf-dist/fonts/type1/public/lm/lmmi7.pfb
 INPUT /usr/local/texlive/2025basic/texmf-dist/fonts/type1/public/lm/lmr10.pfb
 INPUT /usr/local/texlive/2025basic/texmf-dist/fonts/type1/public/lm/lmr7.pfb
 INPUT /usr/local/texlive/2025basic/texmf-dist/fonts/type1/public/lm/lmr9.pfb

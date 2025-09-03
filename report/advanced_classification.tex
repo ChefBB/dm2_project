@@ -331,34 +331,29 @@ RBF (balanced) & $C=10$, $\gamma=\text{scale}$, balanced & 0.84 & 0.65 \\
 % rating
 %-------------------------------------------------------------------------------
 
-We also applied SVM to the \texttt{averageRating} classification task.
-The same kernels and hyperparameter search strategies were used as for \texttt{titleType}.
+Support Vector Machines were applied to the \texttt{averageRating} classification task using the same kernels and hyperparameter search strategies as for \texttt{titleType}.
+A Linear SVM achieved only 0.37 accuracy and a macro F1-score of 0.28, indicating that a linear decision boundary is inadequate.
 
-We then applied the same methodology to the \texttt{rating} classification task.
-% Here the output space is ordinal, ranging from $[1,6)$ to $[9,10)$, with strong class imbalance: 
-% intermediate ranges are frequent, while extreme categories are under-represented.
+Non-linear kernels were then explored. Both RBF and polynomial kernels reached similar test accuracy around 0.39, substantially outperforming the sigmoid kernel (0.28).
+Due to slightly more stable results and better handling of minority categories, the RBF kernel was selected as the reference model.
 
-A Linear SVM was first tested using the same hyperparameter grid as before.
-The best configuration ($C=100$, $max_iter=1000$) achieved only 0.37 accuracy 
-and a macro F1-score of 0.28, confirming (perchè confirming?) that a linear decision 
-boundary is inadequate for this task.
+To address class imbalance, the RBF model was retrained with \texttt{class\_weight=balanced}.
+Overall accuracy decreased slightly to 0.29, but recall improved for the minority classes, particularly the extreme bins $[1,5)$ and $[9,10)$.
+The classification report shows that the model captures a high proportion of extreme instances (recall 0.55 for $[1,5)$ and 0.63 for $[9,10)$), although precision is low (0.23 and 0.10, respectively), resulting in moderate F1-scores (0.33 and 0.18).
+Intermediate bins are predicted with higher precision but lower recall, reflecting the difficulty of separating densely populated central categories.
 
-We therefore moved to non-linear kernels.
-As for the previous experiment, a grid search on a stratified 10\% subset of 
-the training set was conducted. The optimal configurations were $C=10$, $\gamma=\text{auto}$ 
-for the RBF kernel, $C=10$, degree=2, $\gamma=\text{scale}$, $\text{coef0}=1$ for the polynomial 
-kernel, and $C=0.1$, $\gamma=\text{auto}$, $\text{coef0}=0$ for the sigmoid kernel.
-These models were then retrained on the full dataset.
+ROC curves
+%(Figure~\ref{fig:roc_rbf_balanced}) 
+confirm this pattern: AUC is highest for the extremes ($[1,5)$: 0.79, $[9,10)$: 0.80) and lower for intermediate bins ($[6,7)$: 0.61, $[7,8)$: 0.65), indicating that the model distinguishes extreme ratings better than the mid-range values.
 
-Results were generally lower than in the \texttt{titleType} task, with the RBF and polynomial 
-kernels both reaching around 0.42 macro F1, while sigmoid performed substantially worse (macro F1 $\approx 0.36$).
-Confusion matrices showed that the models correctly identified the most populated bins, but failed on the tails 
-(\textit{[1,6)} and \textit{[9,10)}).
+Overall, non-linear kernels improve performance over linear SVM, but the ordinal nature of \texttt{averageRating} and the strong class imbalance continue to challenge accurate prediction across all bins.
 
-Finally, to mitigate imbalance, the RBF kernel was retrained with \texttt{$class\_weight=balanced$}.
-This increased recall on minority classes, at the cost of a slight drop in overall accuracy, 
-producing a fairer but more complex decision function.
-However, even the balanced model struggled to capture the extremes of the rating distribution.
+% \begin{figure}[h]
+%     \centering
+%     \includegraphics[width=0.5\textwidth]{plotsss/roc_rbf_balanced_rating.png}
+%     \caption{ROC Curve for the SVM (kernel rbf and balanced class weight) on the \texttt{averageRating} classification task.}
+%     \label{fig:roc_rbf_balanced}
+% \end{figure}
 
 %------------------------------
 \subsection{Ensemble methods}
