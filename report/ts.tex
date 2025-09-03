@@ -1,0 +1,38 @@
+\section{Time Series Analysis}
+
+\subsection{Data Understanding}
+
+The dataset consists of 1134 films, each represented by a time series of daily domestic 
+box-office gross revenues in the United States and Canada, spanning 100 days from release day (day 0) 
+to day 99. Each observation also includes descriptive metadata. The dataset contains 104 attributes in 
+total: 100 numerical columns corresponding to daily gross revenues, one numerical column for the IMDb average \texttt{rating}, 
+and three categorical columns identifying the film \texttt{id}, \texttt{genre}, and \texttt{rating category}.
+
+Preliminary inspection revealed no missing values. For films with runs shorter than 100 days, 
+missing entries were completed through a synthetic extension procedure, which imputes values using a noise-augmented mean 
+of the observed revenues. This ensures uniform series length, although it introduces artificial values that may influence 
+analyses focusing on the later days of a film’s lifecycle.
+
+Descriptive statistics provide an overview of the box-office revenue trends. 
+On release day, the average revenue is approximately 9 million USD, with maximum values exceeding 150 million USD. 
+Revenues decline rapidly in subsequent days, reaching mean values near 100000 USD by day 99. 
+Variance remains high across the series, indicating substantial variability in revenue levels among films.
+IMDb ratings show a mean of 6.6 with a standard deviation of 0.9, ranging from 2.8 to 8.7.
+The \texttt{rating\_category} variable, which will serve as the target for the classification part, 
+is distributed across five classes: Low (10 titles), Medium Low (128), Medium (387), Medium High (232), and High (377). 
+The distribution is highly imbalanced, with the Low category being significantly underrepresented compared to the other classes.
+
+
+The presence of extreme values and synthetic extensions may necessitate normalization to ensure comparability 
+of the time series and support more robust analyses.
+
+
+% aggiungere parte di scaling eventuale o cose simili di preparation
+
+\subsection{Motifs and Anomalies Discovery}
+
+
+
+\subsection{Clustering}
+
+\subsection{Classification}
