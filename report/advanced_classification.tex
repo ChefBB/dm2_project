@@ -919,3 +919,107 @@ it struggles with fine-grained distinctions between closely spaced rating bins.
 
 
 \subsection{Model Comparison}
+
+\subsection{Explainable AI}
+To better understand the predictions made by our Neural Network model, we employed \texttt{LIME} Local Interpretable Model-agnostic Explanations 
+to provide local explanations for individual predictions.
+LIME works by perturbing the input data around a specific instance and 
+observing how the model's predictions change. 
+This allows us to identify which features are most influential for that particular prediction.
+For our analysis, we selected the first instance from the test set of both classification tasks: \texttt{titleType} and \texttt{averageRating}.
+We then used LIME to generate explanations for the model's predictions on these instances.
+
+\subsubsection{titleType}
+
+ 
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\linewidth]{plotsss/Lime_title.png}
+    \caption{LIME explanation for the \texttt{titleType} prediction of instance 0 in the test set.}
+    \label{fig:LIME_title}
+\end{figure}
+Figure~\ref{fig:LIME_title} shows the LIME explanation for the \texttt{titleType} prediction of instance 0. We only show the top 5 features for clarity.
+The model assigns a high probability of 0.97 to the class \textit{movie}, with all other classes receiving negligible scores. 
+This strong confidence is supported by the decision rules extracted from the local surrogate model, which highlight 
+the most influential features contributing to the classification. 
+The top features include \texttt{runtimeMinutes}, \texttt{numRegions}, \texttt{deltaCredits}, and \texttt{startYear}, 
+each evaluated against specific thresholds. For instance, the value of \texttt{runtimeMinutes} is 1.39 (standardized), 
+which exceeds the threshold used to exclude categories such as \textit{short} and \textit{tvEpisode}, 
+both of which typically have shorter durations. Similarly, the low value of \texttt{numRegions} (0.28) and \texttt{deltaCredits} (0.01) 
+helps eliminate classes like \textit{video} and \textit{tvSpecial}, which often have limited regional distribution and sparse production metadata. 
+The standardized \texttt{startYear} value of $-1.04$ suggests an older release date, 
+which may align more closely with traditional \textit{movie} formats than episodic or special content. 
+The decision paths shown in the visualization reinforce the model's reasoning by systematically ruling out 
+alternative classes through feature-based logic. Notably, the absence of branching toward competing categories 
+like \textit{tvSeries} or \textit{video} indicates that the feature profile of this instance is highly aligned with the 
+learned representation of a \textit{movie}. \\
+
+Figure~\ref{fig:title_coeff} presents the top five features contributing to the model's prediction for a specific instance '0'
+in the \texttt{titleType} classification task. The feature \texttt{runtimeMinutes > 0.63} has the highest positive contribution of 0.4208, 
+indicating that longer runtimes strongly support the classification decision, likely favoring categories such as \textit{movie} or \textit{tvSeries}. 
+The condition \texttt{-0.28 < numRegions $\leq$ 0.57} contributes 0.1110, suggesting that moderate regional distribution adds further support 
+to the predicted class, possibly reflecting titles with limited but non-trivial geographic reach. 
+The feature \texttt{deltaCredits $\leq$ -0.70}, with a contribution of 0.0875, implies that a low difference between director and writer credits 
+may signal a more streamlined or unified production, which is often characteristic of traditional movie formats. 
+The condition \texttt{startYear $\leq$ -0.56} contributes 0.0744, indicating that older titles are more likely to belong to certain categories, 
+perhaps due to historical production norms or metadata completeness. Interestingly, the feature \texttt{Asia $\leq$ -0.37} 
+has a negative contribution of $-0.0688$, suggesting that limited association with the Asian region reduces the likelihood of 
+certain title types, possibly reflecting regional content trends or distribution biases. Collectively, these contributions reveal how the model 
+leverages both structural and geographic metadata to make confident predictions, and they underscore the interpretability of the decision-making process 
+through localized feature analysis.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.7\textwidth]{plotsss/title_coeff.png}
+    \caption{Contribution of top 5 features}
+    \label{fig:title_coeff}
+\end{figure}
+
+\subsubsection{averageRating}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\linewidth]{plotsss/Lime_rating.png}
+    \caption{LIME explanation for the \texttt{rating\_class} prediction of instance 0 in the test set.}
+    \label{fig:LIME_rating}
+\end{figure}
+
+Figure~\ref{fig:LIME_rating} presents the LIME explanation for the \texttt{rating\_class} 
+prediction of instance 0 in the test set, generated from a sequential neural network model. 
+The predicted class is 0, with a confidence of 53\%, followed by class 1 (25\%), class 2 (13\%), and class 3 (9\%), 
+indicating a moderate level of uncertainty but a clear preference toward the lowest rating bin. 
+For this instance, \texttt{titleType\_short = 0.43} and \texttt{titleType\_tvEpisode = 0.5} suggest the content 
+is neither a short nor a TV episode, which may steer the model away from mid-range rating bins typically 
+associated with episodic or short-form content. The value \texttt{startYear = -1.05} indicates an older release, 
+which often correlates with lower ratings due to outdated production standards or limited contemporary relevance. 
+Additionally, \texttt{ratingCount = -0.25} reflects low audience engagement, reinforcing the likelihood of a 
+lower rating bin. Interestingly, \texttt{runtimeMinutes = 1.39} suggests a longer duration, which might typically 
+support higher ratings, but in this context, it appears insufficient to offset the negative influence of other 
+features. The surrogate explanation reveals how the neural network integrates temporal, structural, and 
+popularity-related metadata to arrive at its prediction, and it highlights the nuanced interplay 
+between feature thresholds and class probabilities in a locally interpretable manner.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.7\textwidth]{plotsss/rating_coeff.png}
+    \caption{Contribution of top 5 features}
+    \label{fig:rating_coeff}
+\end{figure}
+
+
+Figure~\ref{fig:rating_coeff} illustrates the top five features influencing the model's 
+prediction for the \texttt{rating\_bin} classification. The feature \texttt{titleType\_short $\leq$ -0.35} 
+contributes positively with a value of 0.0692, suggesting that titles categorized as "short" are more likely to fall into a 
+specific rating bin, possibly due to their niche appeal or limited exposure. The feature \texttt{startYear $\leq$ -0.56} 
+adds a contribution of 0.0384,potentially reflecting historical rating standards or audience expectations.
+Conversely, the feature \texttt{titleType\_tvEpisode $\leq$ -0.95} has a negative contribution of $-0.0236$, implying that the 
+absence or low presence of TV episodes reduces the likelihood of the predicted rating bin, possibly due to episodic 
+content receiving more polarized ratings. The condition \texttt{-0.29 < ratingCount $\leq$ 0.50} contributes 0.0215, 
+suggesting that moderate rating counts slightly support the classification, likely reflecting a balance between popularity 
+and niche interest. Lastly, \texttt{runtimeMinutes > 0.63} contributes negatively with $-0.0192$, indicating that 
+longer runtimes may detract from the predicted rating bin, perhaps due to pacing issues or audience fatigue.
+The model appears to weigh structural metadata (e.g., title type, runtime) alongside temporal 
+and popularity indicators to infer rating categories. Overall, The model's interpretability lies in its transparent structure, 
+allowing us to trace how each feature contributes to the final classification. 
+This is particularly valuable for validating predictions and identifying potential biases in the training data.
+
