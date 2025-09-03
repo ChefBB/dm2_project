@@ -2,3 +2,9 @@
 *.log
 __pycache__/
 .env
+report/*.aux
+report/*.fdb_latexmk
+report/*.out
+report/*.pdf
+report/*.synctex.gz
+report/*.toc
