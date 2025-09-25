@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.6.14)  23 SEP 2025 22:08
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.6.14)  25 SEP 2025 11:43
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -956,17 +956,31 @@ File: plotsss/rf_top18_actual_vs_predicted.png Graphic file (type png)
 Package pdftex.def Info: plotsss/rf_top18_actual_vs_predicted.png  used on input line 58.
 (pdftex.def)             Requested size: 338.58632pt x 278.77556pt.
 ) (./ts.tex [21 <./plotsss/rf_top18_actual_vs_predicted.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 64--68
+
+ []
+
 <plotsss/ts_loss_acc.png, id=401, 729.927pt x 284.0211pt>
 File: plotsss/ts_loss_acc.png Graphic file (type png)
 <use plotsss/ts_loss_acc.png>
-Package pdftex.def Info: plotsss/ts_loss_acc.png  used on input line 96.
-(pdftex.def)             Requested size: 435.32422pt x 169.39119pt.
-<plotsss/rnn_cm.png, id=403, 325.215pt x 339.669pt>
+Package pdftex.def Info: plotsss/ts_loss_acc.png  used on input line 73.
+(pdftex.def)             Requested size: 483.69687pt x 188.2129pt.
+<plotsss/rnn_cm.png, id=402, 325.215pt x 339.669pt>
 File: plotsss/rnn_cm.png Graphic file (type png)
 <use plotsss/rnn_cm.png>
-Package pdftex.def Info: plotsss/rnn_cm.png  used on input line 114.
-(pdftex.def)             Requested size: 169.29684pt x 176.82584pt.
-) [22 <./plotsss/ts_loss_acc.png>] [23 <./plotsss/rnn_cm.png>] (./main.aux)
+Package pdftex.def Info: plotsss/rnn_cm.png  used on input line 91.
+(pdftex.def)             Requested size: 198.31747pt x 207.13559pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 97--99
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 109--112
+
+ []
+
+[22 <./plotsss/ts_loss_acc.png>]) [23 <./plotsss/rnn_cm.png>] (./main.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-02-20>
@@ -982,18 +996,18 @@ Package rerunfilecheck Info: File `main.out' has not changed.
 (rerunfilecheck)             Checksum: 22CB4ED58268E16D7BB97A2137C0D8B1;4453.
  ) 
 Here is how much of TeX's memory you used:
- 20607 strings out of 474116
- 389586 string characters out of 5743682
+ 20609 strings out of 474116
+ 389626 string characters out of 5743682
  1946187 words of memory out of 5000000
- 42569 multiletter control sequences out of 15000+600000
+ 42570 multiletter control sequences out of 15000+600000
  624897 words of font info for 81 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  75i,13n,79p,451b,1036s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmbx10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmbx12.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmbx7.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmbx9.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmmi10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmr10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmr7.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmr9.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmri10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmri12.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmsy10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmsy7.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmtt10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmtt8.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmtt9.pfb>
-Output written on main.pdf (24 pages, 2369338 bytes).
+Output written on main.pdf (24 pages, 2386208 bytes).
 PDF statistics:
- 512 PDF objects out of 1000 (max. 8388607)
- 385 compressed objects within 4 object streams
- 89 named destinations out of 1000 (max. 500000)
+ 514 PDF objects out of 1000 (max. 8388607)
+ 387 compressed objects within 4 object streams
+ 90 named destinations out of 1000 (max. 500000)
  393 words of extra memory for PDF output out of 10000 (max. 10000000)
 

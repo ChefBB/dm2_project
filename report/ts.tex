@@ -48,71 +48,98 @@ As the last model, a Recurrent Neural Network (RNN) was implemented,
 because of the suitability of RNNs for sequential data.
 
 The architecture of the model is composed of multiple Long-Short Term Memory (LSTM)
-layers, with 20\% Dropout layers in between to prevent overfitting.
-The LSTM layers follow a pyramid structure, with a decreasing number of units
-(32, 16, 8).
+layers, with 30\% Dropout layers in between to prevent overfitting.
+There are four LSTM layers, set up in a pyramid structure.
+Their number of units are 32, followed by two layers with 16 units each, and
+finally a layer with 8 units. The second 16 units layer was found to improve
+performance slightly, showing the need for a deeper architecture.
 
-The last two layers are a MaxPooling1D layer, which reduces the dimensionality
-of the data, and a Dense layer with a softmax activation function to output
-class probabilities.
-Between the two, a Flatten layer is used to convert the 2D output of the
-MaxPooling1D layer into a 1D vector, suitable for the Dense layer. A 30\%
-Dropout layer is also applied before the Dense layer.
+The last part of the model is composed of a MaxPooling1D layer to reduce the
+dimensionality of the data, followed by a Flatten layer to convert the 2D output
+in a vector. The final output is provided by a Dense layer with a softmax
+activation function to output class probabilities.
+A 40\% Dropout layer for regularization is also applied before the Dense layer.
 
 
 The model was trained using the Adam optimizer and categorical cross-entropy
 loss function; early stopping was employed to halt training if the validation
 loss did not improve for 10 consecutive epochs.
-The model was trained for a maximum of 500 epochs with a batch size of 32.
+The model was trained for a maximum of 500 epochs with a batch size of 32.\\
 
-% \begin{figure}[H]
-%     \centering
-%     \begin{minipage}{0.6\textwidth}
-%         As the last model, a Recurrent Neural Network (RNN) was implemented.
-%         This choice was made because RNNs are designed for sequential data.
-%         Figure \ref{fig:rnn_model} shows the architecture of the model,
-%         which consists of multiple Long-Short Term Memory (LSTM) layers,
-%         with Dropout layers in between to prevent overfitting.
-%         The last two layers are a MaxPooling1D layer, which reduces the dimensionality of the data,
-%         and a Dense layer with a softmax activation function to output class probabilities.
-%         The LSTM layers follow a pyramid structure, with a decreasing number of units.
-%         The model was trained using the Adam optimizer and categorical cross-entropy loss function;
-%         early stopping was employed to halt training if the validation loss did not improve
-%         for 10 consecutive epochs.
-%         The model was trained for a maximum of 500 epochs with a batch size of 32.
-%     \end{minipage}
-%     \hfill
-%     \begin{minipage}{0.35\textwidth}
-%         \includegraphics[width=\textwidth]{plotsss/rnn_ts.png}
-%         \captionof{figure}{RNN model architecture}
-%         \label{fig:rnn_model}
-%     \end{minipage}
-% \end{figure}
-
-Figure~\ref{fig:loss_acc} shows the training and validation loss and accuracy
-over epochs.
+Figure~\ref{fig:loss_acc} shows the evolution of training and validation loss
+and accuracy over epochs.
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.9\textwidth]{plotsss/ts_loss_acc.png}
+    \includegraphics[width=1\textwidth]{plotsss/ts_loss_acc.png}
     \caption{Training and validation loss and accuracy over epochs}
     \label{fig:loss_acc}
 \end{figure}
 
-The loss graph shows a steady decrease about halfway through training.
-At this point, it records a sharp decrease in loss, followed by another
-period of steady decrease.
+Both metrics report a sharp improvement around the 30th epoch,
+while the rest of the training is more gentle.
+
+Training loss and accuracy show instability throughout the epochs,
+due to small dataset size as well as the Dropout layers.
+Validation loss is more stable, and validation accuracy records more
+gentle changes.
+
 
 
 \begin{figure}[H]
     \centering
-    \begin{minipage}{0.6\textwidth}
-        Figure~\ref{fig:cm_rnn} shows the confusion matrix for the RNN
-        model on the test set.
-    \end{minipage}
-    \hfill
-    \begin{minipage}{0.35\textwidth}
+    \begin{minipage}{0.41\textwidth}
         \includegraphics[width=1\textwidth]{plotsss/rnn_cm.png}
         \caption{Confusion matrix for the RNN model on the test set}
         \label{fig:cm_rnn}
     \end{minipage}
+    \hfill
+    \begin{minipage}{0.55\textwidth}
+        Figure~\ref{fig:cm_rnn} shows the confusion matrix for the RNN
+        model on the test set.\\
+
+        The \textbf{Medium High} class obtains very few predictions
+        compared to other classes, even with respect to the lowest-represented class
+        (\textbf{Medium}).
+        From testing with different architectures and
+        learning rates, it was clear that this class is difficult to distinguish from
+        the nearby \textbf{Medium} and \textbf{High} classes.
+        In fact, the models that obtained highest accuracy were discarded because
+        they mostly ignored the class altogether.
+
+        Another struggling class is \textbf{Medium}. Despite being the second most represented
+        class, it is often confused with the least represented class, \textbf{Low}.
+        This is probably due to the two classes having a part of overlapping viewership patterns.\\
+
+        It's also worth menthioning that these issues can be attributed to the low
+        number of samples in the dataset. This makes it difficult for the model
+        to learn the patterns of each class effectively.
+    \end{minipage}
 \end{figure}
+
+Table~\ref{tab:macro_weighted_avg} shows the macro and weighted average precision,
+recall, and F1-score for the RNN model.
+The final model's accuracy is not a satisfactory result.
+However, considering the small size of the dataset and
+class imbalance and overlap, it is reasonable.
+As mentioned before, better accuracies were
+obtained by models that gave up on the \textbf{Medium High} class, and often
+the \textbf{Low} class as well. This is because these two classes are the
+least represented, making it difficult for the model to learn their patterns.
+Other tested architectures and hyperparamenters were discarded either becuase of
+poorer performances, or because they entirely ignored these two classes.
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{lccc}
+        \toprule
+        \textbf{Metric} & \textbf{Precision} & \textbf{Recall} & \textbf{F1-score} \\
+        \midrule
+        \textbf{Macro avg}    & 0.35 & 0.42 & 0.36 \\
+        \textbf{Weighted avg} & 0.40 & 0.42 & 0.40 \\
+        \midrule
+        \textbf{Accuracy}     & & & 0.42 \\
+        \bottomrule
+    \end{tabular}
+    \caption{Macro and weighted average precision, recall, and F1-score for the RNN model}
+    \label{tab:macro_weighted_avg}
+\end{table}
