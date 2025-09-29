@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1758793386.22793 "/Users/brunobarbieri/Documents/Uni/master/first/second_sem/dm2/dm2_project/report/main.tex" "main.pdf" "main" 1758793391.47719 0
+["pdflatex"] 1759132835.33233 "/Users/brunobarbieri/Documents/Uni/master/first/second_sem/dm2/dm2_project/report/main.tex" "main.pdf" "main" 1759132842.59588 0
   "/Users/brunobarbieri/Documents/Uni/master/first/second_sem/dm2/dm2_project/report/main.tex" 1758095138.77977 3361 2556e211e8ca02d3d6d1c3caa8eff162 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc" 1254269338 2375 baa924870cfb487815765f9094cf3728 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc" 1202520719 2405 5dcf2c1b967ee25cc46c58cd52244aed ""
@@ -168,10 +168,10 @@
   "cherubino_pant541.pdf" 1746536830.58058 91616 7b7710d7bb6492a9499117b6fe225974 ""
   "imbalanced_learning.tex" 1756852165.73666 10274 5a42d24468d7d02d23135892e34b8b92 ""
   "introduction.tex" 1758095138.7665 578 02ca444ff8edb3d9a74c8a6f6b0f5da2 ""
-  "main.aux" 1758793391.06471 19372 ae49d6a5deba45de9acd5e8e6262b906 "pdflatex"
-  "main.out" 1758793391.06891 4453 22cb4ed58268e16d7bb97a2137c0d8b1 "pdflatex"
+  "main.aux" 1759132842.26088 19372 ae49d6a5deba45de9acd5e8e6262b906 "pdflatex"
+  "main.out" 1759132842.26674 4453 22cb4ed58268e16d7bb97a2137c0d8b1 "pdflatex"
   "main.tex" 1758095138.77977 3361 2556e211e8ca02d3d6d1c3caa8eff162 ""
-  "main.toc" 1758793391.06964 2476 d68392a1bb096c8843051c81c7fdd2c0 "pdflatex"
+  "main.toc" 1759132842.26793 2476 d68392a1bb096c8843051c81c7fdd2c0 "pdflatex"
   "outliers.tex" 1756852165.79575 6372 719b36b52237b0e808f4a9510aba26d6 ""
   "plotsss/ABOD.png" 1758095138.78503 254181 69c92e9d5dced08be5eb0aa2f29396de ""
   "plotsss/GBM_ROC_rating.png" 1756909025.89055 73657 77d2b5a98b51fa58f1a83d285d356d67 ""
@@ -204,7 +204,7 @@
   "plotsss/roc_rf_titletype.png" 1756720121.86023 62065 4f2d16bb03c395edb1027e54e547df75 ""
   "plotsss/title_coeff.png" 1758095138.82659 17640 15d7fd72fa99c82052046c7edafe4859 ""
   "plotsss/ts_loss_acc.png" 1758786517.25981 87113 dbd453ced1bac2f4d339a46630edf0c1 ""
-  "ts.tex" 1758793385.92285 7149 d1cf3f5e321ec88a1b85ec4e4d5607cc ""
+  "ts.tex" 1759132834.39345 7606 4a231a5aa09e9e29b4551bdf18c05253 ""
   "understanding_preparation.tex" 1758095138.83326 8013 e9fa9334acae923cc63f687622455a34 ""
   (generated)
   "main.aux"

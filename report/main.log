@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.6.14)  25 SEP 2025 11:43
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.6.14)  29 SEP 2025 10:00
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -956,27 +956,27 @@ File: plotsss/rf_top18_actual_vs_predicted.png Graphic file (type png)
 Package pdftex.def Info: plotsss/rf_top18_actual_vs_predicted.png  used on input line 58.
 (pdftex.def)             Requested size: 338.58632pt x 278.77556pt.
 ) (./ts.tex [21 <./plotsss/rf_top18_actual_vs_predicted.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 64--68
+Underfull \hbox (badness 10000) in paragraph at lines 73--77
 
  []
 
 <plotsss/ts_loss_acc.png, id=401, 729.927pt x 284.0211pt>
 File: plotsss/ts_loss_acc.png Graphic file (type png)
 <use plotsss/ts_loss_acc.png>
-Package pdftex.def Info: plotsss/ts_loss_acc.png  used on input line 73.
+Package pdftex.def Info: plotsss/ts_loss_acc.png  used on input line 82.
 (pdftex.def)             Requested size: 483.69687pt x 188.2129pt.
 <plotsss/rnn_cm.png, id=402, 325.215pt x 339.669pt>
 File: plotsss/rnn_cm.png Graphic file (type png)
 <use plotsss/rnn_cm.png>
-Package pdftex.def Info: plotsss/rnn_cm.png  used on input line 91.
+Package pdftex.def Info: plotsss/rnn_cm.png  used on input line 100.
 (pdftex.def)             Requested size: 198.31747pt x 207.13559pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 97--99
+Underfull \hbox (badness 10000) in paragraph at lines 106--108
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 109--112
+Underfull \hbox (badness 10000) in paragraph at lines 118--121
 
  []
 
@@ -1004,7 +1004,7 @@ Here is how much of TeX's memory you used:
  1141 hyphenation exceptions out of 8191
  75i,13n,79p,451b,1036s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmbx10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmbx12.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmbx7.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmbx9.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmmi10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmr10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmr7.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmr9.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmri10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmri12.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmsy10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmsy7.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmtt10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmtt8.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmtt9.pfb>
-Output written on main.pdf (24 pages, 2386208 bytes).
+Output written on main.pdf (24 pages, 2386442 bytes).
 PDF statistics:
  514 PDF objects out of 1000 (max. 8388607)
  387 compressed objects within 4 object streams
