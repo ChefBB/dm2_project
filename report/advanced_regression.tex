@@ -67,3 +67,20 @@ While the model captures the general pattern, deviations occur, particularly at 
 This indicates that the model explains a substantial portion of the variance, but there remains considerable unexplained variability.
 
 % Questione cross validation ???
+
+\subsection{Neural Network Regression}
+A feedforward neural network was also implemented for the regression task.
+
+Table~\ref{tab:nn_metrics} summarizes the performance of the neural network on the test set.
+\begin{table}[h]
+    \centering
+    \begin{tabular}{lcc}
+        \hline
+        \textbf{MAE} & \textbf{MSE} & \textbf{R\textsuperscript{2}} \\
+        \hline
+        0.7463 & 1.0791 & 0.4067 \\
+        \hline
+    \end{tabular}
+    \caption{Performance of the Neural Network Regressor on the test set.}
+    \label{tab:nn_metrics}
+\end{table}

@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1759132835.33233 "/Users/brunobarbieri/Documents/Uni/master/first/second_sem/dm2/dm2_project/report/main.tex" "main.pdf" "main" 1759132842.59588 0
+["pdflatex"] 1759141791.78752 "/Users/brunobarbieri/Documents/Uni/master/first/second_sem/dm2/dm2_project/report/main.tex" "main.pdf" "main" 1759141796.07606 0
   "/Users/brunobarbieri/Documents/Uni/master/first/second_sem/dm2/dm2_project/report/main.tex" 1758095138.77977 3361 2556e211e8ca02d3d6d1c3caa8eff162 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc" 1254269338 2375 baa924870cfb487815765f9094cf3728 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc" 1202520719 2405 5dcf2c1b967ee25cc46c58cd52244aed ""
@@ -164,14 +164,14 @@
   "/usr/local/texlive/2024/texmf-var/web2c/pdftex/pdflatex.fmt" 1718359419 8221430 7882b9a7879b697c1714b9ec0b6e673c ""
   "/usr/local/texlive/2024/texmf.cnf" 1710266656 577 e590dabc9e28c5b61546e15f63eebcdf ""
   "advanced_classification.tex" 1758715927.02684 52270 a1d53ed9a4012a7cd07e707a47181d0a ""
-  "advanced_regression.tex" 1756629611.59737 4127 8c7e9a515a6d0855438a2acd86da03c9 ""
+  "advanced_regression.tex" 1759141791.21589 4677 bcaa738c79b5fb93859fff78de4f0680 ""
   "cherubino_pant541.pdf" 1746536830.58058 91616 7b7710d7bb6492a9499117b6fe225974 ""
   "imbalanced_learning.tex" 1756852165.73666 10274 5a42d24468d7d02d23135892e34b8b92 ""
   "introduction.tex" 1758095138.7665 578 02ca444ff8edb3d9a74c8a6f6b0f5da2 ""
-  "main.aux" 1759132842.26088 19372 ae49d6a5deba45de9acd5e8e6262b906 "pdflatex"
-  "main.out" 1759132842.26674 4453 22cb4ed58268e16d7bb97a2137c0d8b1 "pdflatex"
+  "main.aux" 1759141795.74252 19802 cfa1614b1da83e9760c10aa32c16f645 "pdflatex"
+  "main.out" 1759141795.74608 4642 39b65acbb142c7184c53c05ba6b146dd "pdflatex"
   "main.tex" 1758095138.77977 3361 2556e211e8ca02d3d6d1c3caa8eff162 ""
-  "main.toc" 1759132842.26793 2476 d68392a1bb096c8843051c81c7fdd2c0 "pdflatex"
+  "main.toc" 1759141795.74668 2568 6daf4f7967d184941ea3999657b66588 "pdflatex"
   "outliers.tex" 1756852165.79575 6372 719b36b52237b0e808f4a9510aba26d6 ""
   "plotsss/ABOD.png" 1758095138.78503 254181 69c92e9d5dced08be5eb0aa2f29396de ""
   "plotsss/GBM_ROC_rating.png" 1756909025.89055 73657 77d2b5a98b51fa58f1a83d285d356d67 ""

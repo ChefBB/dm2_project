@@ -22,6 +22,7 @@
 \contentsline {subsubsection}{\numberline {4.7.2}averageRating}{19}{subsubsection.4.7.2}%
 \contentsline {section}{\numberline {5}Advanced Regression}{20}{section.5}%
 \contentsline {subsection}{\numberline {5.1}Random Forest Regression}{20}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}Neural Network Regression}{21}{subsection.5.2}%
 \contentsline {section}{\numberline {6}Time Series Analysis}{21}{section.6}%
 \contentsline {subsection}{\numberline {6.1}Data Understanding}{21}{subsection.6.1}%
 \contentsline {subsection}{\numberline {6.2}Motifs and Anomalies Discovery}{22}{subsection.6.2}%
