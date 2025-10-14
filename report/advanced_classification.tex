@@ -648,14 +648,14 @@ best configuration found.\\
     \begin{subfigure}[b]{0.48\textwidth}
         \centering
         \includegraphics[width=\textwidth]{plotsss/loss_rating.png}
-        \caption{Loss - Neural Network}
+        % \caption{Loss - Neural Network}
         \label{fig:loss_nn_rating}
     \end{subfigure}
     \hfill
     \begin{subfigure}[b]{0.48\textwidth}
         \centering
         \includegraphics[width=\textwidth]{plotsss/accuracy_rating.png}
-        \caption{Accuracy - Neural Network}
+        % \caption{Accuracy - Neural Network}
         \label{fig:accuracy_nn_rating}
     \end{subfigure}
     \caption{Training and validation loss and accuracy for the neural network on the \texttt{averageRating} classification task.}
@@ -724,6 +724,33 @@ best configuration found.\\
 \end{figure}
 
 % conf matrix and roc titletype
+
+\begin{table}[H]
+    %        movie       0.95      0.89      0.92     12947
+    %        short       0.89      0.94      0.92      4994
+    %    tvEpisode       0.98      0.92      0.95     21249
+    %     tvSeries       0.79      0.97      0.87      3247
+    %    tvSpecial       0.13      0.75      0.22       345
+    %        video       0.49      0.27      0.35      1545
+
+    %     accuracy                           0.90     44327
+    %    macro avg       0.71      0.79      0.70     44327
+    % weighted avg       0.92      0.90      0.91     44327
+    \centering
+    \begin{tabular}{lccc}
+    \hline
+     & \textbf{Precision} & \textbf{Recall} & \textbf{F1-score}\\
+    \hline
+    \textbf{Macro avg}   & 0.71 & 0.79 & 0.70 \\
+    \textbf{Weighted avg}& 0.92 & 0.90 & 0.91 \\
+    \hline
+    \textbf{Accuracy}    & & & 0.90 \\
+    \hline
+    \end{tabular}
+    \caption{Classification performances for the neural network on the \texttt{titleType} classification task.}
+    \label{tab:nn_report_titletype}
+\end{table}
+
 
 \begin{figure}[H]
     \centering

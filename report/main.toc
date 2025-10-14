@@ -23,9 +23,9 @@
 \contentsline {section}{\numberline {5}Advanced Regression}{20}{section.5}%
 \contentsline {subsection}{\numberline {5.1}Random Forest Regression}{20}{subsection.5.1}%
 \contentsline {subsection}{\numberline {5.2}Neural Network Regression}{21}{subsection.5.2}%
-\contentsline {section}{\numberline {6}Time Series Analysis}{21}{section.6}%
-\contentsline {subsection}{\numberline {6.1}Data Understanding}{21}{subsection.6.1}%
-\contentsline {subsection}{\numberline {6.2}Motifs and Anomalies Discovery}{22}{subsection.6.2}%
-\contentsline {subsection}{\numberline {6.3}Clustering}{22}{subsection.6.3}%
-\contentsline {subsection}{\numberline {6.4}Classification}{22}{subsection.6.4}%
-\contentsline {subsubsection}{\numberline {6.4.1}Recurrent Neural Network}{22}{subsubsection.6.4.1}%
+\contentsline {section}{\numberline {6}Time Series Analysis}{22}{section.6}%
+\contentsline {subsection}{\numberline {6.1}Data Understanding}{22}{subsection.6.1}%
+\contentsline {subsection}{\numberline {6.2}Motifs and Anomalies Discovery}{23}{subsection.6.2}%
+\contentsline {subsection}{\numberline {6.3}Clustering}{23}{subsection.6.3}%
+\contentsline {subsection}{\numberline {6.4}Classification}{23}{subsection.6.4}%
+\contentsline {subsubsection}{\numberline {6.4.1}Recurrent Neural Network}{23}{subsubsection.6.4.1}%
