@@ -605,62 +605,115 @@ correctly identifying the more represented classes.
 \subsection{Neural Networks}
 
 For both classification tasks, a feedforward neural network was
-implemented.\\
+implemented.
+In both cases, the train split was 60\%, the validation split
+20\% and the test split 20\%. For both tasks, these splits
+were stratified according to the target variable.
 
-% Input(shape=(X_train.shape[1],)),
-    % Dense(8, activation='relu'),
-    % Dense(16, activation='relu'),
-    % Dense(32, activation='relu'),
-    % Dense(64, activation='relu'),
-    % Dense(32, activation='relu'),
-    % Dropout(0.2),
-    % Dense(16, activation='relu'),
-    % Dense(8, activation='relu'),
-    % Dense(6, activation='softmax')
-For the \texttt{averageRating} task, the architecture consists of
-an input layer, six hidden layers with ReLU activation, forming a
-diamond shape (increasing and then decreasing number of neurons),
-a dropout layer (rate 0.2) to prevent overfitting, and an output
-layer with softmax activation for multi-class classification.\\
-The model was compiled with the Adam optimizer, categorical
-cross-entropy loss, and accuracy as the evaluation metric.
-No early stopping was used, in order to observe the full
-training dynamics. Training was set to last for 500 epochs, with a
-batch size of 64 and a validation split of 20\%.
+\subsubsection{Rating task}
+This first neural network initially has four branches:
+\begin{itemize}
+    \item \texttt{titleType}: handles the titleType feature, through
+    an Embedding layer, followed by a Flatten layer and
+    a Dense layer with 8 units and swish (\textbf{Sigmoid Linear Unit})
+    activation;
+    \item \texttt{region}: handles the region feature, through
+    a Dense layer with 8 units and swish activation;
+    \item \texttt{genre}: handles the genre feature, through
+    a Dense layer with 8 units and swish activation;
+    \item \texttt{numerical}: handles the other numerical
+    features, through a Dense layer with 96 units
+    and swish activation.
+\end{itemize}
+The outputs of the four branches are then concatenated and
+fed into five Dense layers with 256, 128, 64, 64 and 32 units and
+swish activation.
+The output layer has 6 units (one for each class) and
+softmax activation.
+For each Dense layer, Batch Normalization is applied,
+in order to stabilize and speed up training.
+A dropout of 0.2 is also applied everywhere but in the input
+branches, to reduce overfitting. More aggressive dropout rates
+were tested, but generally lead to worse performances.
+
+The optimizer used was Adam with a learning rate of 0.0006,
+and the loss function was Categorical Crossentropy.
+The model was trained for a maximum of 500 epochs, with early
+stopping based on validation loss with a patience of 20 epochs.
+The batch size used was 64, and balanced class weights were used to
+address class imbalance.\\
 
 
-Figures~\ref{fig:loss_nn_rating} and~\ref{fig:accuracy_nn_rating}
-show the training and validation loss and accuracy over epochs.
-The training loss shows a steady decrease, while the validation loss
-stops improving after around 100 to 150 epochs.
-A similar trend is observed in the accuracy plot, although the
-end of the the rise can be found after around 200 epochs.
-Neither graph shows particular signs of overfitting, but
-the stagnation of the validation metrics suggests that the model
-could benefit from further regularization.
-Experiments were made with different dropout rates and configurations,
-as well as different training batch sizes and learning rates,
-in an attempt to improve generalizaiton, but this remained the
-best configuration found.\\
+Figure~\ref{fig:nn_performance_rating}
+shows the training and validation loss and accuracy over epochs.
+While both graphs show a steady improvement in loss and accuracy
+over the epochs for training data, the validation curves
+tend to flatten out after some epochs, with a bit of instability
+in both metrics.
+That being said, for the number of epochs before fulfilling
+the early stopping condition, overfitting is not an issue for
+performances, and although slight, there is still improvement
+until stopping.\\
+
 
 \begin{figure}[H]
     \centering
-    \begin{subfigure}[b]{0.48\textwidth}
+    \begin{subfigure}[b]{0.49\textwidth}
         \centering
         \includegraphics[width=\textwidth]{plotsss/loss_rating.png}
         % \caption{Loss - Neural Network}
         \label{fig:loss_nn_rating}
     \end{subfigure}
     \hfill
-    \begin{subfigure}[b]{0.48\textwidth}
+    \begin{subfigure}[b]{0.49\textwidth}
         \centering
         \includegraphics[width=\textwidth]{plotsss/accuracy_rating.png}
         % \caption{Accuracy - Neural Network}
         \label{fig:accuracy_nn_rating}
     \end{subfigure}
-    \caption{Training and validation loss and accuracy for the neural network on the \texttt{averageRating} classification task.}
+    \caption{Training and validation loss and accuracy on the \texttt{averageRating} classification task.}
     \label{fig:nn_performance_rating}
 \end{figure}
+
+Table~\ref{tab:nn_report_rating} summarizes the classification
+report for the neural network.
+Performances are limited, but this configuration was found to
+be the best among those tested, sinc eother architectures and
+parameter settings led to either worse results or they ignored
+minority classes, as shown in the confusion matrix in figure
+\ref{fig:cm_nn_rating}. With respect to the other reported models,
+the neural network particularly underperforms on the \texttt{[7, 8)}
+class, but spreads predictions more evenly across other classes.
+
+Another important observation is that for each class, the highest
+misclassified classes are adjacent ones,
+which is expected given the ordinal nature of the target variable.
+
+Figure~\ref{fig:roc_nn_rating} shows the ROC curve for the neural
+network. All classes are well above the random classifier line,
+with AUCs ranging from 0.67 to 0.84, indicating that the model
+still represents a good improvement over random guessing.
+The best AUCs are achieved by the most underrepresented classes
+(\texttt{[1, 5)} and \texttt{[9, 10)}), suggesting that
+the model is better at identifying extreme ratings, while
+intermediate ones are harder to distinguish.
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{lccc}
+    \hline
+     & \textbf{Precision} & \textbf{Recall} & \textbf{F1-score}\\
+    \hline
+    \textbf{Macro avg}   & 0.34 & 0.40 & 0.34 \\
+    \textbf{Weighted avg}& 0.40 & 0.35 & 0.36 \\
+    \hline
+    \textbf{Accuracy}    & & & 0.35 \\
+    \hline
+    \end{tabular}
+    \caption{Classification performances for the neural network on the \texttt{averageRating} classification task.}
+    \label{tab:nn_report_rating}
+\end{table}
+
 
 \begin{figure}[H]
     \centering
@@ -682,26 +735,38 @@ best configuration found.\\
 \end{figure}
 
 
-\begin{table}
-    \centering
-    \begin{tabular}{lccc}
-    \hline
-     & \textbf{Precision} & \textbf{Recall} & \textbf{F1-score}\\
-    \hline
-    \textbf{Macro avg}   & 0.39 & 0.29 & 0.29 \\
-    \textbf{Weighted avg}& 0.39 & 0.40 & 0.36 \\
-    \hline
-    \textbf{Accuracy}    & & & 0.40 \\
-    \hline
-    \end{tabular}
-    \caption{Classification performances for the neural network on the \texttt{averageRating} classification task.}
-    \label{tab:nn_report_rating}
-\end{table}
-
-
 % -------------------------------------------------------------------------------
 % titletype task
 % -------------------------------------------------------------------------------
+\subsubsection{Titletype task}
+The neural network's architecture for the \texttt{titleType}
+classification task has three inputs:
+\begin{itemize}
+    \item \texttt{region}: handles the region feature, through
+    a Dense layer with 8 units and ReLU activation;
+    \item \texttt{genre}: handles the genre feature, through
+    a Dense layer with 8 units and ReLU activation;
+    \item \texttt{numerical}: handles the other numerical
+    features, through a Dense layer with 112 units and ReLU
+    activation.
+\end{itemize}
+The outputs of the three branches are then concatenated and
+passed to two Dense layers with 64 and 32 units respectively,
+each with ReLU activation.
+The output layer has 6 units (one for each class) and
+softmax activation.
+For each Dense layer, Batch Normalization is applied,
+to achieve better stability.
+A dropout of 0.2 is also applied everywhere but in the input
+branches.
+
+The optimizer's setup and training procedure are the same as for
+the \texttt{averageRating} task reported in the previous section,
+except for the optimizer's learning rate, which was set to
+0.0001.\\
+
+Figures~\ref{fig:nn_performance_titletype}
+shows the training and validation loss and accuracy over epochs.
 
 
 \begin{figure}[H]
@@ -709,40 +774,30 @@ best configuration found.\\
     \begin{subfigure}[b]{0.48\textwidth}
         \centering
         \includegraphics[width=\textwidth]{plotsss/loss_titletype.png}
-        \caption{Loss - Neural Network}
+        % \caption{Loss - Neural Network}
         \label{fig:loss_nn_titletype}
     \end{subfigure}
     \hfill
     \begin{subfigure}[b]{0.48\textwidth}
         \centering
         \includegraphics[width=\textwidth]{plotsss/accuracy_titletype.png}
-        \caption{Accuracy - Neural Network}
+        % \caption{Accuracy - Neural Network}
         \label{fig:accuracy_nn_titletype}
     \end{subfigure}
-    \caption{Training and validation loss and accuracy for the neural network on the \texttt{titleType} classification task.}
+    \caption{Training and validation loss and accuracy on the \texttt{titleType} classification task.}
     \label{fig:nn_performance_titletype}
 \end{figure}
 
 % conf matrix and roc titletype
 
 \begin{table}[H]
-    %        movie       0.95      0.89      0.92     12947
-    %        short       0.89      0.94      0.92      4994
-    %    tvEpisode       0.98      0.92      0.95     21249
-    %     tvSeries       0.79      0.97      0.87      3247
-    %    tvSpecial       0.13      0.75      0.22       345
-    %        video       0.49      0.27      0.35      1545
-
-    %     accuracy                           0.90     44327
-    %    macro avg       0.71      0.79      0.70     44327
-    % weighted avg       0.92      0.90      0.91     44327
     \centering
     \begin{tabular}{lccc}
     \hline
      & \textbf{Precision} & \textbf{Recall} & \textbf{F1-score}\\
     \hline
-    \textbf{Macro avg}   & 0.71 & 0.79 & 0.70 \\
-    \textbf{Weighted avg}& 0.92 & 0.90 & 0.91 \\
+    \textbf{Macro avg}   & 0.70 & 0.82 & 0.73 \\
+    \textbf{Weighted avg}& 0.93 & 0.90 & 0.91 \\
     \hline
     \textbf{Accuracy}    & & & 0.90 \\
     \hline
@@ -768,7 +823,7 @@ best configuration found.\\
         \label{fig:roc_nn_titletype}
     \end{subfigure}
     \caption{Confusion Matrix and ROC Curve for the Neural Network on the \texttt{titleType} classification task.}
-    \label{fig:cm_nn_titletype}
+    \label{fig:cm_roc_nn_titletype}
 \end{figure}
 
 \subsection{Gradient Boosting Machines}
