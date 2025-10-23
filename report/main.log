@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.6.14)  18 OCT 2025 17:36
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.6.14)  23 OCT 2025 10:52
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -866,91 +866,91 @@ Underfull \hbox (badness 10000) in paragraph at lines 763--767
 
  []
 
-<plotsss/loss_titletype.png, id=335, 387.3672pt x 284.0211pt>
+<plotsss/loss_titletype.png, id=335, 393.8715pt x 284.0211pt>
 File: plotsss/loss_titletype.png Graphic file (type png)
 <use plotsss/loss_titletype.png>
-Package pdftex.def Info: plotsss/loss_titletype.png  used on input line 776.
-(pdftex.def)             Requested size: 232.17242pt x 170.23195pt.
+Package pdftex.def Info: plotsss/loss_titletype.png  used on input line 783.
+(pdftex.def)             Requested size: 237.01411pt x 170.91235pt.
 <plotsss/accuracy_titletype.png, id=336, 393.8715pt x 284.0211pt>
 File: plotsss/accuracy_titletype.png Graphic file (type png)
 <use plotsss/accuracy_titletype.png>
-Package pdftex.def Info: plotsss/accuracy_titletype.png  used on input line 783.
-(pdftex.def)             Requested size: 232.17242pt x 167.42365pt.
-<plotsss/cm_nn_titletype.png, id=337, 352.6776pt x 328.8285pt>
+Package pdftex.def Info: plotsss/accuracy_titletype.png  used on input line 790.
+(pdftex.def)             Requested size: 237.01411pt x 170.91235pt.
+<plotsss/cm_nn_titletype.png, id=338, 352.6776pt x 328.8285pt>
 File: plotsss/cm_nn_titletype.png Graphic file (type png)
 <use plotsss/cm_nn_titletype.png>
-Package pdftex.def Info: plotsss/cm_nn_titletype.png  used on input line 814.
+Package pdftex.def Info: plotsss/cm_nn_titletype.png  used on input line 829.
 (pdftex.def)             Requested size: 227.3381pt x 211.96481pt.
-<plotsss/roc_nn_titletype.png, id=338, 387.3672pt x 339.669pt>
+<plotsss/roc_nn_titletype.png, id=339, 387.3672pt x 339.669pt>
 File: plotsss/roc_nn_titletype.png Graphic file (type png)
 <use plotsss/roc_nn_titletype.png>
-Package pdftex.def Info: plotsss/roc_nn_titletype.png  used on input line 821.
+Package pdftex.def Info: plotsss/roc_nn_titletype.png  used on input line 836.
 (pdftex.def)             Requested size: 241.84843pt x 212.06973pt.
 [15 <./plotsss/loss_titletype.png> <./plotsss/accuracy_titletype.png>]
-Overfull \hbox (4.10635pt too wide) in paragraph at lines 887--903
+Overfull \hbox (4.10635pt too wide) in paragraph at lines 902--918
  [][] 
  []
 
-<plotsss/GBM_confusion_title.png, id=348, 422.7795pt x 400.3758pt>
+<plotsss/GBM_confusion_title.png, id=349, 422.7795pt x 400.3758pt>
 File: plotsss/GBM_confusion_title.png Graphic file (type png)
 <use plotsss/GBM_confusion_title.png>
-Package pdftex.def Info: plotsss/GBM_confusion_title.png  used on input line 907.
+Package pdftex.def Info: plotsss/GBM_confusion_title.png  used on input line 922.
 (pdftex.def)             Requested size: 193.47578pt x 183.22816pt.
-<plotsss/GBM_ROC_title.png, id=349, 390.258pt x 341.8371pt>
+<plotsss/GBM_ROC_title.png, id=350, 390.258pt x 341.8371pt>
 File: plotsss/GBM_ROC_title.png Graphic file (type png)
 <use plotsss/GBM_ROC_title.png>
-Package pdftex.def Info: plotsss/GBM_ROC_title.png  used on input line 913.
+Package pdftex.def Info: plotsss/GBM_ROC_title.png  used on input line 928.
 (pdftex.def)             Requested size: 193.47578pt x 169.47328pt.
 [16 <./plotsss/cm_nn_titletype.png> <./plotsss/roc_nn_titletype.png>]
-Overfull \hbox (4.10635pt too wide) in paragraph at lines 944--960
+Overfull \hbox (4.10635pt too wide) in paragraph at lines 959--975
  [][] 
  []
 
-<plotsss/GBM_confusion_rating.png, id=362, 401.8212pt x 422.0568pt>
+<plotsss/GBM_confusion_rating.png, id=363, 401.8212pt x 422.0568pt>
 File: plotsss/GBM_confusion_rating.png Graphic file (type png)
 <use plotsss/GBM_confusion_rating.png>
-Package pdftex.def Info: plotsss/GBM_confusion_rating.png  used on input line 964.
+Package pdftex.def Info: plotsss/GBM_confusion_rating.png  used on input line 979.
 (pdftex.def)             Requested size: 193.47578pt x 203.22252pt.
 
-Underfull \hbox (badness 2903) in paragraph at lines 965--965
+Underfull \hbox (badness 2903) in paragraph at lines 980--980
 []\T1/lmr/m/n/10 Figure 14: |Con-fu-sion Ma-trix Gra-di-ent
  []
 
-<plotsss/GBM_ROC_rating.png, id=363, 390.258pt x 341.8371pt>
+<plotsss/GBM_ROC_rating.png, id=364, 390.258pt x 341.8371pt>
 File: plotsss/GBM_ROC_rating.png Graphic file (type png)
 <use plotsss/GBM_ROC_rating.png>
-Package pdftex.def Info: plotsss/GBM_ROC_rating.png  used on input line 970.
+Package pdftex.def Info: plotsss/GBM_ROC_rating.png  used on input line 985.
 (pdftex.def)             Requested size: 193.47578pt x 169.47328pt.
 [17 <./plotsss/GBM_confusion_title.png> <./plotsss/GBM_ROC_title.png>]
-<plotsss/Lime_title.png, id=374, 954.56625pt x 498.36188pt>
+<plotsss/Lime_title.png, id=375, 954.56625pt x 498.36188pt>
 File: plotsss/Lime_title.png Graphic file (type png)
 <use plotsss/Lime_title.png>
-Package pdftex.def Info: plotsss/Lime_title.png  used on input line 1019.
+Package pdftex.def Info: plotsss/Lime_title.png  used on input line 1034.
 (pdftex.def)             Requested size: 483.69687pt x 252.52625pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 1023--1038
+Underfull \hbox (badness 10000) in paragraph at lines 1038--1053
 
  []
 
 [18 <./plotsss/GBM_confusion_rating.png> <./plotsss/GBM_ROC_rating.png>]
-<plotsss/title_coeff.png, id=385, 444.15938pt x 116.68594pt>
+<plotsss/title_coeff.png, id=386, 444.15938pt x 116.68594pt>
 File: plotsss/title_coeff.png Graphic file (type png)
 <use plotsss/title_coeff.png>
-Package pdftex.def Info: plotsss/title_coeff.png  used on input line 1055.
+Package pdftex.def Info: plotsss/title_coeff.png  used on input line 1070.
 (pdftex.def)             Requested size: 338.58632pt x 88.9493pt.
-<plotsss/Lime_rating.png, id=386, 870.25125pt x 523.20468pt>
+<plotsss/Lime_rating.png, id=387, 870.25125pt x 523.20468pt>
 File: plotsss/Lime_rating.png Graphic file (type png)
 <use plotsss/Lime_rating.png>
-Package pdftex.def Info: plotsss/Lime_rating.png  used on input line 1064.
+Package pdftex.def Info: plotsss/Lime_rating.png  used on input line 1079.
 (pdftex.def)             Requested size: 483.69687pt x 290.81314pt.
  [19 <./plotsss/Lime_title.png> <./plotsss/title_coeff.png>]
-<plotsss/rating_coeff.png, id=396, 470.50781pt x 118.94438pt>
+<plotsss/rating_coeff.png, id=397, 470.50781pt x 118.94438pt>
 File: plotsss/rating_coeff.png Graphic file (type png)
 <use plotsss/rating_coeff.png>
-Package pdftex.def Info: plotsss/rating_coeff.png  used on input line 1086.
+Package pdftex.def Info: plotsss/rating_coeff.png  used on input line 1101.
 (pdftex.def)             Requested size: 338.58632pt x 85.5945pt.
 ) [20 <./plotsss/Lime_rating.png> <./plotsss/rating_coeff.png>] (./advanced_regression.tex
-<plotsss/rf_top18_actual_vs_predicted.png, id=407, 409.0482pt x 336.7782pt>
+<plotsss/rf_top18_actual_vs_predicted.png, id=408, 409.0482pt x 336.7782pt>
 File: plotsss/rf_top18_actual_vs_predicted.png Graphic file (type png)
 <use plotsss/rf_top18_actual_vs_predicted.png>
 Package pdftex.def Info: plotsss/rf_top18_actual_vs_predicted.png  used on input line 58.
@@ -960,23 +960,23 @@ Package pdftex.def Info: plotsss/rf_top18_actual_vs_predicted.png  used on input
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 [21]
-<plotsss/mae_nn.png, id=419, 377.2494pt x 282.5757pt>
+<plotsss/mae_nn.png, id=420, 377.2494pt x 282.5757pt>
 File: plotsss/mae_nn.png Graphic file (type png)
 <use plotsss/mae_nn.png>
 Package pdftex.def Info: plotsss/mae_nn.png  used on input line 107.
 (pdftex.def)             Requested size: 237.01411pt x 177.53639pt.
-<plotsss/mse_nn.png, id=420, 382.3083pt x 282.5757pt>
+<plotsss/mse_nn.png, id=421, 382.3083pt x 282.5757pt>
 File: plotsss/mse_nn.png Graphic file (type png)
 <use plotsss/mse_nn.png>
 Package pdftex.def Info: plotsss/mse_nn.png  used on input line 114.
 (pdftex.def)             Requested size: 237.01411pt x 175.1865pt.
-<plotsss/preds_reg_nn.png, id=424, 426.393pt x 354.123pt>
+<plotsss/preds_reg_nn.png, id=425, 426.393pt x 354.123pt>
 File: plotsss/preds_reg_nn.png Graphic file (type png)
 <use plotsss/preds_reg_nn.png>
 Package pdftex.def Info: plotsss/preds_reg_nn.png  used on input line 152.
 (pdftex.def)             Requested size: 266.03474pt x 220.94807pt.
 ) [22 <./plotsss/rf_top18_actual_vs_predicted.png> <./plotsss/mae_nn.png> <./plotsss/mse_nn.png>] (./ts.tex [23 <./plotsss/preds_reg_nn.png>]
-<plotsss/rnn_model.png, id=441, 1762.585pt x 1695.33376pt>
+<plotsss/rnn_model.png, id=442, 1762.585pt x 1695.33376pt>
 File: plotsss/rnn_model.png Graphic file (type png)
 <use plotsss/rnn_model.png>
 Package pdftex.def Info: plotsss/rnn_model.png  used on input line 89.
@@ -986,13 +986,13 @@ Underfull \hbox (badness 10000) in paragraph at lines 98--105
 
  []
 
-<plotsss/ts_loss_acc.png, id=443, 723.4227pt x 284.0211pt>
+<plotsss/ts_loss_acc.png, id=444, 723.4227pt x 284.0211pt>
 File: plotsss/ts_loss_acc.png Graphic file (type png)
 <use plotsss/ts_loss_acc.png>
 Package pdftex.def Info: plotsss/ts_loss_acc.png  used on input line 117.
 (pdftex.def)             Requested size: 483.69687pt x 189.90309pt.
 [24 <./plotsss/rnn_model.png>]
-<plotsss/rnn_cm.png, id=452, 325.215pt x 339.669pt>
+<plotsss/rnn_cm.png, id=453, 325.215pt x 339.669pt>
 File: plotsss/rnn_cm.png Graphic file (type png)
 <use plotsss/rnn_cm.png>
 Package pdftex.def Info: plotsss/rnn_cm.png  used on input line 136.
@@ -1018,10 +1018,10 @@ Here is how much of TeX's memory you used:
  1141 hyphenation exceptions out of 8191
  75i,15n,79p,451b,1036s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmbx10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmbx12.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmbx7.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmbx9.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmmi10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmr10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmr7.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmr9.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmri10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmri12.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmsy10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmsy7.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmtt10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmtt8.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmtt9.pfb>
-Output written on main.pdf (26 pages, 2672885 bytes).
+Output written on main.pdf (26 pages, 2693259 bytes).
 PDF statistics:
- 562 PDF objects out of 1000 (max. 8388607)
- 424 compressed objects within 5 object streams
+ 563 PDF objects out of 1000 (max. 8388607)
+ 425 compressed objects within 5 object streams
  99 named destinations out of 1000 (max. 500000)
  437 words of extra memory for PDF output out of 10000 (max. 10000000)
 

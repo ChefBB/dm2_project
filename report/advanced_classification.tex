@@ -763,22 +763,29 @@ branches.
 The optimizer's setup and training procedure are the same as for
 the \texttt{averageRating} task reported in the previous section,
 except for the optimizer's learning rate, which was set to
-0.0001.\\
+0.0006.\\
 
-Figures~\ref{fig:nn_performance_titletype}
-shows the training and validation loss and accuracy over epochs.
+Figures~\ref{fig:nn_performance_titletype} shows the training and
+validation loss and accuracy over epochs.
+Both graphs show a tendency of training metrics to keep improving
+in later epochs compared to validation, which instead starts
+stabilizing much earlier. This is likely due to the low
+value given to the learning rate, which allows the model
+to learn finer patterns. In this case, these appear to be too
+specific to the tranining set, though this doesn't seem to lead
+to particular overfitting.
 
 
 \begin{figure}[H]
     \centering
-    \begin{subfigure}[b]{0.48\textwidth}
+    \begin{subfigure}[b]{0.49\textwidth}
         \centering
         \includegraphics[width=\textwidth]{plotsss/loss_titletype.png}
         % \caption{Loss - Neural Network}
         \label{fig:loss_nn_titletype}
     \end{subfigure}
     \hfill
-    \begin{subfigure}[b]{0.48\textwidth}
+    \begin{subfigure}[b]{0.49\textwidth}
         \centering
         \includegraphics[width=\textwidth]{plotsss/accuracy_titletype.png}
         % \caption{Accuracy - Neural Network}
@@ -789,6 +796,14 @@ shows the training and validation loss and accuracy over epochs.
 \end{figure}
 
 % conf matrix and roc titletype
+Table~\ref{tab:nn_report_titletype} reports the performances of
+the network on the test set. While Accuracy and Macro-Averaged
+F1-Score are comparable to ensemble methods, Macro-averaged
+Precision is lower, and Macro-Averaged Recall is higher.
+This means that the neural network tends to prioritize recall
+over precision, producing more predictions for minority classes
+(higher true positive rate) at the expense of increased false
+positives (lower precision).
 
 \begin{table}[H]
     \centering
@@ -796,7 +811,7 @@ shows the training and validation loss and accuracy over epochs.
     \hline
      & \textbf{Precision} & \textbf{Recall} & \textbf{F1-score}\\
     \hline
-    \textbf{Macro avg}   & 0.70 & 0.82 & 0.73 \\
+    \textbf{Macro avg}   & 0.71 & 0.82 & 0.73 \\
     \textbf{Weighted avg}& 0.93 & 0.90 & 0.91 \\
     \hline
     \textbf{Accuracy}    & & & 0.90 \\
