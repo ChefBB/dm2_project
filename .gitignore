@@ -16,3 +16,5 @@
 # latexmk / temp dirs
 .texpadtmp/
 _tex/
+*.pdf
+*.pdf
