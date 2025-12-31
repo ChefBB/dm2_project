@@ -26,6 +26,7 @@ and could therefore introduce data leakage.}
 \subsection{Logistic Regression}
 \label{subsec:logistic}
 
+\subsubsection{Titletype task}
 %-------------------------------------------------------------------------------
 % titleType logistic
 %-------------------------------------------------------------------------------
@@ -60,8 +61,8 @@ Figure~\ref{fig:log_roc_curves_t}.
     \centering
     \begin{minipage}{0.45\textwidth} 
     \centering
-    \captionof{table}{Classification report for \texttt{titleType}}
-    \label{tab:logistic_report_t}
+    % \captionof{table}{Classification report for \texttt{titleType}}
+    % \label{tab:logistic_report_t}
     \small 
     \begin{tabular}{lccc}
     \hline
@@ -79,6 +80,8 @@ Figure~\ref{fig:log_roc_curves_t}.
     \textbf{Weighted avg}& 0.83 & 0.75 & 0.78  \\
     \hline
     \end{tabular}
+    \captionof{table}{Classification report for \texttt{titleType}}
+    \label{tab:logistic_report_t}
     \end{minipage}
     \hfill
     \begin{minipage}{0.4\textwidth} 
@@ -120,7 +123,7 @@ For individual classes, for example, \texttt{movie} is positively influenced by 
 %-------------------------------------------------------------------------------
 % rating logistic 
 %-------------------------------------------------------------------------------
-
+\subsubsection{Rating task}
 Building upon the approach described for \texttt{titleType}, we trained a 
 Logistic Regression model for the multi-class \texttt{rating\_class} variable. 
 All numerical features were scaled and, in addition, the categorical variable 
@@ -160,8 +163,8 @@ while it struggles to capture subtle differences in the middle of the rating sca
     \centering
     \begin{minipage}{0.45\textwidth}
         \centering
-        \captionof{table}{Classification report for \texttt{rating\_class}}
-        \label{tab:logistic_report_rating}
+        % \captionof{table}{Classification report for \texttt{rating\_class}}
+        % \label{tab:logistic_report_rating}
         \small
         \begin{tabular}{lccc}
         \hline
@@ -179,6 +182,8 @@ while it struggles to capture subtle differences in the middle of the rating sca
         \textbf{Weighted avg}& 0.35 & 0.27 & 0.27 \\
         \hline
         \end{tabular}
+        \captionof{table}{Classification report for \texttt{rating\_class}}
+        \label{tab:logistic_report_rating}
         \end{minipage}
     \hfill
     \begin{minipage}{0.4\textwidth} 
@@ -200,7 +205,7 @@ while it struggles to capture subtle differences in the middle of the rating sca
 %-------------------------------------------------------------------------------
 % titleType
 %-------------------------------------------------------------------------------
-
+\subsubsection{Titletype task}
 We applied Support Vector Machines (SVM) to the \texttt{titleType} classification task.
 Both linear and non-linear kernels were explored in order to evaluate how decision boundary complexity influences predictive performance.
 
@@ -330,7 +335,7 @@ RBF (balanced) & $C=10$, $\gamma=\text{scale}$, balanced & 0.84 & 0.65 \\
 %-------------------------------------------------------------------------------
 % rating
 %-------------------------------------------------------------------------------
-
+\subsubsection{Rating task}
 Support Vector Machines were applied to the \texttt{averageRating} classification task using the same kernels and hyperparameter search strategies as for \texttt{titleType}.
 A Linear SVM achieved only 0.37 accuracy and a macro F1-score of 0.28, indicating that a linear decision boundary is inadequate.
 
