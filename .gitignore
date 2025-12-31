@@ -6,4 +6,8 @@
 *.synctex.gz
 *.fls
 *.fdb_latexmk
-
+*.bbl
+*.bcf
+*.blg
+*.nav
+*.snm
