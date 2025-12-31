@@ -1,4 +1,6 @@
 \section{Data Understanding and Preparation}
+\label{sec: data_preparation}
+
 The dataset contains 32 columns and 149531 rows of titles of different types.
 For each title, the dataset contains information regarding many different
 aspects. Table~\ref{tab:initial_categorical_features} lists the initial categorical
@@ -10,7 +12,7 @@ features.
         \hline
         \textbf{Feature} & \textbf{Description} \\ \hline
         % Categorical
-        \texttt{originalTitle} & Original title, in the original language (?) \\ \hline
+        \texttt{originalTitle} & Original title \\ \hline
         \texttt{isAdult} & Whether or not the title is for adult \\ \hline
         \texttt{canHaveEpisodes} & Whether the title can have episodes \\ \hline
         \texttt{isRatable} & Whether the title can be rated by users \\ \hline
@@ -88,21 +90,54 @@ Of the initial numerical attributes, the following were removed:
     \item \texttt{numVotes}, as it had a very high correlation with \texttt{ratingCount};
 \end{itemize}
 
-Figure~\ref{fig:skewness} shows the skewness of some of the numerical features.
-It can be observed that many features exhibit a heavy right skew, with a long tail of high values.
 
-    
-Figure~\ref{fig:rating_dist} shows the distribution of the
-\texttt{averageRating} attribute.
-\begin{figure}[H]
+
+\subsection{Exploratory Data Analysis}
+
+\begin{wrapfigure}{l}{0.4\textwidth}
     \centering
-    \includegraphics[width=0.6\textwidth]{plotsss/rating_distrib.png}
+    \includegraphics[width=0.38\textwidth,height=4.5cm]{plotsss/rating_distrib.png}
     \caption{Distribution of the \texttt{averageRating} attribute}
     \label{fig:rating_dist}
-\end{figure}
-The distribution is Normal-like, with a peak around 7.
-This graph is particularly important because of the centrality
-of the feature in the classification and regression tasks.
+\end{wrapfigure}
+
+To gain an initial understanding of the dataset, 
+we conducted several exploratory analyses focusing on key attributes related to ratings, genres, 
+and temporal trends. 
+\newline Figure~\ref{fig:rating_dist} shows the distribution of the \texttt{averageRating} attribute, 
+which appears approximately Normal with a peak around 7. This feature is central to both the classification and regression tasks, 
+making its distribution essential for understanding model behavior and potential biases.
+
+
+In Figure~\ref{fig:genre_popularity} we visualized the distribution of titles across different genres.  
+The chart reveals that nearly half of the titles fall under the Drama and Comedy genres, 
+highlighting their dominant role in the entertainment industry and audience preferences. This insight helps guide further analysis, 
+such as predicting genre popularity, tailoring recommendations, or identifying gaps in content diversity.
+
+\begin{wrapfigure}{l}{0.4\textwidth}
+    \centering
+    \includegraphics[width=0.38\textwidth,height=4.5cm]{plotsss/genre_popularity.png}
+    \caption{Distribution of titles across genres}
+    \label{fig:genre_popularity}
+\end{wrapfigure}
+\begin{wrapfigure}{l}{0.4\textwidth}
+    \centering
+    \includegraphics[width=0.38\textwidth,height=4.5cm]{plotsss/year_rating.png}
+    \caption{Average rating trend over the years}
+    \label{fig:year_rating}
+\end{wrapfigure}
+
+To understand viewer perceptions we plotted figure~\ref{fig:year_rating} the trend of average ratings over time.
+It reveals historical shifts in audience engagement 
+and rating standards. We observe a steady increase in average ratings from the early 1900s to the present, 
+with notable peaks around the 1960s and 2020s. This upward trend may reflect improvements in production quality, 
+storytelling, and accessibility, offering valuable context for analyzing rating dynamics across different eras.
+\newline We observed that several features in the dataset exhibited a heavy right skew, 
+characterized by a long tail of high values. Based on this insight, we proceeded to the feature engineering phase, 
+where we merged relevant columns and applied preprocessing techniques such as one-hot encoding and normalization to 
+prepare the data for modeling.
+
+
 
 \subsection{Feature Engineering}
 \begin{itemize}
@@ -145,3 +180,115 @@ we imputed the feature with random integers within the global interquartile rang
 
 
 
+% \subsection{Exploratory Data Analysis}
+
+% To gain an initial understanding of the dataset, we conducted several exploratory analyses focusing on key attributes related to ratings, genres, and temporal trends. Figure~\ref{fig:eda_overview} presents three core visualizations side by side, each highlighting a different aspect of the IMDb dataset.
+
+% The first plot illustrates the distribution of the \texttt{averageRating} attribute, which appears approximately Normal with a peak around 7. This feature is central to both the classification and regression tasks, making its distribution essential for understanding model behavior and potential biases.
+
+% The second plot shows the distribution of titles across genres. We observe that Drama and Comedy dominate the dataset, together accounting for nearly half of all titles. This imbalance is important for downstream modeling, as it may influence genre‑related predictions and highlight areas where content diversity is limited.
+
+% The third plot depicts the trend of average ratings over time. The steady upward movement—from the early 1900s to recent years—suggests evolving audience expectations, improvements in production quality, and shifts in rating standards. These temporal patterns provide valuable context for interpreting rating dynamics across different eras.
+
+% Together, these visualizations offer a comprehensive overview of the dataset structure and guide subsequent steps in feature engineering and model development.
+
+% \begin{figure}[H]
+%     \centering
+%     \begin{minipage}[t]{0.32\textwidth}
+%         \centering
+%         \includegraphics[height=5cm]{plotsss/rating_distrib.png}
+%         \caption{Distribution of the \texttt{averageRating} attribute}
+%         \label{fig:rating_dist}
+%     \end{minipage}
+%     \hfill
+%     \begin{minipage}[t]{0.32\textwidth}
+%         \centering
+%         \includegraphics[height=5cm]{plotsss/genre_popularity.png}
+%         \caption{Distribution of titles across genres}
+%         \label{fig:genre_popularity}
+%     \end{minipage}
+%     \hfill
+%     \begin{minipage}[t]{0.32\textwidth}
+%         \centering
+%         \includegraphics[height=5cm]{plotsss/year_rating.png}
+%         \caption{Average rating trend over the years}
+%         \label{fig:year_rating}
+%     \end{minipage}
+%     \caption{Overview of key exploratory data analysis visualizations}
+%     \label{fig:eda_overview}
+% \end{figure}
+
+% \subsection{Exploratory Data Analysis2}
+
+% \begin{wrapfigure}{l}{0.45\textwidth}
+%     \centering
+%     \includegraphics[width=0.43\textwidth]{plotsss/rating_distrib.png}
+%     \caption{Distribution of the \texttt{averageRating} attribute}
+%     \label{fig:rating_dist}
+% \end{wrapfigure}
+
+% \begin{figure}[H]
+%     \centering
+%     \begin{subfigure}{0.48\textwidth}
+%         \centering
+%         \includegraphics[width=\textwidth]{plotsss/genre_popularity.png}
+%         \caption{Distribution of titles across genres}
+%         \label{fig:genre_popularity}
+%     \end{subfigure}
+%     \hfill
+%     \begin{subfigure}{0.48\textwidth}
+%         \centering
+%         \includegraphics[width=\textwidth]{plotsss/year_rating.png}
+%         \caption{Average rating trend over the years}
+%         \label{fig:year_rating}
+%     \end{subfigure}
+%     \caption{Genre popularity and rating trends over time}
+%     \label{fig:eda_bottom}
+% \end{figure}
+
+
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=0.6\textwidth]{plotsss/year_rating.png}
+%     \caption{Distribution of average rating over the years}
+%     \label{fig:year_rating1}
+% \end{figure}
+
+% \subsection{Exploratory Data Analysis2}
+
+% \noindent
+% \begin{minipage}[t]{0.4\textwidth}
+%     \includegraphics[width=\linewidth,height=4.5cm]{plotsss/rating_distrib.png}
+%     \captionof{figure}{Distribution of the \texttt{averageRating} attribute}
+%     \label{fig:rating_dist1}
+% \end{minipage}
+% \hfill
+% \begin{minipage}[t]{0.58\textwidth}
+%     The distribution of the \texttt{averageRating} attribute appears approximately Normal, peaking around 7. This feature is central to both classification and regression tasks, making its distribution essential for understanding model behavior and potential biases.
+% \end{minipage}
+
+% \vspace{1cm}
+
+% \noindent
+% \begin{minipage}[t]{0.4\textwidth}
+%     \includegraphics[width=\linewidth,height=4.5cm]{plotsss/genre_popularity.png}
+%     \captionof{figure}{Distribution of titles across genres}
+%     \label{fig:genre_popularity1}
+% \end{minipage}
+% \hfill
+% \begin{minipage}[t]{0.58\textwidth}
+%     Drama and Comedy dominate the genre distribution, accounting for nearly half of all titles. This imbalance is important for downstream modeling, as it may influence genre-related predictions and highlight areas where content diversity is limited.
+% \end{minipage}
+
+% \vspace{1cm}
+
+% \noindent
+% \begin{minipage}[t]{0.4\textwidth}
+%     \includegraphics[width=\linewidth,height=4.5cm]{plotsss/year_rating.png}
+%     \captionof{figure}{Average rating trend over the years}
+%     \label{fig:year_rating1}
+% \end{minipage}
+% \hfill
+% \begin{minipage}[t]{0.58\textwidth}
+%     The trend of average ratings over time shows a steady upward movement from the early 1900s to recent years. This suggests evolving audience expectations, improvements in production quality, and shifts in rating standards—valuable context for interpreting rating dynamics across eras.
+% \end{minipage}

@@ -6,7 +6,7 @@ We then applied Decision Tree classifier to the initial dataset and achieved 63\
  Then we performed \texttt{RandomSearchCV} to tune the hyperparameters of the Decision Tree Classifier and achieved 67\% accuracy. 
  The best parameter were
  \begin{center}
-    \texttt{random\_state=42, criterion='gini', max\_features=None, max\_depth=None, min\_samples\_leaf=10, min\_samples\_split=2, splitter = 'random'} 
+    \texttt{random\_state=42, criterion=`gini', max\_features=None, max\_depth=None, min\_samples\_leaf=10, min\_samples\_split=2, splitter = `random'} 
  \end{center}
 
  Our focus was to improve the recall of the low class, so we plotted the confusion matrix to see the number of true positives. 
@@ -83,7 +83,7 @@ we focused on the decision tree algorithm and attempted to adjust its decision t
 We assigned higher importance to the minority class, \texttt{low} class, using the weights obtained from the \texttt{balanced} parameter, 
 which were 
 \begin{center}
-  {'high': 0.6659, 'low': 9.7015, 'medium': 0.7167}.  
+  \texttt{`high': 0.6659, `low': 9.7015, `medium': 0.7167}.  
 \end{center} So, in this way the model would penalize misclassifications of the \texttt{low} class more heavily during training.
 It was surprising to see that even experimenting with different values of weights and assigning very high weight to \texttt{low} 
 class could not lead to an increase in accuracy. In an attempt to further increase 
@@ -117,4 +117,4 @@ To understand the trade-offs more we looked at feature importance and we found o
 most significant contributor across multiple models, 
 while other features such as \texttt{startYear}, \texttt{genre1}, \texttt{genre2}, \texttt{castNumber}, and \texttt{totalCredits} also played crucial roles. 
 However, the relative importance of these features varied across different models, indicating that no single feature consistently dominated in all approaches. 
-Thus we were satisfied with the results of SMOTE and ADASYN as they provided a good balance between accuracy and recall.
+Thus, we were satisfied with the results of \texttt{SMOTE} and \texttt{ADASYN} as they provided a good balance between accuracy and recall.

@@ -1,13 +1,18 @@
-# LaTeX Workshop
+
+# LaTeX build artifacts
 *.aux
-*.log
-*.out
-*.toc
-*.synctex.gz
-*.fls
-*.fdb_latexmk
 *.bbl
 *.bcf
 *.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.synctex.gz
+*.toc
 *.nav
 *.snm
+
+# latexmk / temp dirs
+.texpadtmp/
+_tex/
