@@ -92,6 +92,7 @@ movie’s release period. Moreover, in this context, 7 steps peaks would be
 explained by midweek promotional activities.\newline
 
 
+\paragraph*{\hl{Metadata}}
 IMDb ratings show a mean of 6.6 with a standard deviation of 0.9.
 The distribution ranged from 2.8 to 8.7.
 The \texttt{rating\_category} variable is a binning of \texttt{rating},
@@ -109,6 +110,10 @@ The feature consists of five different classes:
 As can be seen, the distribution is highly imbalanced, with the Low
 category being significantly underrepresented compared to the other
 classes.
+\hl{
+For this reason we decided to merge the Low and Medium Low categories 
+into a single class for classification tasks.}
+
 
 
 % TODO aggiungere parte di scaling eventuale o cose simili di preparation
@@ -255,7 +260,7 @@ without being overly biased towards the more frequent ones.
     \end{tabular}
     \caption{Macro and weighted average precision, recall, and F1-score for the RNN model}
     \label{tab:macro_weighted_avg}
-\end{table}
+\end{table} 
 
 
 
