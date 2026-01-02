@@ -31,36 +31,68 @@ Revenues decline rapidly in subsequent days, reaching mean values near
 Variance remains high across the series, indicating substantial
 variability in revenue levels among films.
 
-Graph~\ref{fig:ts_distrib} shows the log-scale distribution of all time series.
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=0.65\textwidth]{plotsss/ts_distrib.png}
+%     \caption{Log-scale box-office gross revenues}
+%     \label{fig:ts_distrib}
+% \end{figure}
 
-\begin{figure}[H]
+\begin{figure}[ht]
     \centering
-    \includegraphics[width=0.65\textwidth]{plotsss/ts_distrib.png}
-    \caption{Log-scale box-office gross revenues}
-    \label{fig:ts_distrib}
-\end{figure}
-% This or mean per rating category?
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plotsss/ts_boxplot.png} 
+        \captionof{figure}{Boxplot of box-office gross revenues}
+        \label{fig:ts_boxplot} 
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.5\textwidth} 
+        \includegraphics[width=\textwidth]{plotsss/ts_distrib.png}
+        \caption{Log-scale box-office gross revenues}
+        \label{fig:ts_distrib}
+    \end{minipage}
 
+\end{figure}
+
+Figure~\ref{fig:ts_boxplot} shows the boxplot distribution of all time series.
+We can see a lot of fliers, especially in the first days after release,
+indicating high variability in box-office revenues among different films.
+All fliers are concentrated in the upper range, showing that data is
+right-skewed, with a few films achieving exceptionally high revenues
+compared to the majority. 
+
+Graph~\ref{fig:ts_distrib} shows the log-scale distribution of all time series.
 Log-scale was chosen for the representation because it highlights
 the high seasonality of the dataset better, while linear scale flattened
-the time series in the later time steps.
-While weekly seasonality seems to also be present, with peaks around
-the weekend, it seems to be more accentuated on a bi-weekly basis, with
-higher peaks every 14 time steps.
-\textcolor{red}{¿EXPLANATION?}
+the time series in the later time steps.\\
 
 Furthermore, a downward trend is visible in all time series, showing
 higher engagement at release.
 
-Another important note on the dataset is that films with runs shorter than
-100 days, missing entries were completed through a synthetic extension
+Another important note on the dataset is that missing values for films with 
+runs shorter than 100 time steps, were completed through a synthetic extension
 procedure, which imputes values using a noise-augmented mean of the
-observed revenues.
-This ensures uniform series length, although it introduces artificial
-values that may influence analyses focusing on the later days of a
-film's lifecycle.\\
+observed revenues.\\
+
+Although a 7-step seasonal pattern appears to be present, the seasonality is 
+much more pronounced at a 14-step interval. This suggests that the time series may 
+consist of two observations per day, making a 14-step cycle correspond to a 
+weekly pattern.
+% This could be due to the fact that data were synthesized in between existing 
+% observations.
+This could indicate that the synthetic extensions may have been interleaved within 
+the original time steps rather than appended only at the tail of the series. 
+The insertion of noise-augmented mean values within the temporal sequence 
+might alter the effective sampling structure and artificially reinforce 
+longer-period seasonal patterns.
+This interpretation seems to be consistent with the box office domain, where 
+revenue peaks are typically observed during weekends, particularly around a 
+movie’s release period. Moreover, in this context, 7 steps peaks would be
+explained by midweek promotional activities.\newline
 
 
+\paragraph*{\hl{Metadata}}
 IMDb ratings show a mean of 6.6 with a standard deviation of 0.9.
 The distribution ranged from 2.8 to 8.7.
 The \texttt{rating\_category} variable is a binning of \texttt{rating},
@@ -78,6 +110,10 @@ The feature consists of five different classes:
 As can be seen, the distribution is highly imbalanced, with the Low
 category being significantly underrepresented compared to the other
 classes.
+\hl{
+For this reason we decided to merge the Low and Medium Low categories 
+into a single class for classification tasks.}
+
 
 
 % TODO aggiungere parte di scaling eventuale o cose simili di preparation
@@ -224,7 +260,7 @@ without being overly biased towards the more frequent ones.
     \end{tabular}
     \caption{Macro and weighted average precision, recall, and F1-score for the RNN model}
     \label{tab:macro_weighted_avg}
-\end{table}
+\end{table} 
 
 
 

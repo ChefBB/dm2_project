@@ -280,38 +280,7 @@ RBF (balanced) & $C=10$, $\gamma=\text{scale}$, balanced & 0.84 & 0.65 \\
 \end{tabular}
 \end{table}
     
-% % --- First figure: four ROC curves side by side ---
-% \begin{figure}[h]
-%     \centering
-%     \begin{subfigure}[b]{0.24\textwidth}
-%         \centering
-%         \includegraphics[width=\textwidth]{plotsss/roc_linear.png}
-%         \caption{Linear SVM}
-%         \label{fig:roc_linear}
-%     \end{subfigure}
-%     \begin{subfigure}[b]{0.24\textwidth}
-%         \centering
-%         \includegraphics[width=\textwidth]{plotsss/roc_poly.png}
-%         \caption{Polynomial kernel}
-%         \label{fig:roc_poly}
-%     \end{subfigure}
-%     \begin{subfigure}[b]{0.24\textwidth}
-%         \centering
-%         \includegraphics[width=\textwidth]{plotsss/roc_sigmoid.png}
-%         \caption{Sigmoid kernel}
-%         \label{fig:roc_sigmoid}
-%     \end{subfigure}
-%     \begin{subfigure}[b]{0.24\textwidth}
-%         \centering
-%         \includegraphics[width=\textwidth]{plotsss/roc_rbf.png}
-%         \caption{RBF kernel}
-%         \label{fig:roc_rbf}
-%     \end{subfigure}
-%     \caption{...}  
-%     \label{fig:roc_four}
-% \end{figure}
 
-% --- Second figure: confusion matrix and ROC for RBF balanced ---
 \begin{figure}[h]
     \centering
     \begin{subfigure}[b]{0.47\textwidth}
@@ -330,14 +299,7 @@ RBF (balanced) & $C=10$, $\gamma=\text{scale}$, balanced & 0.84 & 0.65 \\
     \label{fig:rbf_balanced_two}
 \end{figure}
 
-% In conclusion, non-linear kernels were clearly superior to the linear SVM, 
-% with RBF and polynomial achieving comparable accuracy. 
-% The RBF kernel with balanced class weights provided the best compromise, 
-% maintaining strong performance on majority classes while improving recognition of minority ones.
 
-%-------------------------------------------------------------------------------
-% rating
-%-------------------------------------------------------------------------------
 \subsubsection{Rating task}
 Support Vector Machines were applied to the \texttt{averageRating} classification task using the same kernels and hyperparameter search strategies as for \texttt{titleType}.
 A Linear SVM achieved only 0.37 accuracy and a macro F1-score of 0.28, indicating that a linear decision boundary is inadequate.
@@ -351,19 +313,11 @@ The classification report shows that the model captures a high proportion of ext
 Intermediate bins are predicted with higher precision but lower recall, reflecting the difficulty of separating densely populated central categories.
 
 ROC curves
-%(Figure~\ref{fig:roc_rbf_balanced}) 
+
 confirm this pattern: AUC is highest for the extremes ($[1,5)$: 0.79, $[9,10)$: 0.80) and lower for intermediate bins ($[6,7)$: 0.61, $[7,8)$: 0.65), indicating that the model distinguishes extreme ratings better than the mid-range values.
 
 Overall, non-linear kernels improve performance over linear SVM, but the ordinal nature of \texttt{averageRating} and the strong class imbalance continue to challenge accurate prediction across all bins.
 
-% \begin{figure}[h]
-%     \centering
-%     \includegraphics[width=0.5\textwidth]{plotsss/roc_rbf_balanced_rating.png}
-%     \caption{ROC Curve for the SVM (kernel rbf and balanced class weight) on the \texttt{averageRating} classification task.}
-%     \label{fig:roc_rbf_balanced}
-% \end{figure}
-
-%------------------------------
 \subsection{Ensemble methods}
 \begin{table}[H]
     \centering
@@ -390,7 +344,6 @@ Overall, non-linear kernels improve performance over linear SVM, but the ordinal
         \centering
         \begin{tabular}{lc}
         \hline
-        % Best parameters found for Random Forest: {'class_weight': None, 'criterion': 'gini', 'max_depth': 19, 'max_features': 0.9137428250443735, 'min_samples_leaf': 6, 'min_samples_split': 2, 'n_estimators': 97}
         \multicolumn{2}{c}{\textbf{Random Forest}} \\
         \hline
         \texttt{n\_estimators} & 97 \\
@@ -421,13 +374,10 @@ trees independently, while AdaBoost adds weak learners
 sequentially, focusing on correcting previous errors.
 
 Another interesting aspect is the distribution of feature importances.
-Both models assign most of the importance to the same set of features:
-\begin{itemize}
-    \item \texttt{ratingCount}
-    \item \texttt{startYear}
-    \item \texttt{runtimeMinutes}
-    \item \texttt{deltaCredits}
-\end{itemize}
+Both models assign about 50\% of the importance to the same set of
+features (\texttt{ratingCount}, \texttt{startYear},
+\texttt{runtimeMinutes} and \texttt{deltaCredits}).
+
 Random Forest assigns about 50\% of the total importance to these
 features, spreading it evenly among them.
 AdaBoost assigns about 75\%, 41 of which is
@@ -557,7 +507,8 @@ intermediate ones are more difficult to distinguish.
     
 \end{table}
 
-Table~\ref{tab:classification_report} summarizes the classification report for both models.
+Table~\ref{tab:classification_report} summarizes the classification
+report for both models.
 \begin{table}[H]
     \centering
     \begin{tabular}{lccccc}
