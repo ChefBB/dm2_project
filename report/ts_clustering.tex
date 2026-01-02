@@ -18,6 +18,7 @@ the complexity of the dataset by grouping similar series in the feature
 space, enabling downstream operations on a smaller representative set.  
 
 \paragraph*{Representative selection and PAA.} 
+
 For each micro-cluster, we computed the medoid of the raw series using 
 Dynamic Time Warping (DTW) distance. This approach preserves the temporal 
 structure of the series within the cluster. The medoids were subsequently 
@@ -30,14 +31,19 @@ small fluctuations.
 Agglomerative clustering with average linkage was applied on the PAA-transformed 
 medoids using DTW distance as the similarity measure. This allows grouping 
 of series based on shape similarity rather than Euclidean proximity in feature space. 
+The number of clusters was determined by visually inspecting the dendrogram and selecting a cut
+-off to obtain 5 clusters.
 The final labels were propagated back to the original series.  
 
 \paragraph*{Cluster analysis and visualization.} 
 We analyzed the resulting clusters with respect to \texttt{rating category}. 
 \textcolor{red}{write something about the distribution of rating categories across clusters.}
-
+Figure~\ref{fig:ts_clustering_dist} shows the distribution of rating categories
+across the clusters, while Figure~\ref{fig:ts_clustering_representatives}
+displays the representative time series for each cluster.
 To visualize the clusters, we projected the PAA-transformed medoids
-into two dimensions using both PCA and t-SNE (perplexity=5).
+into two dimensions using both PCA and t-SNE (perplexity=15).
+
 \textcolor{red}{explain differences between pca and tsne results.}
 % Figure~\ref{fig:cluster_2d} shows the resulting projections,
 % colored by cluster membership. 
