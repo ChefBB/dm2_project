@@ -1,1 +1,60 @@
 \section{Time Series Clustering}
+
+The time series were first preprocessed using a logarithmic transformation
+followed by per-series Z-score normalization. This ensures that each 
+series contributes equally to the feature extraction and clustering, 
+independent of its absolute scale.  
+
+The following pipeline combines feature-based and shape-based clustering: 
+initial feature extraction allows fast micro-clustering, 
+while medoid selection and DTW-based final clustering focus on the 
+temporal shape. 
+
+\paragraph*{Feature extraction and micro-clustering.} 
+From the normalized series, we extracted features using  
+\texttt{catch22}.
+These features were used for an initial micro-clustering step via 
+\texttt{KMeans} with Euclidean distance. The micro-clustering reduces 
+the complexity of the dataset by grouping similar series in the feature 
+space, enabling downstream operations on a smaller representative set.  
+
+\paragraph*{Representative selection and PAA.} 
+For each micro-cluster, we computed the medoid of the raw series using 
+Dynamic Time Warping (DTW) distance. This approach preserves the temporal 
+structure of the series within the cluster. The medoids were subsequently 
+transformed using Piecewise Aggregate Approximation (PAA, $M=20$), which 
+reduces the dimensionality while retaining the overall shape of the series. 
+PAA also facilitates the use of DTW in the final clustering step by smoothing 
+small fluctuations.  
+
+\paragraph*{Final clustering.} 
+Agglomerative clustering with average linkage was applied on the PAA-transformed 
+medoids using DTW distance as the similarity measure. This allows grouping 
+of series based on shape similarity rather than Euclidean proximity in feature space. 
+The final labels were propagated back to the original series.  
+
+\paragraph*{Cluster analysis and visualization.} 
+We analyzed the resulting clusters with respect to \texttt{rating category}. 
+\textcolor{red}{write something about the distribution of rating categories across clusters.}
+
+To visualize the clusters, we projected the PAA-transformed medoids
+into two dimensions using both PCA and t-SNE (perplexity=5).
+\textcolor{red}{explain differences between pca and tsne results.}
+% Figure~\ref{fig:cluster_2d} shows the resulting projections,
+% colored by cluster membership. 
+
+
+% \begin{figure}[h!]
+%     \centering
+%     \includegraphics[width=0.48\textwidth]{pca_clusters.png}
+%     \includegraphics[width=0.48\textwidth]{tsne_clusters.png}
+%     \caption{Two-dimensional projections of cluster representatives. \textbf{Left:} PCA. \textbf{Right:} t-SNE. Each color corresponds to a cluster.}
+%     \label{fig:cluster_2d}
+% \end{figure}
+
+% Overall, the clusters reveal clear differences in temporal patterns among 
+% the movies, particularly in peak timing, decay, and long-term tail behavior. 
+% The similarity of results between PCA and t-SNE projections confirms that the cluster 
+% structure is robust to the dimensionality reduction method. 
+
+ 
