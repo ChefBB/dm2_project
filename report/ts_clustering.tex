@@ -4,7 +4,6 @@ The time series were first preprocessed using a logarithmic transformation
 followed by per-series Z-score normalization. This ensures that each 
 series contributes equally to the feature extraction and clustering, 
 independent of its absolute scale.  
-
 The following pipeline combines feature-based and shape-based clustering: 
 initial feature extraction allows fast micro-clustering, 
 while medoid selection and DTW-based final clustering focus on the 
@@ -57,4 +56,38 @@ into two dimensions using both PCA and t-SNE (perplexity=5).
 % The similarity of results between PCA and t-SNE projections confirms that the cluster 
 % structure is robust to the dimensionality reduction method. 
 
- 
+\begin{figure}[ht]
+    \centering
+    \begin{minipage}{0.5\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plotsss/ts_clustering_dist.png} 
+        \captionof{figure}{Rating category Distribution}
+        \label{fig:ts_clustering_dist} 
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.45\textwidth} 
+        \includegraphics[width=\textwidth]{plotsss/ts_clustering_representatives.png}
+        \caption{Final Cluster Representatives}
+        \label{fig:ts_clustering_representatives}
+    \end{minipage}
+
+
+\end{figure}
+
+
+\begin{figure}[ht]
+    \centering
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plotsss/ts_pca.png} 
+        \captionof{figure}{PCA Projection}
+        \label{fig:ts_pca} 
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.45\textwidth} 
+        \includegraphics[width=\textwidth]{plotsss/ts_tsne.png}
+        \caption{t-SNE Projection}
+        \label{fig:ts_tsne}
+    \end{minipage}
+
+\end{figure}
