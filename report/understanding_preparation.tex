@@ -114,19 +114,40 @@ The chart reveals that nearly half of the titles fall under the Drama and Comedy
 highlighting their dominant role in the entertainment industry and audience preferences. This insight helps guide further analysis, 
 such as predicting genre popularity, tailoring recommendations, or identifying gaps in content diversity.
 
-\begin{wrapfigure}{l}{0.4\textwidth}
+\begin{figure}[ht]
     \centering
-    \includegraphics[width=0.38\textwidth,height=4.5cm]{plotsss/genre_popularity.png}
-    \caption{Distribution of titles across genres}
-    \label{fig:genre_popularity}
-\end{wrapfigure}
-\begin{wrapfigure}{l}{0.4\textwidth}
-    \centering
-    \includegraphics[width=0.38\textwidth,height=4.5cm]{plotsss/year_rating.png}
-    \caption{Average rating trend over the years}
-    \label{fig:year_rating}
-\end{wrapfigure}
+    \begin{minipage}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\linewidth,height=4.5cm]{plotsss/genre_popularity.png}
+        \caption{Distribution of titles across genres}
+        \label{fig:genre_popularity}
+    \end{minipage}
+    \hspace{0.02\textwidth}
+    \begin{minipage}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\linewidth,height=4.5cm]{plotsss/year_rating.png}
+        \caption{Average rating trend over the years}
+        \label{fig:year_rating}
+    \end{minipage}
+\end{figure}
 
+
+% \begin{figure}[ht]
+%     \centering
+%     \begin{minipage}{0.45\textwidth}
+%         \centering
+%         \includegraphics[width=\textwidth]{plotsss/ts_boxplot.png} 
+%         \captionof{figure}{Boxplot of box-office gross revenues}
+%         \label{fig:ts_boxplot} 
+%     \end{minipage}
+%     \hfill
+%     \begin{minipage}{0.5\textwidth} 
+%         \includegraphics[width=\textwidth]{plotsss/ts_distrib.png}
+%         \caption{Log-scale box-office gross revenues}
+%         \label{fig:ts_distrib}
+%     \end{minipage}
+
+% \end{figure}
 To understand viewer perceptions we plotted figure~\ref{fig:year_rating} the trend of average ratings over time.
 It reveals historical shifts in audience engagement 
 and rating standards. We observe a steady increase in average ratings from the early 1900s to the present, 

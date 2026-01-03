@@ -4,7 +4,7 @@
 
 In this section, we present the classification results for two target variables: 
 \texttt{averageRating} (binned into six classes) and \texttt{titleType} (six classes). 
-All models were trained using the preprocessed dataset described in section~\ref{sec: data_preparation}.
+All models were trained using the preprocessed dataset described in section~\ref{sec:data_preparation}.
 
 The first target variable, \texttt{titleType}, originally contained several categories with 
 highly imbalanced frequencies. In particular, \texttt{tvSpecial} and \texttt{video} were strongly 
@@ -19,7 +19,7 @@ following mapping: \texttt{movie} and \texttt{tvMovie} $\rightarrow$ \texttt{mov
  as it directly reveals information about the target \texttt{titleType}.
 
 The second target variable, \texttt{averageRating}, 
-was transformed into six discrete classes as described in section~\ref{sec: outlier} to convert the regression-style target 
+was transformed into six discrete classes as described in section~\ref{sec:outlier} to convert the regression-style target 
 into a balanced multi-class problem and to reduce noise caused by small rating fluctuations. 
 
 
@@ -29,7 +29,7 @@ into a balanced multi-class problem and to reduce noise caused by small rating f
 \subsection{Logistic Regression}
 \label{subsec:logistic}
 
-\subsubsection{Titletype task}
+\subsubsection{titleType task}
 %-------------------------------------------------------------------------------
 % titleType logistic
 %-------------------------------------------------------------------------------
@@ -126,9 +126,10 @@ For individual classes, for example, \texttt{movie} is positively influenced by 
 %-------------------------------------------------------------------------------
 % rating logistic 
 %-------------------------------------------------------------------------------
-\subsubsection{Rating task}
+% Ensure that \subsubsection is not placed inside an environment like figure or table
+\subsubsection{averageRating task}
 Building upon the approach described for \texttt{titleType}, we trained a 
-Logistic Regression model for the multi-class \texttt{rating\_class} variable. 
+Logistic Regression model for the multi-class \texttt{averageRating} variable. 
 All numerical features were scaled and, in addition, the categorical variable 
 \texttt{titleType} was included as a predictor and processed via \textit{One-Hot Encoding}.
 
@@ -146,7 +147,7 @@ The best parameters were then used to fit the model on the full dataset, and eva
 % (\texttt{[1, 5)}, \texttt{[9, 10)}) are notably weaker. 
 
 
-The results for the \texttt{rating\_class} target are reported in 
+The results for the \texttt{averageRating} class are reported in 
 Table~\ref{tab:logistic_report_rating} and Figure~\ref{fig:log_roc_curves_rating}. 
 Overall, the model shows limited predictive ability 
 (\textbf{accuracy = 0.27}, \textbf{macro F1 = 0.25}), with marked variability across classes. 
@@ -208,7 +209,7 @@ while it struggles to capture subtle differences in the middle of the rating sca
 %-------------------------------------------------------------------------------
 % titleType
 %-------------------------------------------------------------------------------
-\subsubsection{Titletype task}
+\subsubsection{titleType task}
 We applied Support Vector Machines (SVM) to the \texttt{titleType} classification task.
 Both linear and non-linear kernels were explored in order to evaluate how decision boundary complexity influences predictive performance.
 
@@ -300,7 +301,7 @@ RBF (balanced) & $C=10$, $\gamma=\text{scale}$, balanced & 0.84 & 0.65 \\
 \end{figure}
 
 
-\subsubsection{Rating task}
+\subsubsection{averageRating task}
 Support Vector Machines were applied to the \texttt{averageRating} classification task using the same kernels and hyperparameter search strategies as for \texttt{titleType}.
 A Linear SVM achieved only 0.37 accuracy and a macro F1-score of 0.28, indicating that a linear decision boundary is inadequate.
 
@@ -319,10 +320,122 @@ confirm this pattern: AUC is highest for the extremes ($[1,5)$: 0.79, $[9,10)$: 
 Overall, non-linear kernels improve performance over linear SVM, but the ordinal nature of \texttt{averageRating} and the strong class imbalance continue to challenge accurate prediction across all bins.
 
 \subsection{Ensemble methods}
+
+\subsubsection{titleType task}
+
 \begin{table}[H]
     \centering
     \begin{minipage}{0.55\textwidth}
-        Boosting and Random Forest models were trained on the
+        Table \ref{tab:ensemble_param_titletype} shows the best hyperparameter
+        configurations found for Random Forest and AdaBoost on the
+        \texttt{titleType} task.\\
+
+        For Random Forest, the trees are quite deep and complex,
+        with low minimum samples per split and leaf.\\
+
+        For AdaBoost, the learning rate is very low, leading to
+        slow, incremental learning.
+        The base estimator is a decision tree with
+        considerable depth and higher minimum samples per split and
+        leaf than Random Forest's trees, indicating that each weak
+        learner is slightly less complex.\\
+
+        Again, the two models use a very different number of
+        estimators, with Random Forest employing a much larger
+        ensemble. For feature importances, both models assign
+        over half of the importance to \texttt{runtimeMinutes},
+        indicating a high dependence on this feature for
+        classification.
+
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.4\textwidth}
+        \centering
+        \begin{tabular}{lc}
+        \hline
+        \multicolumn{2}{c}{\textbf{Random Forest}} \\
+        \hline
+        \texttt{n\_estimators} & 42 \\
+        \texttt{max\_depth} & 19 \\
+        \texttt{min\_samples\_split} & 4 \\
+        \texttt{min\_samples\_leaf} & 3 \\
+        \texttt{max\_features} & 0.74 \\
+        \texttt{criterion} & gini \\
+        \texttt{class\_weight} & \texttt{None} \\
+        \hline
+        \multicolumn{2}{c}{\textbf{AdaBoost}} \\
+        \hline
+        \texttt{n\_estimators} & 11 \\
+        \texttt{learning\_rate} & 0.03 \\
+        \texttt{estimator\_\_max\_depth} & 14 \\
+        \texttt{estimator\_\_min\_samples\_split} & 18 \\
+        \texttt{estimator\_\_min\_samples\_leaf} & 10 \\
+        \hline
+        \end{tabular}
+        \caption{Hyperparameter search space for ensemble models.}
+        \label{tab:ensemble_param_titletype}
+    \end{minipage}
+    
+\end{table}
+
+Table~\ref{tab:classification_report} summarizes the classification
+report for both models.
+\begin{table}[H]
+    \centering
+    \begin{tabular}{lccccc}
+    \hline
+    \textbf{Model} & \textbf{Accuracy} & \textbf{Macro Precision} & \textbf{Macro Recall} & \textbf{Macro F1-score} \\
+    \hline
+    Random Forest & 0.92 & 0.84 & 0.71 & 0.75 \\
+    AdaBoost & 0.92 & 0.81 & 0.70 & 0.73 \\
+    \hline
+    \end{tabular}
+    \caption{Performances of the models on the \texttt{titleType} classification task.}
+    \label{tab:classification_report}
+\end{table}
+
+
+Figures~\ref{fig:cm_rf_titletype} shows the confusion matrix
+for Random Forest.
+Consistently good performances can be observed across the most
+represented classes. \texttt{video} and \texttt{tvSpecial} are the
+classes that cause the most problems, since they are often
+misclassified as the more frequent classes. The class \texttt{movie}
+attracts most of these misclassifications, likely due to
+similar durations of the products in these categories.
+Likely due to the same reason, \texttt{video} is also often
+misclassified as \texttt{short}.\\
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.47\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plotsss/conf_matr_rf_titletype}
+        \caption{Confusion Matrix - Random Forest}
+        \label{fig:cm_rf_titletype}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.50\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plotsss/roc_rf_titletype}
+        \caption{ROC Curve - Random Forest}
+        \label{fig:roc_rf}
+    \end{subfigure}
+    \caption{Confusion matrix and ROC Curve for Random Forest on the \texttt{titleType} classification task.}
+    \label{fig:cm_comparison}
+\end{figure}
+
+The ROC curve shows high AUCs for all classes, with the lowest ones
+being for the aformentioned less represented classes, both
+achieving 0.96. This indicates that the model is very good at
+maintaining a low false positive rate for these, while
+correctly identifying the more represented classes.
+
+\subsubsection{averageRating task}
+\begin{table}[H]
+    \centering
+    \begin{minipage}{0.55\textwidth}
+        AdaBoost and Random Forest models were trained on the
         classification tasks, while being optimized via Stratified
         Randomized Search with 5-fold
         cross-validation over a predefined hyperparameter space.\\
@@ -452,114 +565,6 @@ intermediate ones are more difficult to distinguish.
 %-------------------------------------------------------------------------------
 
 
-\begin{table}[H]
-    \centering
-    \begin{minipage}{0.55\textwidth}
-        Table \ref{tab:ensemble_param_titletype} shows the best hyperparameter
-        configurations found for Random Forest and AdaBoost on the
-        \texttt{titleType} task.\\
-
-        For Random Forest, the trees are quite deep and complex,
-        with low minimum samples per split and leaf.\\
-
-        For AdaBoost, the learning rate is very low, leading to
-        slow, incremental learning.
-        The base estimator is a decision tree with
-        considerable depth and higher minimum samples per split and
-        leaf than Random Forest's trees, indicating that each weak
-        learner is slightly less complex.\\
-
-        Again, the two models use a very different number of
-        estimators, with Random Forest employing a much larger
-        ensemble. For feature importances, both models assign
-        over half of the importance to \texttt{runtimeMinutes},
-        indicating a high dependence on this feature for
-        classification.
-
-    \end{minipage}
-    \hfill
-    \begin{minipage}{0.4\textwidth}
-        \centering
-        \begin{tabular}{lc}
-        \hline
-        \multicolumn{2}{c}{\textbf{Random Forest}} \\
-        \hline
-        \texttt{n\_estimators} & 42 \\
-        \texttt{max\_depth} & 19 \\
-        \texttt{min\_samples\_split} & 4 \\
-        \texttt{min\_samples\_leaf} & 3 \\
-        \texttt{max\_features} & 0.74 \\
-        \texttt{criterion} & gini \\
-        \texttt{class\_weight} & \texttt{None} \\
-        \hline
-        \multicolumn{2}{c}{\textbf{AdaBoost}} \\
-        \hline
-        \texttt{n\_estimators} & 11 \\
-        \texttt{learning\_rate} & 0.03 \\
-        \texttt{estimator\_\_max\_depth} & 14 \\
-        \texttt{estimator\_\_min\_samples\_split} & 18 \\
-        \texttt{estimator\_\_min\_samples\_leaf} & 10 \\
-        \hline
-        \end{tabular}
-        \caption{Hyperparameter search space for ensemble models.}
-        \label{tab:ensemble_param_titletype}
-    \end{minipage}
-    
-\end{table}
-
-Table~\ref{tab:classification_report} summarizes the classification
-report for both models.
-\begin{table}[H]
-    \centering
-    \begin{tabular}{lccccc}
-    \hline
-    \textbf{Model} & \textbf{Accuracy} & \textbf{Macro Precision} & \textbf{Macro Recall} & \textbf{Macro F1-score} \\
-    \hline
-    Random Forest & 0.92 & 0.84 & 0.71 & 0.75 \\
-    AdaBoost & 0.92 & 0.81 & 0.70 & 0.73 \\
-    \hline
-    \end{tabular}
-    \caption{Performances of the models on the \texttt{titleType} classification task.}
-    \label{tab:classification_report}
-\end{table}
-
-
-Figures~\ref{fig:cm_rf_titletype} shows the confusion matrix
-for Random Forest.
-Consistently good performances can be observed across the most
-represented classes. \texttt{video} and \texttt{tvSpecial} are the
-classes that cause the most problems, since they are often
-misclassified as the more frequent classes. The class \texttt{movie}
-attracts most of these misclassifications, likely due to
-similar durations of the products in these categories.
-Likely due to the same reason, \texttt{video} is also often
-misclassified as \texttt{short}.\\
-
-\begin{figure}[H]
-    \centering
-    \begin{subfigure}[b]{0.47\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{plotsss/conf_matr_rf_titletype}
-        \caption{Confusion Matrix - Random Forest}
-        \label{fig:cm_rf_titletype}
-    \end{subfigure}
-    \hfill
-    \begin{subfigure}[b]{0.50\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{plotsss/roc_rf_titletype}
-        \caption{ROC Curve - Random Forest}
-        \label{fig:roc_rf}
-    \end{subfigure}
-    \caption{Confusion matrix and ROC Curve for Random Forest on the \texttt{titleType} classification task.}
-    \label{fig:cm_comparison}
-\end{figure}
-
-The ROC curve shows high AUCs for all classes, with the lowest ones
-being for the aformentioned less represented classes, both
-achieving 0.96. This indicates that the model is very good at
-maintaining a low false positive rate for these, while
-correctly identifying the more represented classes.
-
 
 \subsection{Neural Networks}
 
@@ -569,7 +574,113 @@ In both cases, the train split was 60\%, the validation split
 20\% and the test split 20\%. For both tasks, these splits
 were stratified according to the target variable.
 
-\subsubsection{Rating task}
+% -------------------------------------------------------------------------------
+% titletype task
+% -------------------------------------------------------------------------------
+\subsubsection{titleType task}
+The neural network's architecture for the \texttt{titleType}
+classification task has three inputs:
+\begin{itemize}
+    \item \texttt{region}: handles the region feature, through
+    a Dense layer with 8 units and ReLU activation;
+    \item \texttt{genre}: handles the genre feature, through
+    a Dense layer with 8 units and ReLU activation;
+    \item \texttt{numerical}: handles the other numerical
+    features, through a Dense layer with 112 units and ReLU
+    activation.
+\end{itemize}
+The outputs of the three branches are then concatenated and
+passed to two Dense layers with 64 and 32 units respectively,
+each with ReLU activation.
+The output layer has 6 units (one for each class) and
+softmax activation.
+For each Dense layer, Batch Normalization is applied,
+to achieve better stability.
+A dropout of 0.2 is also applied everywhere but in the input
+branches.
+
+The optimizer's setup and training procedure are the same as for
+the \texttt{averageRating} task reported in the previous section,
+except for the optimizer's learning rate, which was set to
+0.0006.\\
+
+Figures~\ref{fig:nn_performance_titletype} shows the training and
+validation loss and accuracy over epochs.
+Both graphs show a tendency of training metrics to keep improving
+in later epochs compared to validation, which instead starts
+stabilizing much earlier. This is likely due to the low
+value given to the learning rate, which allows the model
+to learn finer patterns. In this case, these appear to be too
+specific to the tranining set, though this doesn't seem to lead
+to particular overfitting.
+
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plotsss/loss_titletype.png}
+        % \caption{Loss - Neural Network}
+        \label{fig:loss_nn_titletype}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plotsss/accuracy_titletype.png}
+        % \caption{Accuracy - Neural Network}
+        \label{fig:accuracy_nn_titletype}
+    \end{subfigure}
+    \caption{Training and validation loss and accuracy on the \texttt{titleType} classification task.}
+    \label{fig:nn_performance_titletype}
+\end{figure}
+
+% conf matrix and roc titletype
+Table~\ref{tab:nn_report_titletype} reports the performances of
+the network on the test set. While Accuracy and Macro-Averaged
+F1-Score are comparable to ensemble methods, Macro-averaged
+Precision is lower, and Macro-Averaged Recall is higher.
+This means that the neural network tends to prioritize recall
+over precision, producing more predictions for minority classes
+(higher true positive rate) at the expense of increased false
+positives (lower precision).
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{lccc}
+    \hline
+     & \textbf{Precision} & \textbf{Recall} & \textbf{F1-score}\\
+    \hline
+    \textbf{Macro avg}   & 0.71 & 0.82 & 0.73 \\
+    \textbf{Weighted avg}& 0.93 & 0.90 & 0.91 \\
+    \hline
+    \textbf{Accuracy}    & & & 0.90 \\
+    \hline
+    \end{tabular}
+    \caption{Classification performances for the neural network on the \texttt{titleType} classification task.}
+    \label{tab:nn_report_titletype}
+\end{table}
+
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.47\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plotsss/cm_nn_titletype.png}
+        \caption{Confusion Matrix - Neural Network}
+        \label{fig:cm_nn_titletype}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.50\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plotsss/roc_nn_titletype.png}
+        \caption{ROC Curve - Neural Network}
+        \label{fig:roc_nn_titletype}
+    \end{subfigure}
+    \caption{Confusion Matrix and ROC Curve for the Neural Network on the \texttt{titleType} classification task.}
+    \label{fig:cm_roc_nn_titletype}
+\end{figure}
+
+\subsubsection{averageRating task}
 This first neural network initially has four branches:
 \begin{itemize}
     \item \texttt{titleType}: handles the titleType feature, through
@@ -694,202 +805,110 @@ intermediate ones are harder to distinguish.
 \end{figure}
 
 
-% -------------------------------------------------------------------------------
-% titletype task
-% -------------------------------------------------------------------------------
-\subsubsection{Titletype task}
-The neural network's architecture for the \texttt{titleType}
-classification task has three inputs:
-\begin{itemize}
-    \item \texttt{region}: handles the region feature, through
-    a Dense layer with 8 units and ReLU activation;
-    \item \texttt{genre}: handles the genre feature, through
-    a Dense layer with 8 units and ReLU activation;
-    \item \texttt{numerical}: handles the other numerical
-    features, through a Dense layer with 112 units and ReLU
-    activation.
-\end{itemize}
-The outputs of the three branches are then concatenated and
-passed to two Dense layers with 64 and 32 units respectively,
-each with ReLU activation.
-The output layer has 6 units (one for each class) and
-softmax activation.
-For each Dense layer, Batch Normalization is applied,
-to achieve better stability.
-A dropout of 0.2 is also applied everywhere but in the input
-branches.
 
-The optimizer's setup and training procedure are the same as for
-the \texttt{averageRating} task reported in the previous section,
-except for the optimizer's learning rate, which was set to
-0.0006.\\
-
-Figures~\ref{fig:nn_performance_titletype} shows the training and
-validation loss and accuracy over epochs.
-Both graphs show a tendency of training metrics to keep improving
-in later epochs compared to validation, which instead starts
-stabilizing much earlier. This is likely due to the low
-value given to the learning rate, which allows the model
-to learn finer patterns. In this case, these appear to be too
-specific to the tranining set, though this doesn't seem to lead
-to particular overfitting.
-
-
-\begin{figure}[H]
-    \centering
-    \begin{subfigure}[b]{0.49\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{plotsss/loss_titletype.png}
-        % \caption{Loss - Neural Network}
-        \label{fig:loss_nn_titletype}
-    \end{subfigure}
-    \hfill
-    \begin{subfigure}[b]{0.49\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{plotsss/accuracy_titletype.png}
-        % \caption{Accuracy - Neural Network}
-        \label{fig:accuracy_nn_titletype}
-    \end{subfigure}
-    \caption{Training and validation loss and accuracy on the \texttt{titleType} classification task.}
-    \label{fig:nn_performance_titletype}
-\end{figure}
-
-% conf matrix and roc titletype
-Table~\ref{tab:nn_report_titletype} reports the performances of
-the network on the test set. While Accuracy and Macro-Averaged
-F1-Score are comparable to ensemble methods, Macro-averaged
-Precision is lower, and Macro-Averaged Recall is higher.
-This means that the neural network tends to prioritize recall
-over precision, producing more predictions for minority classes
-(higher true positive rate) at the expense of increased false
-positives (lower precision).
-
-\begin{table}[H]
-    \centering
-    \begin{tabular}{lccc}
-    \hline
-     & \textbf{Precision} & \textbf{Recall} & \textbf{F1-score}\\
-    \hline
-    \textbf{Macro avg}   & 0.71 & 0.82 & 0.73 \\
-    \textbf{Weighted avg}& 0.93 & 0.90 & 0.91 \\
-    \hline
-    \textbf{Accuracy}    & & & 0.90 \\
-    \hline
-    \end{tabular}
-    \caption{Classification performances for the neural network on the \texttt{titleType} classification task.}
-    \label{tab:nn_report_titletype}
-\end{table}
-
-
-\begin{figure}[H]
-    \centering
-    \begin{subfigure}[b]{0.47\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{plotsss/cm_nn_titletype.png}
-        \caption{Confusion Matrix - Neural Network}
-        \label{fig:cm_nn_titletype}
-    \end{subfigure}
-    \hfill
-    \begin{subfigure}[b]{0.50\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{plotsss/roc_nn_titletype.png}
-        \caption{ROC Curve - Neural Network}
-        \label{fig:roc_nn_titletype}
-    \end{subfigure}
-    \caption{Confusion Matrix and ROC Curve for the Neural Network on the \texttt{titleType} classification task.}
-    \label{fig:cm_roc_nn_titletype}
-\end{figure}
 
 \subsection{Gradient Boosting Machines}
-Next, we applied a \texttt{Gradient Boosting Machine (GBM)} to evaluate its ability to classify the \texttt{titleType} and \texttt{rating\_bin} variable. 
+
+\subsubsection{titleType task}
+
+\begin{wraptable}{r}{0.45\textwidth}
+\centering
+\begin{tabular}{lcc}
+\hline
+\textbf{Hyperparameter} & \textbf{titleType} & \textbf{averageRating} \\
+\hline
+\texttt{subsample}            & 0.8   & 0.6   \\
+\texttt{n\_estimators}        & 500   & 400   \\
+\texttt{max\_depth}           & 6     & 5     \\
+\texttt{min\_samples\_split}  & 10    & 10    \\
+\texttt{min\_samples\_leaf}   & 1     & 2     \\
+\texttt{max\_features}        & None  & sqrt  \\
+\texttt{learning\_rate}       & 0.1   & 0.05  \\
+\hline
+\end{tabular}
+\caption{Hyperparameter search space for GBM.}
+\label{tab:GBM_param}
+\end{wraptable}
+
+
+Next, we applied a \texttt{Gradient Boosting Machine (GBM)} to evaluate its ability to classify the \texttt{titleType} variable. 
 \texttt{GBM} is an ensemble method that builds a series of decision trees sequentially, where each tree attempts to correct 
 the errors of its predecessor. Unlike \texttt{Random Forest}, which builds trees independently and averages their predictions, 
 \texttt{GBM} focuses on minimizing the loss function through gradient descent, making it highly adaptive to complex patterns in the data.
-The baseline accuracy to predict \texttt{titleType} was found out to be 0.94, while for \texttt{rating\_bin} it was 0.40.
-For both tasks, we sampled the data to 10\% of the training set to perform hyperparameter tuning, 
-due to the high computational cost of training GBM models on large datasets.
-The hyperparameter tuning was performed using \texttt{RandomizedSearchCV} with 5-fold stratified cross-validation.
-Table \ref{tab:GBM_param} shows the best parameters found for the \texttt{titleType} and \texttt{rating\_bin}.
-\begin{table}[H]
-    \centering
-    \begin{minipage}{0.4\textwidth}
-        \centering
-        \begin{tabular}{lc}
-        \hline
-        \multicolumn{2}{c}{\textbf{titleType}} \\
-        \hline
-        \texttt{subsample} & 0.8 \\
-        \texttt{n\_estimators} & 500 \\
-        \texttt{max\_depth} & 6 \\
-        \texttt{min\_samples\_split} & 10 \\
-        \texttt{min\_samples\_leaf} & 1 \\
-        \texttt{max\_features} & None \\
-        \texttt{learning\_rate} & 0.1 \\
-        \hline
-        \multicolumn{2}{c}{\textbf{rating\_bin}} \\
-        \hline
-        \texttt{subsample} & 0.6 \\
-        \texttt{n\_estimators} & 400 \\
-        \texttt{max\_depth} & 5 \\
-        \texttt{min\_samples\_split} & 10 \\
-        \texttt{min\_samples\_leaf} & 2 \\
-        \texttt{max\_features} & sqrt \\
-        \texttt{learning\_rate} & 0.05 \\
-        \hline
-        \end{tabular}
-        \caption{Hyperparameter search space for GBM.}
-        \label{tab:GBM_param}
-    \end{minipage}
-    
-\end{table}
+The baseline accuracy to predict \texttt{titleType} was found out to be 0.94.
 
-% \begin{center}
-%     'subsample': 0.8, 'n\_estimators': 500, 'min\_samples\_split': 10, 'min\_samples\_leaf': 1, 'max\_features': None, 'max\_depth': 6, 'learning\_rate': 0.1
-% \end{center}
-% The best parameters found for the \texttt{rating\_bin} task were:
-% \begin{center}
-%     'subsample': 0.6, 'n\_estimators': 400, 'min\_samples\_split': 10, 'min\_samples\_leaf': 2, 'max\_features': 'sqrt', 'max\_depth': 5, 'learning\_rate': 0.05
-% \end{center}
+For both tasks, we sampled the data to 10\% of the training set to perform hyperparameter tuning.
+It was performed using \texttt{RandomizedSearchCV} with 5-fold stratified cross-validation.
+Table \ref{tab:GBM_param} shows the best parameters found for the \texttt{titleType} and \texttt{averageRating}.
 
-\begin{figure}[ht]
+
+
+\begin{figure}[H]
     \centering
-    \begin{minipage}{0.45\textwidth} 
-    \centering
-    \captionof{table}{Classification report for \texttt{titleType}}
-    \label{tab:GBM_report_t}
-    \small 
-    \begin{tabular}{lccc}
-    \hline
-    \textbf{Class} & \textbf{Precision} & \textbf{Recall} & \textbf{F1-score}\\
-    \hline
-    tvEpisode  & 0.94 & 0.97 & 0.96  \\
-    movie      & 0.95 & 0.98 & 0.97  \\
-    short      & 0.98 & 0.98 & 0.98  \\
-    tvSeries   & 0.94 & 0.97 & 0.96  \\
-    video      & 0.77 & 0.45 & 0.57  \\
-    tvSpecial  & 0.79 & 0.55 & 0.65  \\
-    \hline
-    \textbf{Accuracy}    & \multicolumn{3}{c}{0.96} \\
-    \textbf{Macro avg}   & 0.90 & 0.82 & 0.85  \\
-    \textbf{Weighted avg}& 0.96 & 0.96 & 0.96  \\
-    \hline
-    \end{tabular}
-    \end{minipage}
-    \hfill
-    \begin{minipage}{0.4\textwidth} 
+    \begin{subfigure}[b]{0.45\textwidth} 
     \centering
     \includegraphics[width=\textwidth]{plotsss/GBM_confusion_title.png} 
-    \captionof{figure}{Confusion Gradient Boosting Machine}
+    \caption{Confusion Matrix - Gradient Boosting Machine}
     \label{fig:GBM_confusion_title} 
-    \end{minipage}
-    \begin{minipage}{0.4\textwidth} 
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.49\textwidth} 
     \centering
     \includegraphics[width=\textwidth]{plotsss/GBM_ROC_title.png} 
-    \captionof{figure}{ROC Gradient Boosting Machine}
+    \caption{ROC Curve - Gradient Boosting Machine}
     \label{fig:GBM_ROC_title} 
-    \end{minipage}
+    \end{subfigure}
+    \caption{Confusion Matrix and ROC Curve for the Gradient Boosting Machine on the \texttt{titleType} classification task.}
+    \label{fig:cm_roc_gbm}
+\end{figure}
 
-    \end{figure}
+\begin{table}[H]
+\centering
+\begin{minipage}{0.48\textwidth}
+    \centering
+    \begin{tabular}{lccc}
+    \hline
+    \textbf{Class} & \textbf{Precision} & \textbf{Recall} & \textbf{F1-score} \\
+    \hline
+    tvEpisode  & 0.94 & 0.97 & 0.96 \\
+    movie      & 0.95 & 0.98 & 0.97 \\
+    short      & 0.98 & 0.98 & 0.98 \\
+    tvSeries   & 0.94 & 0.97 & 0.96 \\
+    video      & 0.77 & 0.45 & 0.57 \\
+    tvSpecial  & 0.79 & 0.55 & 0.65 \\
+    \hline
+    \textbf{Accuracy}       & \multicolumn{3}{c}{0.96} \\
+    \textbf{Macro avg}      & 0.90 & 0.82 & 0.85 \\
+    \textbf{Weighted avg}   & 0.96 & 0.96 & 0.96 \\
+    \hline
+    \end{tabular}
+    \caption{Classification report for \texttt{titleType}}
+    \label{tab:GBM_report_t}
+\end{minipage}
+\hspace{0.02\textwidth}
+\begin{minipage}{0.48\textwidth}
+    \centering
+    \begin{tabular}{lccc}
+    \hline
+    \textbf{Class} & \textbf{Precision} & \textbf{Recall} & \textbf{F1-score} \\
+    \hline
+    \texttt{[1,5)}   & 0.49 & 0.38 & 0.43 \\
+    \texttt{[5,6)}   & 0.37 & 0.26 & 0.31 \\
+    \texttt{[6,7)}   & 0.41 & 0.39 & 0.40 \\
+    \texttt{[7,8)}   & 0.47 & 0.67 & 0.56 \\
+    \texttt{[8,9)}   & 0.43 & 0.30 & 0.35 \\
+    \texttt{[9,10]}  & 0.44 & 0.22 & 0.29 \\
+    \hline
+    \textbf{Accuracy}       & \multicolumn{3}{c}{0.44} \\
+    \textbf{Macro avg}      & 0.44 & 0.37 & 0.39 \\
+    \textbf{Weighted avg}   & 0.44 & 0.44 & 0.43 \\
+    \hline
+    \end{tabular}
+    \caption{Classification report for \texttt{averageRating}}
+    \label{tab:GBM_report_r}
+\end{minipage}
+\end{table}
+
 
 From the table \ref{tab:GBM_report_t}, we can see that GBM performs very well on the \texttt{titleType} task, achieving an accuracy of 0.96.
 The confusion matrix (Figure~\ref{fig:GBM_confusion_title}) shows that the model is able to correctly classify most of the classes, 
@@ -908,48 +927,31 @@ Interestingly, the \textit{Europe} feature emerged as a strong predictor,
 possibly due to cultural or market-specific trends in title type distribution. 
 
 
-\begin{figure}[ht]
+
+\subsubsection{averageRating task}
+
+\begin{figure}[H]
     \centering
-    \begin{minipage}{0.45\textwidth} 
-    \centering
-    \captionof{table}{Classification report for \texttt{titleType}}
-    \label{tab:GBM_report_r}
-    \small 
-    \begin{tabular}{lccc}
-    \hline
-    \textbf{Class} & \textbf{Precision} & \textbf{Recall} & \textbf{F1-score}\\
-    \hline
-    0  & 0.49 & 0.38 & 0.43  \\
-    1      & 0.37 & 0.26 & 0.31  \\
-    2      & 0.41 & 0.39 & 0.40  \\
-    3   & 0.47 & 0.67 & 0.56  \\
-    4      & 0.43 & 0.30 & 0.35  \\
-    5  & 0.44 & 0.22 & 0.29  \\
-    \hline
-    \textbf{Accuracy}    & \multicolumn{3}{c}{0.44} \\
-    \textbf{Macro avg}   & 0.44 & 0.37 & 0.39  \\
-    \textbf{Weighted avg}& 0.44 & 0.44 & 0.43  \\
-    \hline
-    \end{tabular}
-    \end{minipage}
-    \hfill
-    \begin{minipage}{0.4\textwidth} 
+    \begin{subfigure}[b]{0.4\textwidth} 
     \centering
     \includegraphics[width=\textwidth]{plotsss/GBM_confusion_rating.png} 
-    \captionof{figure}{Confusion Matrix Gradient Boosting Machine}
+    \caption{Confusion Matrix - Gradient Boosting Machine}
     \label{fig:GBM_confusion_rating} 
-    \end{minipage}
-    \begin{minipage}{0.4\textwidth} 
+    \end{subfigure}
+    \begin{subfigure}[b]{0.485\textwidth} 
     \centering
     \includegraphics[width=\textwidth]{plotsss/GBM_ROC_rating.png} 
-    \captionof{figure}{ROC Gradient Boosting Machine}
+    \caption{ROC Curve - Gradient Boosting Machine}
     \label{fig:GBM_ROC_rating} 
-    \end{minipage}
+    \end{subfigure}
+    \caption{Confusion Matrix and ROC Curve for the Gradient Boosting Machine on the \texttt{averageRating} classification task.}
+    \label{fig:cm_roc_GBM_rating}
+\end{figure}
 
-    \end{figure}
 
 From the table \ref{tab:GBM_report_r}, it is evident that the Gradient Boosting Machine performs moderately on the 
-\texttt{rating\_bin} classification task, achieving an overall accuracy of 0.44. While this is less than 50\%, 
+\texttt{averageRating} classification task, achieving an overall accuracy of 0.44, nearly outperforming the baseline
+accuracy of 0.40. While this is less than 50\%, 
 considering that the task involves six classes, the model exceeds the baseline accuracy of 1/6, indicating that it is 
 capturing some underlying patterns in the data. Examination of the confusion matrix (Figure~\ref{fig:GBM_confusion_rating}) 
 reveals that the model correctly classifies rating class 3 more reliably than others, while classes 2 and 4 are often misclassified 
@@ -960,7 +962,7 @@ class distributions present inherent challenges in distinguishing closely spaced
 
 The ROC curves (Figure~\ref{fig:GBM_ROC_rating}) reinforce this observation, 
 showing relatively low AUC values of approximately 0.54 for all classes, which indicates limited 
-separability among the rating bins. Compared to tasks such as \textit{titleType}, the model struggles to distinguish \textit{rating\_bin}, 
+separability among the rating bins. Compared to tasks such as \textit{titleType}, the model struggles to distinguish \texttt{averageRating}, 
 likely due to the continuous and overlapping nature of ratings as opposed to the more discrete and structured categories of title types. 
 Feature importance analysis provides additional insight: \textit{ratingCount} emerges as the strongest predictor, 
 which is intuitive since titles with higher ratings are more likely to be correctly classified. 
@@ -969,7 +971,8 @@ while \textit{runtimeMinutes} indicates that longer titles tend to receive highe
 Other features such as \textit{totalCredits}, \textit{castNumber}, \textit{totalMedia}, and \textit{tvEpisode} also contribute significantly, 
 with \textit{tvEpisode} being more impactful than other TV formats like \textit{tvMiniseries}, \textit{tvSpecial}, or \textit{tvShort}, 
 possibly due to greater representation in the dataset.
-Overall, the results suggest that while the model captures broad patterns such as the tendency for longer or more regionally distributed titles to receive higher ratings, 
+Overall, the results suggest that while the model captures broad patterns such as the tendency for longer 
+or more regionally distributed titles to receive higher ratings, 
 it struggles with fine-grained distinctions between closely spaced rating bins. 
 
 
