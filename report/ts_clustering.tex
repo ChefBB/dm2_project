@@ -13,7 +13,7 @@ temporal shape.
 From the normalized series, we extracted features using  
 \texttt{catch22}.
 These features were used for an initial micro-clustering step via 
-\texttt{KMeans} with Euclidean distance. The micro-clustering reduces 
+\texttt{KMeans} with Euclidean distance setting k=200. The micro-clustering reduces 
 the complexity of the dataset by grouping similar series in the feature 
 space, enabling downstream operations on a smaller representative set.  
 
@@ -31,12 +31,11 @@ small fluctuations.
 Agglomerative clustering with average linkage was applied on the PAA-transformed 
 medoids using DTW distance as the similarity measure. This allows grouping 
 of series based on shape similarity rather than Euclidean proximity in feature space. 
-The number of clusters was determined by visually inspecting the dendrogram and selecting a cut
--off to obtain 5 clusters.
+The number of clusters was determined by visually inspecting the dendrogram and selecting a cut-off to obtain 5 clusters.
 The final labels were propagated back to the original series.  
 
 \paragraph*{Cluster analysis and visualization.} 
-We analyzed the resulting clusters with respect to \texttt{rating category}. 
+We analyzed the resulting clusters with respect to \texttt{rating\_category}. 
 \textcolor{red}{write something about the distribution of rating categories across clusters.}
 Figure~\ref{fig:ts_clustering_dist} shows the distribution of rating categories
 across the clusters, while Figure~\ref{fig:ts_clustering_representatives}
