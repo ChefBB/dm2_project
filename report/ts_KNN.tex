@@ -1,0 +1,104 @@
+\subsection{kNN Classifier}
+
+%Preprocessing in rnn
+
+% The time series were first preprocessed using a logarithmic transformation (\texttt{log1p}) 
+% to reduce skewness and stabilize variance. For the classical K-Nearest Neighbors (KNN) model 
+% with Euclidean distance, we applied global standardization across all series to center and 
+% scale the data. For the KNN model with Dynamic Time Warping (DTW), we applied per-series 
+% amplitude scaling using \texttt{TimeSeriesScalerMeanVariance} to focus the distance on the 
+% shape of each series rather than absolute magnitudes.
+
+% The dataset was split into stratified train and test sets (80/20), and \texttt{GridSearchCV} 
+% was used on the Euclidean KNN to optimize the number of neighbors setting as scoring \texttt{balanced\_accuracy}.
+% The best number of neighbors was found to be 9. Using this configuration, the Euclidean KNN 
+% achieved an accuracy of 0.48 and a macro F1-score of 0.33, showing better performance on the most 
+% frequent classes but lower recall for underrepresented categories such 
+% as ``Low'' and ``Medium High''. 
+
+% We then applied KNN with DTW using the same number of neighbors and a 
+% Sakoe--Chiba radius of 7, chosen considering the observed seasonality of approximately 
+% 14 time steps. DTW achieved an accuracy of 0.43 and a macro F1-score of 0.35, improving 
+% recall for the minority class ``Low'' while slightly decreasing performance on the other 
+% classes.
+
+% Overall, these results indicate that DTW can better handle small temporal shifts in 
+% the series, whereas Euclidean distance benefits from global scaling and simplicity. 
+% Categorical metadata, such as genre, was deliberately excluded to allow a direct 
+% comparison of the two distance metrics on the raw time series.
+
+
+
+\subsection{Classification with KNN}
+
+The task was first addressed using the $k$-Nearest Neighbors (KNN) classifier with two 
+different distance measures, namely Euclidean distance and Dynamic Time Warping (DTW), 
+in order to compare a standard vector-based similarity with a time-aware distance specifically 
+designed for temporal data. The input consisted exclusively of the raw time series, 
+without additional metadata, in order to allow a direct comparison of the two distance metrics 
+on the raw time series. A logarithmic transformation was first applied to reduce skewness and 
+stabilize variance. For the Euclidean KNN, a global Z-score normalization was then performed 
+across samples so that each time step contributed equally to the distance computation, 
+while for the DTW-based KNN a per-series mean–variance normalization was applied to remove 
+amplitude effects and focus the comparison on temporal shape rather than absolute scale. 
+The dataset was split into stratified train and test sets (80/20), and \texttt{GridSearchCV} 
+was used on the Euclidean KNN to optimize the number of neighbors setting as scoring \texttt{balanced\_accuracy}.
+The best number of neighbors was found to be 9.
+
+Using this configuration, the Euclidean KNN achieved an overall accuracy of approximately 
+$46\%$, with a macro-averaged F1-score of $0.37$, indicating a moderate classification 
+performance in a multi-class and partially imbalanced setting. The confusion matrix reveals 
+that the classifier is most effective in identifying the \textit{High} and \textit{Medium} 
+rating categories, which also correspond to the most represented classes in the dataset. 
+In particular, the \textit{High} class exhibits a relatively high recall (0.71),
+suggesting that 
+movies with strong rating signals tend to share more consistent temporal patterns. 
+In contrast, the \textit{Low} and \textit{Medium High} categories show substantially lower 
+recall values and are frequently misclassified as neighboring classes, reflecting a smoother 
+transition in temporal behavior between adjacent rating levels rather than clearly separable 
+patterns. This behavior is consistent with the ordinal nature of the target variable, 
+where errors tend to occur between semantically close categories rather than across 
+distant ones.
+
+achieved an accuracy of 0.46 and a macro F1-score of 0.37, ...
+The corresponding confusion matrix, shown in Figure~\ref{fig:cm_knn}, highlights a 
+relatively good performance for the \textit{High} and \textit{Medium} classes, 
+while the \textit{Low} and \textit{Medium High} categories are more frequently 
+confused with adjacent rating levels.
+
+The DTW-based KNN was evaluated using the same number of neighbors and a Sakoe–Chiba 
+constraint with radius 7, chosen considering the observed seasonality of approximately 14 
+time steps while preventing excessive temporal warping. The DTW classifier achieved a 
+slightly lower accuracy of about $42\%$ and a macro F1-score of $0.35$, with performance trends similar to the Euclidean 
+case, as shown in Figure~\ref{fig:cm_knn}. While DTW provides a more flexible alignment 
+of temporal patterns, its advantage appears limited in this setting, likely due to the 
+fact that rating categories are more strongly associated with overall trend and magnitude 
+patterns rather than fine-grained temporal misalignments. 
+
+We then applied KNN with DTW using the same number of neighbors and a 
+Sakoe--Chiba radius of 7, chosen considering the observed seasonality of approximately 
+14 time steps. DTW achieved an accuracy of 0.43 and a macro F1-score of 0.35, improving 
+recall for the minority class ``Low'' while slightly decreasing performance on the other 
+classes.
+% Overall, the comparison suggests that, for this task, Euclidean KNN on globally normalized 
+% time series offers a competitive and computationally simpler baseline, while DTW does not 
+% yield a substantial improvement despite its higher computational cost.
+
+\begin{figure}[t]
+    \centering
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{plotsss/cm_knn_euclidean.png}
+        \caption{KNN with Euclidean distance}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{plotsss/cm_knn_dtw.png}
+        \caption{KNN with DTW distance}
+    \end{subfigure}
+    \caption{Confusion matrices for the KNN classifiers using Euclidean and DTW distances.}
+    \label{fig:cm_knn}
+\end{figure}
+
+
