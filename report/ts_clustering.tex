@@ -3,7 +3,56 @@
 The time series were first preprocessed using a logarithmic transformation
 followed by per-series Z-score normalization. This ensures that each 
 series contributes equally to the feature extraction and clustering, 
-independent of its absolute scale.  
+independent of its absolute scale.
+
+
+\subsection{Baseline}
+As a baseline, sequence of experiments was designed to systematically explore how different representations and distance measures
+influenced the quality of time series clustering. 
+We first evaluated simple Euclidean-based approaches using both agglomerative hierarchical clustering and \texttt{KMeans} 
+in order to establish a straightforward baseline. 
+We then introduced Dynamic Time Warping (DTW), 
+%and repeated the experiments with agglomerative clustering and \texttt{KMeans}, 
+since DTW is well suited for handling temporal misalignment and shape-based similarity. 
+Finally, we extracted the \texttt{catch22} feature set and applied both clustering algorithms again to assess 
+whether a compact, interpretable feature representation could outperform raw time series distances. 
+This progression allowed us to compare distance-based versus feature-based methods, 
+evaluate the impact of temporal alignment, and understand the trade-offs between computational cost
+and interpretability across all clustering configurations.
+
+In the agglomerative hierarchical clustering results, the dendrogram 
+clearly indicated the presence of three dominant clusters. Based on this observation, to assess the robustness we experimented 
+with cluster sizes of $k=3,4,5$ to examine how the \texttt{rating\_category} values were distributed across the groups. 
+For \texttt{KMeans}, both the elbow method and the silhouette score suggested that $k=6$ was the most suitable choice, 
+so to understand the stability of cluster structure we further inspected the distributions for $k=4,5,6$. Across these experiments, 
+we observed that the majority of samples consistently formed one large, heterogeneous cluster containing 
+almost all rating categories (\texttt{low}, \texttt{medium\_low}, \texttt{medium}, \texttt{medium\_high}, \texttt{high}), 
+while a much smaller cluster captured only a few higher-rated series. 
+Increasing the number of clusters mainly affected these small groups, which became further subdivided, 
+whereas the large mixed cluster remained relatively stable. 
+This behaviour was expected, as the IMDb time series exhibited strong overall similarity with 
+only subtle differences in temporal patterns, causing most series to cluster together 
+while only a few outliers separated.
+
+
+% As a baseline, we applied K-Means clustering directly on the catch22 features, setting the number
+% of clusters with elbow method and silhoutte score
+% with k=2 and k=5()
+% we can show dynamic time warping distane simple agglomerative clustering with average distance with k=2, or k=5
+% we canshow simple agglomerative clustering with average distance with k=2, or k=5
+% we can show simple agglomerative clustering with ward distance with k=2, or k=5
+% we tried all these methods but due to page constraint we will show only the best one which is agglomerative clustering with average distance with k=5
+
+
+
+% Pros and cons
+% a) dynamic time warping takes too long even with sakoe chiba band as it is not useful, we use dtw 
+% in the pipeline to reduce dimensionality
+% b) simple agglomerative clustering with average distance and k = 2, we follow the algorithm, dendogram
+% c) with k = 5, we make it comparable with k means with  catch 22 features
+% d)
+
+\subsection{Clustering Pipeline}
 The following pipeline combines feature-based and shape-based clustering: 
 initial feature extraction allows fast micro-clustering, 
 while medoid selection and DTW-based final clustering focus on the 

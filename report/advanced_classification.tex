@@ -979,14 +979,99 @@ it struggles with fine-grained distinctions between closely spaced rating bins.
 
 \subsection{Model Comparison}
 
+In this subsection, we compared the performance of all advanced classification models applied to the two target variables,
+\texttt{titleType} and \texttt{averageRating}. 
+Each model was trained on the same preprocessed dataset to ensure a fair comparison, 
+and the evaluation was conducted using accuracy, and macro-averaged F1 score. 
+Since the two tasks differed in class distribution and semantic complexity, 
+the comparison allowed us to understand how each algorithm handled multi-class imbalance, nonlinear decision boundaries, 
+and high-dimensional feature interactions. To support this analysis, we included a 
+summary table reporting the performance metrics of all models in Table~\ref{tab:merged_model_comparison}.
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{lcccc}
+\hline
+\multirow{2}{*}{\textbf{Model}} 
+& \multicolumn{2}{c}{\textbf{titleType}} 
+& \multicolumn{2}{c}{\textbf{averageRating}} \\
+\cline{2-5}
+& \textbf{Accuracy} & \textbf{F1-Macro} 
+& \textbf{Accuracy} & \textbf{F1-Macro} \\
+\hline
+Logistic Regression        & 0.75 & 0.54 & 0.27 & 0.25 \\
+SVM (RBF)                  & 0.90 & 0.64 & 0.39 & 0.33 \\
+Random Forest              & 0.92 & 0.75 & 0.45 & 0.37 \\
+AdaBoost                   & 0.92 & 0.73 & 0.43 & 0.35 \\
+Neural Network             & 0.90 & 0.73 & 0.35 & 0.34 \\
+Gradient Boosting Machine  & 0.96 & 0.85 & 0.44 & 0.39 \\
+\hline
+\end{tabular}
+\caption{Comparison of model performance for the \texttt{titleType} and \texttt{averageRating} classification tasks.}
+\label{tab:merged_model_comparison}
+\end{table}
+
+
+\subsubsection{titleType task}
+
+For the \texttt{titleType} task, the results showed a clear trend: models capable of capturing nonlinear relationships significantly outperformed linear approaches. 
+Logistic Regression achieved an accuracy of approximately 0.75, providing a reasonable baseline but struggling with the complex, 
+multi-modal structure of the feature space. Support Vector Machines with an RBF kernel improved performance substantially, 
+reaching around 0.90 accuracy, confirming that nonlinear decision boundaries were essential for this task.
+Tree-based ensemble methods delivered the strongest results. Both Random Forest and AdaBoost achieved accuracies close to 0.92, 
+benefiting from their ability to model heterogeneous interactions between features such as \texttt{startYear}, \texttt{genre1}, 
+\texttt{castNumber}, and \texttt{totalCredits}. Neural Networks also performed competitively with an accuracy around 0.90, although they exhibited higher variance 
+and required careful tuning. Gradient Boosting Machines (GBM) outperformed all other models, 
+reaching approximately 0.96 accuracy, demonstrating superior handling of feature interactions and class boundaries.
+
+
+\subsubsection{averageRating task}
+
+For the \texttt{averageRating} task, the overall performance of all models was significantly 
+lower than in the \texttt{titleType} task. This was expected, as the rating classes were highly 
+overlapping in the feature space and exhibited weaker separability. Logistic Regression achieved an accuracy of approximately 0.27, 
+indicating that linear boundaries were insufficient for capturing the subtle differences between rating categories. 
+Support Vector Machines with an RBF kernel improved performance to around 0.39, but still struggled due to the intrinsic difficulty of the task.
+Tree-based models again performed better than linear methods. Random Forest achieved an accuracy of 
+approximately 0.45, while AdaBoost reached around 0.43. Neural Networks achieved an accuracy of around 0.35, performing worse than tree-based models, likely due to 
+the limited discriminative power of the features for this target.
+Gradient Boosting Machines performed similarly with an accuracy of 
+about 0.44, confirming that ensemble methods were more capable of modeling the nonlinear relationships present in the data. 
+
+\subsubsection{Advanced classification conclusion}
+Across both tasks, ensemble-based methods such as Gradient Boosting Machines and Random Forests 
+consistently outperformed linear models, confirming that nonlinear relationships played a significant 
+role in the IMDb dataset. Logistic Regression, despite its simplicity, provided a strong baseline for the \texttt{titleType} 
+task but struggled with the \texttt{averageRating} classes due to overlapping feature distributions 
+and the ordinal nature of the target. Support Vector Machines achieved competitive performance, 
+particularly with the RBF kernel, but required substantial computational resources due to the dataset size. 
+Neural Networks demonstrated strong predictive power but showed higher variance across runs, 
+indicating sensitivity to hyperparameter choices and initialization. These observations highlighted the importance of model 
+flexibility and the ability to capture complex interactions among features such as \texttt{startYear}, 
+\texttt{genre1}, \texttt{castNumber}, and \texttt{totalCredits}.
+
+
+
+
+
 \subsection{Explainable AI}
 To better understand the predictions made by our Neural Network model, we employed \texttt{LIME} Local Interpretable Model-agnostic Explanations 
 to provide local explanations for individual predictions.
-LIME works by perturbing the input data around a specific instance and 
+\texttt{LIME} works by perturbing the input data around a specific instance and 
 observing how the model's predictions change. 
+We adopted \texttt{LIME} instead of \texttt{SHAP} or rule-based methods such as \texttt{LORE} for several reasons. 
+First, \texttt{LIME} is strictly local and model-agnostic: it focuses on explaining a single prediction by approximating the 
+complex neural network with a simple, interpretable surrogate model around that specific instance. 
+This was particularly suitable for our setting, where we were interested in understanding \emph{why} 
+the network misclassified certain titles, rather than deriving a global explanation of the whole decision boundary. 
+Compared to \texttt{SHAP}, \texttt{LIME} is typically less computationally demanding for tabular data and easier to integrate 
+in an iterative analysis workflow, which was important given the size of our dataset and the number of experiments. 
+Rule-based approaches such as \texttt{LORE}, while highly interpretable, tend to introduce additional complexity in terms of 
+rule extraction and parameter tuning, and may be less straightforward to apply to high-dimensional, continuous feature spaces 
+like ours. \texttt{LIME} therefore offered a good compromise between interpretability, flexibility, and computational cost.
 This allows us to identify which features are most influential for that particular prediction.
-For our analysis, we selected the first instance from the test set of both classification tasks: \texttt{titleType} and \texttt{averageRating}.
-We then used LIME to generate explanations for the model's predictions on these instances.
+For our analysis, we selected the first misclassified instance from the test set of both classification tasks: \texttt{titleType} and \texttt{averageRating}.
+We then used \texttt{LIME} to generate explanations for the model's predictions on these instances. We only showed the top 5 features for clarity.
 
 \subsubsection{titleType}
 
@@ -994,93 +1079,150 @@ We then used LIME to generate explanations for the model's predictions on these 
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=\linewidth]{plotsss/Lime_title.png}
-    \caption{LIME explanation for the \texttt{titleType} prediction of instance 0 in the test set.}
+    \caption{LIME explanation for the \texttt{titleType} prediction of first misclassified instance in the test set.}
     \label{fig:LIME_title}
 \end{figure}
-Figure~\ref{fig:LIME_title} shows the LIME explanation for the \texttt{titleType} prediction of instance 0. We only show the top 5 features for clarity.
-The model assigns a high probability of 0.97 to the class \textit{movie}, with all other classes receiving negligible scores. 
-This strong confidence is supported by the decision rules extracted from the local surrogate model, which highlight 
-the most influential features contributing to the classification. 
-The top features include \texttt{runtimeMinutes}, \texttt{numRegions}, \texttt{deltaCredits}, and \texttt{startYear}, 
-each evaluated against specific thresholds. For instance, the value of \texttt{runtimeMinutes} is 1.39 (standardized), 
-which exceeds the threshold used to exclude categories such as \textit{short} and \textit{tvEpisode}, 
-both of which typically have shorter durations. Similarly, the low value of \texttt{numRegions} (0.28) and \texttt{deltaCredits} (0.01) 
-helps eliminate classes like \textit{video} and \textit{tvSpecial}, which often have limited regional distribution and sparse production metadata. 
-The standardized \texttt{startYear} value of $-1.04$ suggests an older release date, 
-which may align more closely with traditional \textit{movie} formats than episodic or special content. 
-The decision paths shown in the visualization reinforce the model's reasoning by systematically ruling out 
-alternative classes through feature-based logic. Notably, the absence of branching toward competing categories 
-like \textit{tvSeries} or \textit{video} indicates that the feature profile of this instance is highly aligned with the 
-learned representation of a \textit{movie}. \\
 
-Figure~\ref{fig:title_coeff} presents the top five features contributing to the model's prediction for a specific instance '0'
-in the \texttt{titleType} classification task. The feature \texttt{runtimeMinutes > 0.63} has the highest positive contribution of 0.4208, 
-indicating that longer runtimes strongly support the classification decision, likely favoring categories such as \textit{movie} or \textit{tvSeries}. 
-The condition \texttt{-0.28 < numRegions $\leq$ 0.57} contributes 0.1110, suggesting that moderate regional distribution adds further support 
-to the predicted class, possibly reflecting titles with limited but non-trivial geographic reach. 
-The feature \texttt{deltaCredits $\leq$ -0.70}, with a contribution of 0.0875, implies that a low difference between director and writer credits 
-may signal a more streamlined or unified production, which is often characteristic of traditional movie formats. 
-The condition \texttt{startYear $\leq$ -0.56} contributes 0.0744, indicating that older titles are more likely to belong to certain categories, 
-perhaps due to historical production norms or metadata completeness. Interestingly, the feature \texttt{Asia $\leq$ -0.37} 
-has a negative contribution of $-0.0688$, suggesting that limited association with the Asian region reduces the likelihood of 
-certain title types, possibly reflecting regional content trends or distribution biases. Collectively, these contributions reveal how the model 
-leverages both structural and geographic metadata to make confident predictions, and they underscore the interpretability of the decision-making process 
-through localized feature analysis.
+For the \texttt{titleType} neural network, we analyzed a misclassified instance 
+where the true class was \texttt{tvEpisode}, but the model predicted \texttt{tvSeries} with very high confidence. 
+The \texttt{LIME} visualization in Figure~\ref{fig:LIME_title} shows, how the most relevant 
+input features contributed to the final prediction. Each horizontal bar represents a simple rule on one feature 
+(for example, \texttt{totalCredits} exceeding a certain threshold or \texttt{numRegions} being above a given value), 
+and the associated number indicates how strongly that rule pushes the local surrogate model towards or away from a specific class. 
+Positive contributions increase the probability of the class being explained (in this case \texttt{tvSeries}), 
+while negative contributions reduce it. The cumulative effect of all these contributions, starting from a baseline, 
+leads to the final predicted probability displayed at the top of the figure.
 
-\begin{figure}
-    \centering
-    \includegraphics[width=0.7\textwidth]{plotsss/title_coeff.png}
-    \caption{Contribution of top 5 features}
-    \label{fig:title_coeff}
-\end{figure}
+The labels such as \texttt{tvSeries} and \texttt{NOT tvSeries} (and analogously for other classes) reflect the one-vs-rest formulation 
+used by \texttt{LIME} in the local surrogate model: for each class, \texttt{LIME} learns a simple linear classifier that separates that class 
+from all others. Bars aligned with \texttt{tvSeries} indicate conditions that make this instance look more like a typical \texttt{tvSeries} 
+according to the local surrogate, whereas bars aligned with \texttt{NOT tvSeries} capture conditions that would instead support other classes. 
+The same feature can appear with different signs across different class panels, meaning that it pushes the prediction towards one class while 
+simultaneously pulling it away from another. The numerical values attached to each rule can therefore be 
+interpreted as local importance scores: larger magnitudes (in absolute value) correspond to a 
+stronger influence on the final decision. Overall, the figure conveys that specific combinations 
+of metadata, such as high \texttt{totalCredits} or a large number of regions, locally made the 
+model treat this \texttt{tvEpisode} more like a \texttt{tvSeries}.
+
 
 \subsubsection{averageRating}
 
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=\linewidth]{plotsss/Lime_rating.png}
-    \caption{LIME explanation for the \texttt{rating\_class} prediction of instance 0 in the test set.}
+    \caption{LIME explanation for the \texttt{averageRating} prediction of first misclassified instance in the test set.}
     \label{fig:LIME_rating}
 \end{figure}
 
-Figure~\ref{fig:LIME_rating} presents the LIME explanation for the \texttt{rating\_class} 
-prediction of instance 0 in the test set, generated from a sequential neural network model. 
-The predicted class is 0, with a confidence of 53\%, followed by class 1 (25\%), class 2 (13\%), and class 3 (9\%), 
-indicating a moderate level of uncertainty but a clear preference toward the lowest rating bin. 
-For this instance, \texttt{titleType\_short = 0.43} and \texttt{titleType\_tvEpisode = 0.5} suggest the content 
-is neither a short nor a TV episode, which may steer the model away from mid-range rating bins typically 
-associated with episodic or short-form content. The value \texttt{startYear = -1.05} indicates an older release, 
-which often correlates with lower ratings due to outdated production standards or limited contemporary relevance. 
-Additionally, \texttt{ratingCount = -0.25} reflects low audience engagement, reinforcing the likelihood of a 
-lower rating bin. Interestingly, \texttt{runtimeMinutes = 1.39} suggests a longer duration, which might typically 
-support higher ratings, but in this context, it appears insufficient to offset the negative influence of other 
-features. The surrogate explanation reveals how the neural network integrates temporal, structural, and 
-popularity-related metadata to arrive at its prediction, and it highlights the nuanced interplay 
-between feature thresholds and class probabilities in a locally interpretable manner.
-
-\begin{figure}
-    \centering
-    \includegraphics[width=0.7\textwidth]{plotsss/rating_coeff.png}
-    \caption{Contribution of top 5 features}
-    \label{fig:rating_coeff}
-\end{figure}
 
 
-Figure~\ref{fig:rating_coeff} illustrates the top five features influencing the model's 
-prediction for the \texttt{rating\_bin} classification. The feature \texttt{titleType\_short $\leq$ -0.35} 
-contributes positively with a value of 0.0692, suggesting that titles categorized as "short" are more likely to fall into a 
-specific rating bin, possibly due to their niche appeal or limited exposure. The feature \texttt{startYear $\leq$ -0.56} 
-adds a contribution of 0.0384,potentially reflecting historical rating standards or audience expectations.
-Conversely, the feature \texttt{titleType\_tvEpisode $\leq$ -0.95} has a negative contribution of $-0.0236$, implying that the 
-absence or low presence of TV episodes reduces the likelihood of the predicted rating bin, possibly due to episodic 
-content receiving more polarized ratings. The condition \texttt{-0.29 < ratingCount $\leq$ 0.50} contributes 0.0215, 
-suggesting that moderate rating counts slightly support the classification, likely reflecting a balance between popularity 
-and niche interest. Lastly, \texttt{runtimeMinutes > 0.63} contributes negatively with $-0.0192$, indicating that 
-longer runtimes may detract from the predicted rating bin, perhaps due to pacing issues or audience fatigue.
-The model appears to weigh structural metadata (e.g., title type, runtime) alongside temporal 
-and popularity indicators to infer rating categories. Overall, The model's interpretability lies in its transparent structure, 
-allowing us to trace how each feature contributes to the final classification. 
-This is particularly valuable for validating predictions and identifying potential biases in the training data.
+For the \texttt{averageRating} task, the behaviour of the model is qualitatively different from 
+the \texttt{titleType} example. Here, the true class of the instance is \([6, 7)\), 
+whereas the neural network predicts the lowest class \([1, 5)\) with the highest probability. 
+% for each rating bin, a set of feature-based rules (e.g., conditions on \texttt{ratingCount}, 
+% \texttt{runtimeMinutes}, or other metadata) together with their local contributions, 
+% indicating how strongly they push the surrogate model towards or away from that bin. 
+Unlike the title type case, where the error involved two semantically similar categories, 
+this misclassification jumps across several class. This makes the explanation particularly interesting, 
+% and the explanation helps to reveal why 
+% the model locally treats this title as if it belonged to the lowest-rated group.
+Figure~\ref{fig:LIME_rating} shows, the panel corresponding to the predicted class \([1, 5)\), the main contributing 
+features have positive weights, meaning that their values for this instance resemble those 
+commonly observed among titles in the lowest rating bin. For example, relatively 
+low \texttt{ratingCount} or specific combinations of content-related features 
+may be interpreted by the model as indicators of poor reception, thereby increasing 
+the probability assigned to \([1, 5)\). In contrast, when looking at the panel for the 
+true class \([6, 7)\), several of these same features tend to appear with negative contributions, 
+indicating that, in the local surrogate model, they move the prediction \emph{away} from 
+\([6, 7)\) and towards competing classes. This sign inversion captures the fact that the 
+instance does not match well the typical profile learned by the network for mid-range ratings, 
+even though it is labelled as such in the ground truth. The negative values therefore 
+do not imply that the features are globally bad predictors, but that, for this particular 
+title, they locally argue against assigning it to \([6, 7)\).
+
+Taken together, the \texttt{LIME} explanation suggests that the misclassification is driven by 
+an overlap in feature distributions between low-rated and moderately rated titles. The model has learned that the observed pattern of votes, 
+runtime, and related attributes is more characteristic of items in \([1, 5)\) than of those in 
+\([6, 7)\). This also explains why the error does not involve a neighbouring class but instead 
+a more distant class. The figure~\ref{fig:LIME_rating} thus provides 
+an interpretable account of a severe underestimation: it shows that, locally, the model is not 
+making an arbitrary mistake, but consistently applying a pattern that, in this case, contradicts 
+the true label because of the way the classes overlap and are represented in the training data.
+
+
+% \subsubsection{Explainability for the \texttt{averageRating} task}
+
+% For the \texttt{averagRating} neural network, the true rating bin belonged
+% to \texttt{\([6,7)\)} interval, while the model assigned a neighbouring class \texttt{\([1,5)\)} 
+% with higher probability. This choice is particularly meaningful because 
+% rating bins are ordinal and partially overlapping in feature space: 
+% misclassifications often occur between adjacent intervals, and a 
+% local explanation helps to understand which features pushed the model 
+% towards the wrong side of the threshold. As in the previous case, 
+% \texttt{LIME} builds a simple linear surrogate model around the 
+% selected instance and expresses the prediction as a weighted sum of
+% human-readable rules on the input features. Each bar in the visualization 
+% corresponds to one such rule (for example, \texttt{ratingCount} in a
+% certain range or \texttt{runtimeMinutes} above a threshold) and 
+% quantifies how that condition influences the probability of a specific 
+% rating class for this particular title.
+
+% The figure shows, for each rating bin, two panels labelled with the class and its complement 
+% (e.g., \([6, 7)\) vs.\ ``NOT \([6, 7)\)''). Within a panel, 
+% positive contributions indicate that a feature makes the instance more likely to belong to that bin, while negative contributions make it less likely. For example, a rule on \texttt{ratingCount} or \texttt{totalCredits} may have a positive weight for a mid-range bin such as \([7, 8)\), reflecting that highly rated and frequently voted titles in the training data often fall in that interval. At the same time, the same or related features can appear with a negative sign in the panel of a lower bin, meaning that they pull the prediction away from that class. The sum of these contributions, starting from a baseline, leads to the final probabilities that the network assigns to each rating interval. In the misclassified example, the explanation reveals that the combination of features (such as relatively high \texttt{ratingCount}, longer \texttt{runtimeMinutes} and non-trivial \texttt{reviewsTotal}) aligns more closely with the learned profile of a higher rating bin, even though the ground-truth label belongs to a slightly lower interval. This illustrates how subtle differences in feature values can cause the model to cross the decision boundary between neighbouring bins.
+
+% Overall, the \texttt{LIME} explanation highlights that the misclassification is not random 
+% but driven by a coherent local pattern. Features that typically characterize higher-quality 
+% or more popular titles push the prediction towards a higher bin, while conditions 
+% associated with lower ratings are either weak or expressed with negative contributions 
+% in the context of the true class. The negative signs in the bars simply indicate that, 
+% for this specific instance, those features act against the considered bin and favour alternative 
+% classes instead. In this way, the figure provides an intuitive narrative: the model 
+% overestimates the rating because, locally, this title ``looks'' more like titles in the 
+% neighbouring higher bin according to its metadata. This type of explanation is particularly 
+% useful for understanding borderline cases and for motivating why, despite moderate global 
+% performance, the model tends to confuse adjacent rating intervals rather than making arbitrary 
+% errors.
+
+
+% %Figure~\ref{fig:LIME_rating} presents the LIME explanation for the \texttt{rating\_class} 
+% prediction of instance 0 in the test set, generated from a sequential neural network model. 
+% The predicted class is 0, with a confidence of 53\%, followed by class 1 (25\%), class 2 (13\%), and class 3 (9\%), 
+% indicating a moderate level of uncertainty but a clear preference toward the lowest rating bin. 
+% For this instance, \texttt{titleType\_short = 0.43} and \texttt{titleType\_tvEpisode = 0.5} suggest the content 
+% is neither a short nor a TV episode, which may steer the model away from mid-range rating bins typically 
+% associated with episodic or short-form content. The value \texttt{startYear = -1.05} indicates an older release, 
+% which often correlates with lower ratings due to outdated production standards or limited contemporary relevance. 
+% Additionally, \texttt{ratingCount = -0.25} reflects low audience engagement, reinforcing the likelihood of a 
+% lower rating bin. Interestingly, \texttt{runtimeMinutes = 1.39} suggests a longer duration, which might typically 
+% support higher ratings, but in this context, it appears insufficient to offset the negative influence of other 
+% features. The surrogate explanation reveals how the neural network integrates temporal, structural, and 
+% popularity-related metadata to arrive at its prediction, and it highlights the nuanced interplay 
+% between feature thresholds and class probabilities in a locally interpretable manner.
+
+% \begin{figure}
+%     \centering
+%     \includegraphics[width=0.7\textwidth]{plotsss/rating_coeff.png}
+%     \caption{Contribution of top 5 features}
+%     \label{fig:rating_coeff}
+% \end{figure}
+
+
+% Figure~\ref{fig:rating_coeff} illustrates the top five features influencing the model's 
+% prediction for the \texttt{rating\_bin} classification. The feature \texttt{titleType\_short $\leq$ -0.35} 
+% contributes positively with a value of 0.0692, suggesting that titles categorized as "short" are more likely to fall into a 
+% specific rating bin, possibly due to their niche appeal or limited exposure. The feature \texttt{startYear $\leq$ -0.56} 
+% adds a contribution of 0.0384,potentially reflecting historical rating standards or audience expectations.
+% Conversely, the feature \texttt{titleType\_tvEpisode $\leq$ -0.95} has a negative contribution of $-0.0236$, implying that the 
+% absence or low presence of TV episodes reduces the likelihood of the predicted rating bin, possibly due to episodic 
+% content receiving more polarized ratings. The condition \texttt{-0.29 < ratingCount $\leq$ 0.50} contributes 0.0215, 
+% suggesting that moderate rating counts slightly support the classification, likely reflecting a balance between popularity 
+% and niche interest. Lastly, \texttt{runtimeMinutes > 0.63} contributes negatively with $-0.0192$, indicating that 
+% longer runtimes may detract from the predicted rating bin, perhaps due to pacing issues or audience fatigue.
+% The model appears to weigh structural metadata (e.g., title type, runtime) alongside temporal 
+% and popularity indicators to infer rating categories. Overall, The model's interpretability lies in its transparent structure, 
+% allowing us to trace how each feature contributes to the final classification. 
+% This is particularly valuable for validating predictions and identifying potential biases in the training data.
 
 
 % In this section, classification results are showcased for two
@@ -1103,3 +1245,134 @@ This is particularly valuable for validating predictions and identifying potenti
 % In addition, the variable \texttt{canHaveEpisodes} was removed prior to training, 
 % since it provides direct information about the target \texttt{titleType} 
 % and could therefore introduce data leakage.}
+% To provide a more interpretable comparison, we also analyzed feature importance across 
+% tree-based models and SHAP explanations for the best-performing classifiers. 
+% This analysis revealed that certain features consistently influenced predictions across models, 
+% while others were model-specific. For example, \texttt{tvEpisode} and \texttt{startYear} were highly influential in the 
+% \texttt{titleType} task, whereas \texttt{averageRating}, \texttt{numVotes}, and \texttt{reviewsTotal} played a central 
+% role in predicting the rating classes. Including SHAP summary plots (Figures~\ref{fig:shap_titleType} and \ref{fig:shap_rating}) 
+% allowed us to visualize these contributions and understand why certain models performed better. 
+% Overall, the model comparison demonstrated that while simpler models offered interpretability and 
+% efficiency, ensemble and neural approaches provided superior predictive performance, 
+% making them the most suitable choices for the IMDb classification tasks.
+
+% \begin{table}[h!]
+% \centering
+% \caption{Comparison of classification models on the two target variables. Metrics include accuracy and macro F1 score.}
+% \label{tab:model_comparison}
+% \begin{tabular}{lcc}
+% \hline
+% \textbf{Model} & \textbf{Accuracy} & \textbf{F1-Macro} \\
+% \hline
+% Logistic Regression & ... & ... \\
+% Support Vector Machine & ... & ... \\
+% Random Forest & ... & ... \\
+% Gradient Boosting Machine & ... & ... \\
+% Neural Network & ... & ... \\
+% \hline
+% \end{tabular}
+% \end{table}
+
+
+% \begin{figure}[h!]
+% \centering
+% \includegraphics[width=0.75\textwidth]{cm_titleType.png}
+% \caption{Confusion matrix for the best-performing model on the \texttt{titleType} task.}
+% \label{fig:cm_titleType}
+% \end{figure}
+
+% \begin{figure}[h!]
+% \centering
+% \includegraphics[width=0.75\textwidth]{cm_rating.png}
+% \caption{Confusion matrix for the best-performing model on the \texttt{averageRating} task.}
+% \label{fig:cm_rating}
+% \end{figure}
+
+% \begin{figure}[h!]
+% \centering
+% \includegraphics[width=0.75\textwidth]{shap_titleType.png}
+% \caption{SHAP summary plot for the best model on the \texttt{titleType} task.}
+% \label{fig:shap_titleType}
+% \end{figure}
+
+% \begin{figure}[h!]
+% \centering
+% \includegraphics[width=0.75\textwidth]{shap_rating.png}
+% \caption{SHAP summary plot for the best model on the \texttt{averageRating} task.}
+% \label{fig:shap_rating}
+% \end{figure}
+
+% \subsection{4.6 Model Comparison}
+
+
+
+
+
+% \begin{figure}[h!]
+% \centering
+% \includegraphics[width=0.75\textwidth]{cm_titleType_gbm.png}
+% \caption{Confusion matrix for the Gradient Boosting Machine on the \texttt{titleType} task.}
+% \label{fig:cm_titleType_gbm}
+% \end{figure}
+
+% \begin{figure}[h!]
+% \centering
+% \includegraphics[width=0.75\textwidth]{cm_titleType_rf.png}
+% \caption{Confusion matrix for the Random Forest model on the \texttt{titleType} task.}
+% \label{fig:cm_titleType_rf}
+% \end{figure}
+
+
+
+
+
+
+% \begin{figure}[h!]
+% \centering
+% \includegraphics[width=0.75\textwidth]{cm_rating_rf.png}
+% \caption{Confusion matrix for the Random Forest model on the \texttt{averageRating} task.}
+% \label{fig:cm_rating_rf}
+% \end{figure}
+
+% \begin{figure}[h!]
+% \centering
+% \includegraphics[width=0.75\textwidth]{cm_rating_gbm.png}
+% \caption{Confusion matrix for the Gradient Boosting Machine on the \texttt{averageRating} task.}
+% \label{fig:cm_rating_gbm}
+% \end{figure}
+
+% The model assigns a high probability of 0.97 to the class \textit{movie}, with all other classes receiving negligible scores. 
+% This strong confidence is supported by the decision rules extracted from the local surrogate model, which highlight 
+% the most influential features contributing to the classification. 
+% The top features include \texttt{runtimeMinutes}, \texttt{numRegions}, \texttt{deltaCredits}, and \texttt{startYear}, 
+% each evaluated against specific thresholds. For instance, the value of \texttt{runtimeMinutes} is 1.39 (standardized), 
+% which exceeds the threshold used to exclude categories such as \textit{short} and \textit{tvEpisode}, 
+% both of which typically have shorter durations. Similarly, the low value of \texttt{numRegions} (0.28) and \texttt{deltaCredits} (0.01) 
+% helps eliminate classes like \textit{video} and \textit{tvSpecial}, which often have limited regional distribution and sparse production metadata. 
+% The standardized \texttt{startYear} value of $-1.04$ suggests an older release date, 
+% which may align more closely with traditional \textit{movie} formats than episodic or special content. 
+% The decision paths shown in the visualization reinforce the model's reasoning by systematically ruling out 
+% alternative classes through feature-based logic. Notably, the absence of branching toward competing categories 
+% like \textit{tvSeries} or \textit{video} indicates that the feature profile of this instance is highly aligned with the 
+% learned representation of a \textit{movie}. \\
+
+% Figure~\ref{fig:title_coeff} presents the top five features contributing to the model's prediction for a specific instance '0'
+% in the \texttt{titleType} classification task. The feature \texttt{runtimeMinutes > 0.63} has the highest positive contribution of 0.4208, 
+% indicating that longer runtimes strongly support the classification decision, likely favoring categories such as \textit{movie} or \textit{tvSeries}. 
+% The condition \texttt{-0.28 < numRegions $\leq$ 0.57} contributes 0.1110, suggesting that moderate regional distribution adds further support 
+% to the predicted class, possibly reflecting titles with limited but non-trivial geographic reach. 
+% The feature \texttt{deltaCredits $\leq$ -0.70}, with a contribution of 0.0875, implies that a low difference between director and writer credits 
+% may signal a more streamlined or unified production, which is often characteristic of traditional movie formats. 
+% The condition \texttt{startYear $\leq$ -0.56} contributes 0.0744, indicating that older titles are more likely to belong to certain categories, 
+% perhaps due to historical production norms or metadata completeness. Interestingly, the feature \texttt{Asia $\leq$ -0.37} 
+% has a negative contribution of $-0.0688$, suggesting that limited association with the Asian region reduces the likelihood of 
+% certain title types, possibly reflecting regional content trends or distribution biases. Collectively, these contributions reveal how the model 
+% leverages both structural and geographic metadata to make confident predictions, and they underscore the interpretability of the decision-making process 
+% through localized feature analysis.
+
+% \begin{figure}
+%     \centering
+%     \includegraphics[width=0.7\textwidth]{plotsss/title_coeff.png}
+%     \caption{Contribution of top 5 features}
+%     \label{fig:title_coeff}
+% \end{figure}
