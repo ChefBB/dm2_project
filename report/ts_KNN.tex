@@ -1,4 +1,4 @@
-\subsection{kNN Classifier}
+\subsubsection{kNN Classifier}
 
 %Preprocessing in rnn
 
@@ -9,7 +9,7 @@ designed for temporal data. The input consisted exclusively of the raw time seri
 without additional metadata, in order to allow a direct comparison of the two distance metrics 
 on the raw time series. A logarithmic transformation was first applied to reduce skewness and 
 stabilize variance. For the Euclidean KNN, a global Z-score normalization was then performed 
-across samples so that each time step contributed equally to the distance computation, 
+across samples in order to keep amplitude information relevant for the classification, 
 while for the DTW-based KNN a per-series mean–variance normalization was applied to remove 
 amplitude effects and focus the comparison on temporal shape rather than absolute scale. 
 The dataset was split into stratified train and test sets (80/20), and \texttt{GridSearchCV} 
@@ -37,16 +37,16 @@ constraint with radius 7, chosen considering the observed seasonality of approxi
 time steps while preventing excessive temporal warping. The DTW classifier achieved a 
 slightly lower accuracy of about $0.42$ and a macro F1-score of $0.35$, with performance trends similar to the Euclidean 
 case, as shown in Figure~\ref{fig:cm_knn}. While DTW provides a more flexible alignment 
-of temporal patterns, its advantage appears limited in this setting, likely due to the 
-fact that, maybe, rating categories are more strongly associated with overall trend and magnitude 
-patterns rather than fine-grained temporal misalignments. 
+of temporal patterns, its advantage appears limited in this setting.
+%likely due to the fact that, maybe, rating categories are more strongly associated with overall trend and magnitude 
+%patterns rather than fine-grained temporal misalignments. 
 
 
 % Overall, the comparison suggests that, for this task, Euclidean KNN on globally normalized 
 % time series offers a competitive and computationally simpler baseline, while DTW does not 
 % yield a substantial improvement despite its higher computational cost.
 
-\begin{figure}[t]
+\begin{figure}[ht]
     \centering
     \begin{subfigure}{0.45\textwidth}
         \centering

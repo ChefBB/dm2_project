@@ -164,31 +164,50 @@ into two dimensions using both PCA and t-SNE (perplexity=15).
     4 & 88  & $7.19\times10^{5}$ & $1.93\times10^{6}$ & $4$ & $2.41\times10^{7}$ & $1.48\times10^{6}$ & $6.36\times10^{5}$ & $1.07\times10^{5}$ \\
     \bottomrule
     \end{tabular}
-    \end{table}
-        
+\end{table}
 
-Table~\ref{tab:cluster_descriptive} reports descriptive statistics of the domestic 
-box office gross time series for each cluster. 
-In addition to global statistics (mean, standard deviation, minimum and maximum), 
-the average gross at the release day ($t=0$), at the midpoint of the observation window 
-($t=50$), and at the final day ($t=99$) was reported in order to summarize the typical 
-temporal evolution of movies belonging to each cluster.
 
-The results highlight substantial heterogeneity across clusters, both in terms of revenue scale and temporal dynamics.
-The largest cluster (Cluster 3, 953 movies) is characterized by extremely high 
-opening-day revenues, with an average gross exceeding $10^7$ USD at release, 
-followed by a sharp decline over time. 
-%This pattern is typical of blockbuster movies, where 
-A large fraction of total revenue is concentrated in the initial days after release.
 
-Clusters 4 and 0 (88 and 87 movies, respectively) exhibit intermediate behaviors. 
-Cluster 4 shows relatively high opening-day revenues (on the order of $10^6$ USD) 
-followed by a gradual decay, whereas Cluster 0 is characterized by lower initial values 
-and a pronounced peak around the midpoint of the observation window, suggesting a more 
-gradual build-up of audience interest.
+    % --- LEFT: plot ---
+    \begin{wrapfigure}{l}{0.48\textwidth}
+        \centering
+        \vspace{-0.5em}
+        \includegraphics[width=\linewidth]{plotsss/ts_log_clustering.png}
+        \caption{Log-scale average box office gross by cluster.
+        Solid lines represent cluster mean trajectories, while shaded areas
+        indicate the range between minimum and maximum values.}
+        \label{fig:cluster_log}
+        \vspace{-1em}
+    \end{wrapfigure}
+    \hfill
+    
+    Table~\ref{tab:cluster_descriptive} reports descriptive statistics of the domestic
+    box office gross time series for each cluster.
+    In addition to global statistics (mean, standard deviation, minimum and maximum),
+    the average gross at the release time step ($t=0$), at the midpoint of the observation
+    window ($t=50$), and at the final time step ($t=99$) is reported in order to summarize
+    the typical temporal evolution of movies belonging to each cluster.
+    
+    \vspace{0.5em}
+    
+    The results highlight substantial heterogeneity across clusters, both in terms of
+    revenue scale and temporal dynamics.
+    The largest cluster (Cluster~3, 953 movies) is characterized by extremely high
+    initial revenues, with an average gross exceeding $10^7$ USD at release,
+    followed by a sharp decline over time.
+    A large fraction of total revenue is therefore concentrated in the initial period
+    after release.
+    
+    Clusters~4 and~0 (88 and 87 movies, respectively) exhibit intermediate behaviors.
+    Cluster~4 shows relatively high initial revenues (on the order of $10^6$ USD)
+    followed by a gradual decay, whereas Cluster~0 is characterized by lower initial values
+    and a pronounced peak around the midpoint of the observation window.
+    
+    The remaining clusters are much smaller in size and capture atypical dynamics.
+    Cluster~1 includes movies with consistently low revenues throughout the observation
+    period, while Cluster~2 consists of a single movie displaying an unusual pattern
+    with very low opening revenues and a sharp increase toward the end of the time horizon,
+    indicative of outlier behavior.
 
-The remaining clusters are much smaller in size and capture atypical dynamics. 
-Cluster 1 includes movies with consistently low revenues throughout the observation 
-period, while Cluster 2 consists of a single movie displaying an unusual pattern 
-with very low opening revenues and a sharp increase toward the end of the time 
-horizon, indicative of outlier behavior.
+
+
