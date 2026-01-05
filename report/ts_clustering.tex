@@ -146,19 +146,49 @@ into two dimensions using both PCA and t-SNE (perplexity=15).
 \end{figure}
 
 
+
+
+
 \begin{table}[ht]
     \centering
-    \caption{Descriptive statistics per cluster}
-    \label{tab:cluster_stats}
-    \begin{tabular}{rrrrrr}
+    \caption{Descriptive statistics of box office Gross by cluster.}
+    \label{tab:cluster_descriptive}
+    \begin{tabular}{ccccccccc}
     \toprule
-     cluster &  size &       mean &        std &        min &         max \\
+    Cluster & Size & Mean & Std & Min & Max & Start ($t=0$) & Mid ($t=50$) & End ($t=99$) \\
     \midrule
-           0 &    87 & 5.62e+05 & 1.67e+06 & 8.00e+01 & 3.45e+07 \\
-           1 &     5 & 2.03e+05 & 3.11e+05 & 4.90e+01 & 2.38e+06 \\
-           2 &     1 & 4.75e+05 & 8.62e+05 & 4.83e+03 & 3.99e+06 \\
-           3 &   953 & 1.63e+06 & 4.36e+06 & 8.00e+00 & 1.57e+08 \\
-           4 &    88 & 7.19e+05 & 1.93e+06 & 4.00e+00 & 2.41e+07 \\
+    0 & 87  & $5.62\times10^{5}$ & $1.67\times10^{6}$ & $80$ & $3.45\times10^{7}$ & $1.49\times10^{5}$ & $8.32\times10^{5}$ & $2.07\times10^{5}$ \\
+    1 & 5   & $2.03\times10^{5}$ & $3.11\times10^{5}$ & $49$ & $2.38\times10^{6}$ & $2.50\times10^{5}$ & $2.92\times10^{5}$ & $5.77\times10^{4}$ \\
+    2 & 1   & $4.75\times10^{5}$ & $8.62\times10^{5}$ & $4834$ & $3.99\times10^{6}$ & $6.95\times10^{3}$ & $4.99\times10^{4}$ & $5.10\times10^{5}$ \\
+    3 & 953 & $1.63\times10^{6}$ & $4.36\times10^{6}$ & $8$ & $1.57\times10^{8}$ & $1.06\times10^{7}$ & $6.42\times10^{5}$ & $1.03\times10^{5}$ \\
+    4 & 88  & $7.19\times10^{5}$ & $1.93\times10^{6}$ & $4$ & $2.41\times10^{7}$ & $1.48\times10^{6}$ & $6.36\times10^{5}$ & $1.07\times10^{5}$ \\
     \bottomrule
     \end{tabular}
     \end{table}
+        
+
+Table~\ref{tab:cluster_descriptive} reports descriptive statistics of the domestic 
+box office gross time series for each cluster. 
+In addition to global statistics (mean, standard deviation, minimum and maximum), 
+the average gross at the release day ($t=0$), at the midpoint of the observation window 
+($t=50$), and at the final day ($t=99$) was reported in order to summarize the typical 
+temporal evolution of movies belonging to each cluster.
+
+The results highlight substantial heterogeneity across clusters, both in terms of revenue scale and temporal dynamics.
+The largest cluster (Cluster 3, 953 movies) is characterized by extremely high 
+opening-day revenues, with an average gross exceeding $10^7$ USD at release, 
+followed by a sharp decline over time. 
+%This pattern is typical of blockbuster movies, where 
+A large fraction of total revenue is concentrated in the initial days after release.
+
+Clusters 4 and 0 (88 and 87 movies, respectively) exhibit intermediate behaviors. 
+Cluster 4 shows relatively high opening-day revenues (on the order of $10^6$ USD) 
+followed by a gradual decay, whereas Cluster 0 is characterized by lower initial values 
+and a pronounced peak around the midpoint of the observation window, suggesting a more 
+gradual build-up of audience interest.
+
+The remaining clusters are much smaller in size and capture atypical dynamics. 
+Cluster 1 includes movies with consistently low revenues throughout the observation 
+period, while Cluster 2 consists of a single movie displaying an unusual pattern 
+with very low opening revenues and a sharp increase toward the end of the time 
+horizon, indicative of outlier behavior.
