@@ -84,18 +84,13 @@ The number of clusters was determined by visually inspecting the dendrogram and 
 The final labels were propagated back to the original series.  \\
 
 %\paragraph*{Cluster analysis and visualization.} 
-We analyzed the resulting clusters with respect to \texttt{rating\_category}. 
-\textcolor{red}{write something about the distribution of rating categories across clusters.}
+We analyzed the resulting clusters with respect to \texttt{rating\_category} metadata. 
 Figure~\ref{fig:ts_clustering_dist} shows the distribution of rating categories
 across the clusters, while Figure~\ref{fig:ts_clustering_representatives}
 displays the representative time series for each cluster.
-To visualize the clusters, we projected the PAA-transformed medoids
-into two dimensions using both PCA and t-SNE (perplexity=15).
 
-\textcolor{red}{explain differences between pca and tsne results.}
 % Figure~\ref{fig:cluster_2d} shows the resulting projections,
 % colored by cluster membership. 
-
 
 % \begin{figure}[h!]
 %     \centering
@@ -127,6 +122,27 @@ into two dimensions using both PCA and t-SNE (perplexity=15).
 
 \end{figure}
 
+
+Cluster~3 is the largest and most heterogeneous group, containing movies
+from all rating categories, with a predominance of medium-rated titles.
+The shape of its representative time series is characterized by very high
+opening revenues followed by a monotonic decline.
+Clusters~0,~1 and~4 are instead dominated by highly rated movies and 
+Cluter~1 has also a moderate amount of medium low rating movies.
+Cluster 0 is characterized by a pronounced peak around the midpoint of the observation window,
+Cluster 4 starts higher and has a similar overall shape to Cluster~0 but shifted toward earlier
+time steps.
+Cluster 1 displays an overall flatter temporal profile.
+Finally, Cluster~2 consists of a single highly rated movie and captures an
+atypical temporal pattern, with very low opening revenues followed by a sharp
+increase toward the end of the observation window, highlighting an outlier
+behavior.
+
+To visualize the cluster structure, the 200 PAA-transformed medoids 
+were projected into two dimensions using both PCA and t-SNE (perplexity=15). 
+Both techniques reveal a modest separation among the three most populated clusters. 
+In particular, the t-SNE projection highlights a clearer separation of Cluster~3 
+from the others.
 
 \begin{figure}[H]
     \centering
@@ -181,33 +197,43 @@ into two dimensions using both PCA and t-SNE (perplexity=15).
     \end{wrapfigure}
     \hfill
     
+   
     Table~\ref{tab:cluster_descriptive} reports descriptive statistics of the domestic
     box office gross time series for each cluster.
     In addition to global statistics (mean, standard deviation, minimum and maximum),
     the average gross at the release time step ($t=0$), at the midpoint of the observation
     window ($t=50$), and at the final time step ($t=99$) is reported in order to summarize
     the typical temporal evolution of movies belonging to each cluster.
+
+    These pieces of information about absolute values are complemented by
+    the log-scale plot in Figure~\ref{fig:cluster_log}, which provides an overview
+    of the temporal dynamics for all movies within each cluster. 
+    Compared to the previous analysis on the representative microcluster medoids, 
+    we now consider the full set of original time series, confirming that the
+    temporal patterns identified earlier are generally preserved.
+
+    Cluster~2, originally identified as a single outlier among the medoids, 
+    remains an isolated series after mapping back to the original time series,
+    confirming its atypical behavior.
+
+    % The results highlight substantial heterogeneity across clusters, both in terms of
+    % revenue scale and temporal dynamics.
+    % The largest cluster (Cluster~3, 953 movies) is characterized by extremely high
+    % initial revenues, with an average gross exceeding $10^7$ USD at release,
+    % followed by a sharp decline over time.
+    % A large fraction of total revenue is therefore concentrated in the initial period
+    % after release.
     
-    \vspace{0.5em}
+    % Clusters~4 and~0 (88 and 87 movies, respectively) exhibit intermediate behaviors.
+    % Cluster~4 shows relatively high initial revenues (on the order of $10^6$ USD)
+    % followed by a gradual decay, whereas Cluster~0 is characterized by lower initial values
+    % and a pronounced peak around the midpoint of the observation window.
     
-    The results highlight substantial heterogeneity across clusters, both in terms of
-    revenue scale and temporal dynamics.
-    The largest cluster (Cluster~3, 953 movies) is characterized by extremely high
-    initial revenues, with an average gross exceeding $10^7$ USD at release,
-    followed by a sharp decline over time.
-    A large fraction of total revenue is therefore concentrated in the initial period
-    after release.
-    
-    Clusters~4 and~0 (88 and 87 movies, respectively) exhibit intermediate behaviors.
-    Cluster~4 shows relatively high initial revenues (on the order of $10^6$ USD)
-    followed by a gradual decay, whereas Cluster~0 is characterized by lower initial values
-    and a pronounced peak around the midpoint of the observation window.
-    
-    The remaining clusters are much smaller in size and capture atypical dynamics.
-    Cluster~1 includes movies with consistently low revenues throughout the observation
-    period, while Cluster~2 consists of a single movie displaying an unusual pattern
-    with very low opening revenues and a sharp increase toward the end of the time horizon,
-    indicative of outlier behavior.
+    % The remaining clusters are much smaller in size and capture atypical dynamics.
+    % Cluster~1 includes movies with consistently low revenues throughout the observation
+    % period, while Cluster~2 consists of a single movie displaying an unusual pattern
+    % with very low opening revenues and a sharp increase toward the end of the time horizon,
+    % indicative of outlier behavior.
 
 
 
