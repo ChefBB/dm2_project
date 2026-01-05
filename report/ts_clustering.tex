@@ -7,24 +7,24 @@ independent of its absolute scale.
 
 
 \subsection{Baseline}
-As a baseline, sequence of experiments was designed to systematically explore how different representations and distance measures
+As a baseline, sequence of experiments were designed to systematically explore how different representations and distance measures
 influenced the quality of time series clustering. 
-We first evaluated simple Euclidean-based approaches using both agglomerative hierarchical clustering and \texttt{KMeans} 
+We first evaluated simple Euclidean-based approaches using both \textit{Agglomerative hierarchical clustering} and \textit{KMeans} 
 in order to establish a straightforward baseline. 
 We then introduced Dynamic Time Warping (DTW), 
 %and repeated the experiments with agglomerative clustering and \texttt{KMeans}, 
-since DTW is well suited for handling temporal misalignment and shape-based similarity. 
+since it is well suited for handling temporal misalignment and shape-based similarity. 
 Finally, we extracted the \texttt{catch22} feature set and applied both clustering algorithms again to assess 
 whether a compact, interpretable feature representation could outperform raw time series distances. 
 This progression allowed us to compare distance-based versus feature-based methods, 
-evaluate the impact of temporal alignment, and understand the trade-offs between computational cost
-and interpretability across all clustering configurations.
-
-In the agglomerative hierarchical clustering results, the dendrogram 
-clearly indicated the presence of three dominant clusters. Based on this observation, to assess the robustness we experimented 
-with cluster sizes of $k=3,4,5$ to examine how the \texttt{rating\_category} values were distributed across the groups. 
-For \texttt{KMeans}, both the elbow method and the silhouette score suggested that $k=6$ was the most suitable choice, 
-so to understand the stability of cluster structure we further inspected the distributions for $k=4,5,6$. Across these experiments, 
+evaluate the impact of temporal alignment.
+In the \textit{Agglomerative hierarchical clustering} results, the dendrogram 
+clearly indicated the presence of three dominant clusters. Based on this observation, to assess the robustness we also experimented 
+with cluster sizes of $k=3,4,5$.
+%to examine how the \texttt{rating\_category} values were distributed across the groups. 
+For \textit{KMeans}, both the elbow method and the silhouette score suggested that $k=6$ was the most suitable choice, 
+so to understand the stability of cluster structure we further inspected the distributions for $k=4,5,6$. \\ 
+Across all these experiments, 
 we observed that the majority of samples consistently formed one large, heterogeneous cluster containing 
 almost all rating categories (\texttt{low}, \texttt{medium\_low}, \texttt{medium}, \texttt{medium\_high}, \texttt{high}), 
 while a much smaller cluster captured only a few higher-rated series. 
@@ -81,9 +81,9 @@ Agglomerative clustering with average linkage was applied on the PAA-transformed
 medoids using DTW distance as the similarity measure. This allows grouping 
 of series based on shape similarity rather than Euclidean proximity in feature space. 
 The number of clusters was determined by visually inspecting the dendrogram and selecting a cut-off to obtain 5 clusters.
-The final labels were propagated back to the original series.  
+The final labels were propagated back to the original series.  \\
 
-\paragraph*{Cluster analysis and visualization.} 
+%\paragraph*{Cluster analysis and visualization.} 
 We analyzed the resulting clusters with respect to \texttt{rating\_category}. 
 \textcolor{red}{write something about the distribution of rating categories across clusters.}
 Figure~\ref{fig:ts_clustering_dist} shows the distribution of rating categories
@@ -112,24 +112,23 @@ into two dimensions using both PCA and t-SNE (perplexity=15).
 
 \begin{figure}[ht]
     \centering
-    \begin{minipage}{0.5\textwidth}
+    \begin{minipage}[t]{0.55\textwidth}
         \centering
         \includegraphics[width=\textwidth]{plotsss/ts_clustering_dist.png} 
         \captionof{figure}{Rating category Distribution}
         \label{fig:ts_clustering_dist} 
     \end{minipage}
     \hfill
-    \begin{minipage}{0.45\textwidth} 
+    \begin{minipage}[t]{0.43\textwidth} 
         \includegraphics[width=\textwidth]{plotsss/ts_clustering_representatives.png}
-        \caption{Final Cluster Representatives}
+        \captionof{figure}{Final Cluster Representatives}
         \label{fig:ts_clustering_representatives}
     \end{minipage}
-
 
 \end{figure}
 
 
-\begin{figure}[ht]
+\begin{figure}[H]
     \centering
     \begin{minipage}{0.45\textwidth}
         \centering
@@ -145,3 +144,21 @@ into two dimensions using both PCA and t-SNE (perplexity=15).
     \end{minipage}
 
 \end{figure}
+
+
+\begin{table}[ht]
+    \centering
+    \caption{Descriptive statistics per cluster}
+    \label{tab:cluster_stats}
+    \begin{tabular}{rrrrrr}
+    \toprule
+     cluster &  size &       mean &        std &        min &         max \\
+    \midrule
+           0 &    87 & 5.62e+05 & 1.67e+06 & 8.00e+01 & 3.45e+07 \\
+           1 &     5 & 2.03e+05 & 3.11e+05 & 4.90e+01 & 2.38e+06 \\
+           2 &     1 & 4.75e+05 & 8.62e+05 & 4.83e+03 & 3.99e+06 \\
+           3 &   953 & 1.63e+06 & 4.36e+06 & 8.00e+00 & 1.57e+08 \\
+           4 &    88 & 7.19e+05 & 1.93e+06 & 4.00e+00 & 2.41e+07 \\
+    \bottomrule
+    \end{tabular}
+    \end{table}

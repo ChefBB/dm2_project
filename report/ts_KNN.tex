@@ -17,7 +17,7 @@ was used on the Euclidean KNN to optimize the number of neighbors setting as sco
 The best number of neighbors was found to be 9.
 
 Using this configuration, the Euclidean KNN achieved an overall accuracy of approximately 
-$46\%$, with a macro-averaged F1-score of $0.37$, indicating a moderate classification 
+$0.46$, with a macro-averaged F1-score of $0.37$, indicating a moderate classification 
 performance in a multi-class and partially imbalanced setting. The classification report
 and the confusion matrix reveal
 that the classifier is most effective in identifying the \textit{High} and \textit{Medium} 
@@ -35,7 +35,7 @@ distant ones.
 The DTW-based KNN was evaluated using the same number of neighbors and a Sakoe–Chiba 
 constraint with radius 7, chosen considering the observed seasonality of approximately 14 
 time steps while preventing excessive temporal warping. The DTW classifier achieved a 
-slightly lower accuracy of about $42\%$ and a macro F1-score of $0.35$, with performance trends similar to the Euclidean 
+slightly lower accuracy of about $0.42$ and a macro F1-score of $0.35$, with performance trends similar to the Euclidean 
 case, as shown in Figure~\ref{fig:cm_knn}. While DTW provides a more flexible alignment 
 of temporal patterns, its advantage appears limited in this setting, likely due to the 
 fact that, maybe, rating categories are more strongly associated with overall trend and magnitude 
