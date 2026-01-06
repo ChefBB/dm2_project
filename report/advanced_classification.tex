@@ -1089,8 +1089,8 @@ Positive contributions increase the probability of the class being explained (in
 while negative contributions reduce it. The cumulative effect of all these contributions, starting from a baseline, 
 leads to the final predicted probability displayed at the top of the figure.
 The labels such as \texttt{tvSeries} and \texttt{NOT tvSeries} (and analogously for other classes) reflect the one-vs-rest formulation 
-used by \texttt{LIME} for each class. \
-texttt{LIME} learns a simple linear classifier that separates that class 
+used by \texttt{LIME} for each class.
+\texttt{LIME} learns a simple linear classifier that separates that class 
 from all others. Bars aligned with \texttt{tvSeries} indicate conditions that make this instance look more like a typical \texttt{tvSeries}, 
 whereas bars aligned with \texttt{NOT tvSeries} capture conditions that would instead support other classes. 
 The same feature can appear with different signs across different class panels, meaning that it pushes the prediction towards one class while 
