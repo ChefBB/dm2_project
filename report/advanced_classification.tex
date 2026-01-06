@@ -1038,7 +1038,7 @@ the limited discriminative power of the features for this target.
 Gradient Boosting Machines performed similarly with an accuracy of 
 about 0.44, confirming that ensemble methods were more capable of modeling the nonlinear relationships present in the data. 
 
-\subsubsection{Advanced classification conclusion}
+\subsection{Advanced Classification Conclusion}
 Across both tasks, ensemble-based methods such as Gradient Boosting Machines and Random Forests 
 consistently outperformed linear models, confirming that nonlinear relationships played a significant 
 role in the IMDb dataset. Logistic Regression, despite its simplicity, provided a strong baseline for the \texttt{titleType} 
@@ -1052,30 +1052,19 @@ flexibility and the ability to capture complex interactions among features such 
 
 
 
+\section{Explainable AI}
+
+To better understand the predictions made by our Neural Network model, we employed two model-agnostic
+explanation techniques, \texttt{LIME} (Local Interpretable Model-agnostic Explanations) and \texttt{SHAP}
+(SHapley Additive exPlanations). For our analysis, we selected the first misclassified
+instance from the test set of both classification tasks, \texttt{titleType} and \texttt{averageRating}, and
+generated explanations with both methods, displaying only the top five features for clarity.
 
 
-\subsection{Explainable AI}
-To better understand the predictions made by our Neural Network model, we employed \texttt{LIME} Local Interpretable Model-agnostic Explanations 
-to provide local explanations for individual predictions.
-\texttt{LIME} works by perturbing the input data around a specific instance and 
-observing how the model's predictions change. 
-We adopted \texttt{LIME} instead of \texttt{SHAP} or rule-based methods such as \texttt{LORE} for several reasons. 
-First, \texttt{LIME} is strictly local and model-agnostic: it focuses on explaining a single prediction by approximating the 
-complex neural network with a simple, interpretable surrogate model around that specific instance. 
-This was particularly suitable for our setting, where we were interested in understanding \emph{why} 
-the network misclassified certain titles, rather than deriving a global explanation of the whole decision boundary. 
-Compared to \texttt{SHAP}, \texttt{LIME} is typically less computationally demanding for tabular data and easier to integrate 
-in an iterative analysis workflow, which was important given the size of our dataset and the number of experiments. 
-Rule-based approaches such as \texttt{LORE}, while highly interpretable, tend to introduce additional complexity in terms of 
-rule extraction and parameter tuning, and may be less straightforward to apply to high-dimensional, continuous feature spaces 
-like ours. \texttt{LIME} therefore offered a good compromise between interpretability, flexibility, and computational cost.
-This allows us to identify which features are most influential for that particular prediction.
-For our analysis, we selected the first misclassified instance from the test set of both classification tasks: \texttt{titleType} and \texttt{averageRating}.
-We then used \texttt{LIME} to generate explanations for the model's predictions on these instances. We only showed the top 5 features for clarity.
+\subsection{\texttt{LIME}}
 
 \subsubsection{titleType}
 
- 
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=\linewidth]{plotsss/Lime_title.png}
@@ -1085,24 +1074,25 @@ We then used \texttt{LIME} to generate explanations for the model's predictions 
 
 For the \texttt{titleType} neural network, we analyzed a misclassified instance 
 where the true class was \texttt{tvEpisode}, but the model predicted \texttt{tvSeries} with very high confidence. 
-The \texttt{LIME} visualization in Figure~\ref{fig:LIME_title} shows, how the most relevant 
+The \texttt{LIME} visualization in Figure~\ref{fig:LIME_title} shows, how the top 5 
 input features contributed to the final prediction. Each horizontal bar represents a simple rule on one feature 
 (for example, \texttt{totalCredits} exceeding a certain threshold or \texttt{numRegions} being above a given value), 
 and the associated number indicates how strongly that rule pushes the local surrogate model towards or away from a specific class. 
 Positive contributions increase the probability of the class being explained (in this case \texttt{tvSeries}), 
 while negative contributions reduce it. The cumulative effect of all these contributions, starting from a baseline, 
 leads to the final predicted probability displayed at the top of the figure.
-
 The labels such as \texttt{tvSeries} and \texttt{NOT tvSeries} (and analogously for other classes) reflect the one-vs-rest formulation 
-used by \texttt{LIME} in the local surrogate model: for each class, \texttt{LIME} learns a simple linear classifier that separates that class 
-from all others. Bars aligned with \texttt{tvSeries} indicate conditions that make this instance look more like a typical \texttt{tvSeries} 
-according to the local surrogate, whereas bars aligned with \texttt{NOT tvSeries} capture conditions that would instead support other classes. 
+used by \texttt{LIME} for each class. \
+texttt{LIME} learns a simple linear classifier that separates that class 
+from all others. Bars aligned with \texttt{tvSeries} indicate conditions that make this instance look more like a typical \texttt{tvSeries}, 
+whereas bars aligned with \texttt{NOT tvSeries} capture conditions that would instead support other classes. 
 The same feature can appear with different signs across different class panels, meaning that it pushes the prediction towards one class while 
 simultaneously pulling it away from another. The numerical values attached to each rule can therefore be 
 interpreted as local importance scores: larger magnitudes (in absolute value) correspond to a 
-stronger influence on the final decision. Overall, the figure conveys that specific combinations 
-of metadata, such as high \texttt{totalCredits} or a large number of regions, locally made the 
-model treat this \texttt{tvEpisode} more like a \texttt{tvSeries}.
+stronger influence on the final decision. 
+% Overall, the figure conveys that specific combinations 
+% of metadata, such as high \texttt{totalCredits} or a large number of regions, locally made the 
+% model treat this \texttt{tvEpisode} more like a \texttt{tvSeries}.
 
 
 \subsubsection{averageRating}
@@ -1126,28 +1116,248 @@ Unlike the title type case, where the error involved two semantically similar ca
 this misclassification jumps across several class. This makes the explanation particularly interesting, 
 % and the explanation helps to reveal why 
 % the model locally treats this title as if it belonged to the lowest-rated group.
-Figure~\ref{fig:LIME_rating} shows, the panel corresponding to the predicted class \([1, 5)\), the main contributing 
-features have positive weights, meaning that their values for this instance resemble those 
-commonly observed among titles in the lowest rating bin. For example, relatively 
-low \texttt{ratingCount} or specific combinations of content-related features 
-may be interpreted by the model as indicators of poor reception, thereby increasing 
-the probability assigned to \([1, 5)\). In contrast, when looking at the panel for the 
+Figure~\ref{fig:LIME_rating} shows, \texttt{castNumber} and \texttt{totalNominations}
+have positive weights, meaning that their values for this instance resemble those 
+commonly observed among titles in the lowest rating bin. 
+% For example, relatively 
+% low \texttt{ratingCount} or specific combinations of content-related features 
+% may be interpreted by the model as indicators of poor reception, thereby increasing 
+% the probability assigned to \([1, 5)\). 
+In contrast, when looking at the panel for the 
 true class \([6, 7)\), several of these same features tend to appear with negative contributions, 
-indicating that, in the local surrogate model, they move the prediction \emph{away} from 
+indicating that, they move the prediction \emph{away} from 
 \([6, 7)\) and towards competing classes. This sign inversion captures the fact that the 
 instance does not match well the typical profile learned by the network for mid-range ratings, 
 even though it is labelled as such in the ground truth. The negative values therefore 
 do not imply that the features are globally bad predictors, but that, for this particular 
 title, they locally argue against assigning it to \([6, 7)\).
 
-Taken together, the \texttt{LIME} explanation suggests that the misclassification is driven by 
-an overlap in feature distributions between low-rated and moderately rated titles. The model has learned that the observed pattern of votes, 
-runtime, and related attributes is more characteristic of items in \([1, 5)\) than of those in 
-\([6, 7)\). This also explains why the error does not involve a neighbouring class but instead 
-a more distant class. The figure~\ref{fig:LIME_rating} thus provides 
-an interpretable account of a severe underestimation: it shows that, locally, the model is not 
-making an arbitrary mistake, but consistently applying a pattern that, in this case, contradicts 
-the true label because of the way the classes overlap and are represented in the training data.
+
+\subsection{\texttt{SHAP}}
+
+
+\subsubsection{\texttt{titleType}} 
+
+
+We applied \texttt{SHAP} to the same misclassified instance where the 
+true class was \texttt{tvEpisode} and the model predicted \texttt{tvSeries}. 
+The model's output for this class was $f(x) = 0.367$, slightly above the 
+expected value $E[f(X)] = 0.29$, indicating a modest increase in confidence 
+driven by the instance's feature profile. SHAP decomposes this shift into 
+additive contributions from individual features. The most influential was 
+\texttt{genre1}, with a SHAP value of $-0.24$, acting as a strong 
+counterweight against the prediction. 
+In contrast, \texttt{genre2} ($+0.18$), \texttt{Europe} ($+0.11$), and \texttt{Oceania} ($+0.07$) contributed positively, 
+suggesting a non-linear interaction captured by the model. 
+% \texttt{South America} contributed $-0.06$, further reducing the score. 
+The remaining 18 features collectively added only $+0.01$, reinforcing that 
+the prediction was shaped by a small set of dominant signals.
+
+\begin{figure}[htbp]
+    \centering
+    \begin{minipage}{0.48\linewidth}
+        \centering
+        \includegraphics[width=0.95\linewidth]{plotsss/SHAP_title.png}
+        \caption{SHAP explanation for the \texttt{titleType} prediction of the first misclassified instance in the test set.}
+        \label{fig:SHAP_title}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.48\linewidth}
+        \centering
+        \includegraphics[width=0.95\linewidth]{plotsss/SHAP_rating.png}
+        \caption{SHAP explanation for the \texttt{averageRating} prediction of the first misclassified instance in the test set.}
+        \label{fig:SHAP_rating}
+    \end{minipage}
+\end{figure}
+
+
+\subsubsection{averageRating}
+
+For the same misclassified instance in the \texttt{averageRating} task (\texttt{true}: \([6, 7)\), \texttt{predicted}: \([1, 5)\)), 
+the SHAP explanation in Figure~\ref{fig:SHAP_rating} reveals 
+the model's output increased slightly from the expected value $E[f(X)] = 0.126$ to $f(x) = 0.135$. 
+The most influential was \texttt{startYear} ($+0.08$), which pushed the prediction toward the lower rating class, 
+while \texttt{numRegions} ($-0.03$), \texttt{ratingCount} ($-0.02$), and \texttt{totalCredits} ($-0.02$) exerted negative pressure, 
+pulling the prediction downward. 
+
+\subsection{Explainable AI Conclusion}
+
+Taken together, for the same misclassified instance the contrast 
+in feature attribution is striking. For \texttt{titleType}, 
+\texttt{LIME} emphasized metadata-related features 
+such as \texttt{totalCredits} and \texttt{numRegions}, interpreting them as 
+locally decisive for the misclassification. SHAP, however, highlighted genre 
+and geographic indicators as the primary drivers. LIME's surrogate model 
+captured the immediate decision logic based on production metadata, while SHAP 
+exposed broader structural patterns that the neural network associates with 
+content type and origin. The fact that \texttt{genre1} had the largest 
+negative SHAP value ($-0.24$) yet was not prominent in LIME's explanation 
+suggests that LIME's local linear approximation may have missed subtle but 
+globally consistent signals.
+
+For \texttt{averageRating} task the top features identified by \texttt{LIME} were \texttt{castNumber}, \texttt{totalNominations}, and \texttt{tvEpisode}, 
+all contributing positively to the prediction of the lowest rating bin.
+In contrast, \texttt{SHAP} attributed the prediction 
+primarily to \texttt{startYear} ($+0.08$), followed by negative contributions from \texttt{numRegions} ($-0.03$), \texttt{ratingCount} 
+($-0.02$), and \texttt{totalCredits} ($-0.02$). While both methods agree on the relevance of \texttt{ratingCount}, 
+but the presence of \texttt{startYear} in SHAP and not 
+in LIME suggests that temporal context played a subtle role in the model's confidence, which LIME's 
+local surrogate did not capture.
+
+This comparison underscores the value of using multiple interpretability tools.
+LIME offers intuitive, instance-specific rules that reflect the model's local 
+behaviour, while SHAP provides a theoretically grounded decomposition that 
+reveals how the model's internal representation aligns with broader feature 
+semantics. Together, they suggest that the model's error is not driven by a single dominant feature but by a subtle 
+imbalance in multiple weak signals that collectively resemble the profile of poorly rated titles.
+Overall, the comparison reveals that both explanations converge on 
+metadata features but diverge in ranking and directionality.
+
+% explanation suggests that the misclassification is driven by 
+% an overlap in feature distributions between low-rated and moderately rated titles. The model has learned that the observed pattern of votes, 
+% runtime, and related attributes is more characteristic of items in \([1, 5)\) than of those in 
+% \([6, 7)\). This also explains why the error does not involve a neighbouring class but instead 
+% a more distant class. The figure~\ref{fig:LIME_rating} thus provides 
+% an interpretable account of a severe underestimation: it shows that, locally, the model is not 
+% making an arbitrary mistake, but consistently applying a pattern that, in this case, contradicts 
+% the true label because of the way the classes overlap and are represented in the training data.
+% The discrepancy between the two methods 
+% highlights how LIME captures local decision boundaries through interpretable rules, while SHAP attributes the prediction to marginal 
+% feature contributions.
+% Compared to the \texttt{LIME} explanation,  
+% In our case, the misclassification was not arbitrary—it was the 
+% result of genre and regional features collectively outweighing metadata cues, 
+% leading the model to treat a \texttt{tvEpisode} as if it were a 
+% \texttt{tvSeries}. The interplay between these explanations enriches our 
+% understanding of the model's reasoning and highlights the importance of 
+% interpretability in diagnosing and refining complex classifiers.
+
+% Compared to LIME, which emphasized rule-based conditions on \texttt{ratingCount}, \texttt{runtimeMinutes}, 
+% and metadata features, SHAP provides a more additive and numerically grounded view, showing that the model's confidence in the 
+% misclassification stems from a weak but cumulative alignment with low-rated patterns. 
+% \paragraph{Comparison with LIME}
+
+% For the misclassified instance in the  LIME interprets them as pushing the prediction toward low ratings, 
+% whereas SHAP shows them slightly pulling it away. .  indicating that the misclassification stems 
+% from a nuanced interplay of weak signals rather than a single dominant factor.
+
+% to provide local explanations for individual predictions.
+
+% \texttt{LIME} approximates the complex decision function of the neural network in a neighbourhood of a given
+% instance by fitting an interpretable surrogate model (typically linear). By perturbing the input around that
+% instance and observing the corresponding variations in the predicted probabilities, \texttt{LIME} yields a
+% locally faithful attribution of feature importance. This is particularly suitable in our setting, where we are
+% interested in understanding \emph{why} the network misclassified specific titles, rather than characterising
+% the global decision boundary. Moreover, \texttt{LIME} integrates naturally into an iterative analysis workflow,
+% allowing us to quickly inspect and compare explanations across multiple instances and experiments.
+
+% \texttt{SHAP}, on the other hand, is grounded in cooperative game theory and assigns each feature a Shapley
+% value, quantifying its marginal contribution to the prediction with respect to a chosen reference distribution.
+% Unlike \texttt{LIME}, which focuses on a local linear approximation, \texttt{SHAP} provides locally accurate
+% additive attributions that satisfy desirable theoretical properties such as local accuracy, consistency and
+% symmetry. In practice, this enables a more principled decomposition of the model output into feature-wise
+% contributions, and makes it possible to aggregate explanations across instances to identify global patterns
+% in the model's behaviour.
+
+% We therefore used both \texttt{LIME} and \texttt{SHAP} in a complementary way. \texttt{LIME} was primarily
+% employed to obtain, instance-level explanations and to visually inspect the main features driving
+% individual misclassifications. 
+% \texttt{SHAP} was used to validate these local insights from a theoretically
+% grounded perspective and to analyse how feature contributions behave across the dataset, thus bridging local
+% and more global understanding of the neural network. 
+% To better understand the predictions made by our Neural Network model, we employed \texttt{LIME} Local Interpretable Model-agnostic Explanations 
+% to provide local explanations for individual predictions.
+% \texttt{LIME} works by perturbing the input data around a specific instance and 
+% observing how the model's predictions change. 
+% We adopted \texttt{LIME} instead of \texttt{SHAP} or rule-based methods such as \texttt{LORE} for several reasons. 
+% First, \texttt{LIME} is strictly local and model-agnostic: it focuses on explaining a single prediction by approximating the 
+% complex neural network with a simple, interpretable surrogate model around that specific instance. 
+% This was particularly suitable for our setting, where we were interested in understanding \emph{why} 
+% the network misclassified certain titles, rather than deriving a global explanation of the whole decision boundary. 
+% Compared to \texttt{SHAP}, \texttt{LIME} is typically less computationally demanding for tabular data and easier to integrate 
+% in an iterative analysis workflow, which was important given the size of our dataset and the number of experiments. 
+% Rule-based approaches such as \texttt{LORE}, while highly interpretable, tend to introduce additional complexity in terms of 
+% rule extraction and parameter tuning, and may be less straightforward to apply to high-dimensional, continuous feature spaces 
+% like ours. \texttt{LIME} therefore offered a good compromise between interpretability, flexibility, and computational cost.
+% This allows us to identify which features are most influential for that particular prediction.
+% For our analysis, we selected the first misclassified instance from the test set of both classification tasks: \texttt{titleType} and \texttt{averageRating}.
+% We then used \texttt{LIME} to generate explanations for the model's predictions on these instances. We only showed the top 5 features for clarity.
+
+
+% We applied \texttt{SHAP} to the same misclassified instance where the true class was \texttt{tvEpisode} and the model predicted \texttt{tvSeries}. 
+% Figure~\ref{fig:SHAP_title} shows the contribution of each feature to the predicted probability, 
+% decomposing the output into additive components relative to the expected value. 
+% Positive SHAP values (pink bars) indicate features that increased the likelihood of the predicted class, 
+% while negative values (blue bars) reduced it. Notably, \texttt{genre2}, \texttt{Europe}, and \texttt{numRegions} contributed positively, 
+% pushing the prediction toward \texttt{tvSeries}, whereas \texttt{genre1} and \texttt{South America} had a negative influence. 
+% The cumulative effect of these contributions explains the model's confidence in the incorrect prediction, 
+% highlighting how regional and genre-based features shaped the decision.
+
+
+% Compared to the \texttt{LIME} explanation for the same misclassified instance, the top five features 
+% identified by \texttt{SHAP} differ significantly. While \texttt{LIME} emphasized \texttt{totalCredits}, 
+% \texttt{numRegions}, and other metadata-related features, \texttt{SHAP} highlighted genre-based and 
+% geographic features such as \texttt{genre1}, \texttt{genre2}, and \texttt{Europe}. 
+% This divergence arises from the methodological differences: \texttt{LIME} builds a local surrogate model 
+% based on perturbed samples, which can be sensitive to feature interactions and 
+% sampling noise, whereas \texttt{SHAP} computes feature contributions based on marginal 
+% expectations over all possible feature coalitions, yielding more stable and theoretically grounded attributions. 
+% The contrast suggests that different explanation methods may uncover complementary aspects of 
+% the model's reasoning. In our case, \texttt{LIME} captured the local decision logic tied to production metadata, 
+% while \texttt{SHAP} revealed broader patterns linked to content and origin. This reinforces the 
+% importance of using multiple interpretability tools to gain a more holistic understanding of model behaviour.
+
+% \subsubsubsection{SHAP}
+
+% \begin{figure}[htbp]
+%     \centering
+%     \includegraphics[width=\linewidth]{plotsss/SHAP_title.png}
+%     \caption{SHAP explanation for the \texttt{titleType} prediction of the first misclassified instance in the test set.}
+%     \label{fig:SHAP_title}
+% \end{figure}
+
+% To complement the local surrogate analysis provided by \texttt{LIME}, we computed \texttt{SHAP} values for the
+% same misclassified instance (\texttt{true}: tvEpisode, \texttt{predicted}: tvSeries). SHAP decomposes the model
+% output into additive feature contributions relative to the expected prediction $E[f(X)] = 0.29$. For this
+% instance, the model output increases to $f(x) = 0.367$, and the SHAP values quantify how each feature shifts
+% the prediction away from the baseline.
+
+% The most influential features were:
+% \begin{itemize}
+%     \item \texttt{genre1}: SHAP value $-0.24$, decreasing the probability of \texttt{tvSeries};
+%     \item \texttt{genre2}: SHAP value $+0.18$, increasing the probability of \texttt{tvSeries};
+%     \item \texttt{Europe}: SHAP value $+0.11$, further pushing the prediction upward;
+%     \item \texttt{Oceania}: SHAP value $+0.07$, contributing positively despite the feature value being negative;
+%     \item \texttt{South America}: SHAP value $-0.06$, reducing the predicted score.
+% \end{itemize}
+
+% The remaining 18 features collectively contributed only $+0.01$, indicating that the misclassification is driven
+% primarily by a small subset of high-impact attributes. Overall, SHAP reveals that the model associates the
+% combination of \texttt{genre2} and geographic indicators (e.g., \texttt{Europe}) with \texttt{tvSeries}, which
+% overrides the negative influence of \texttt{genre1} and leads to the incorrect prediction.
+
+% \paragraph{Comparison with LIME}
+
+% Although both \texttt{LIME} and \texttt{SHAP} aim to explain the same prediction, the top contributing features
+% identified by the two methods differ. \texttt{LIME} emphasised metadata-related variables such as
+% \texttt{totalCredits} and \texttt{numRegions}, whereas \texttt{SHAP} assigned the largest numerical impact to
+% content- and geography-related attributes such as \texttt{genre1} ($-0.24$), \texttt{genre2} ($+0.18$), and
+% \texttt{Europe} ($+0.11$). This discrepancy arises from methodological differences: \texttt{LIME} constructs a
+% local linear approximation based on perturbed samples, making it sensitive to local feature interactions,
+% whereas \texttt{SHAP} computes marginal contributions over all possible feature coalitions, yielding a more
+% globally consistent attribution.
+
+% The contrast between the two explanations suggests that the model relies on multiple, partially overlapping
+% feature groups when distinguishing \texttt{tvEpisode} from \texttt{tvSeries}. \texttt{LIME} captures the
+% instance-specific behaviour driven by production metadata, while \texttt{SHAP} highlights broader structural
+% patterns tied to genre and regional indicators. The combined interpretation indicates that the misclassification
+% is not arbitrary: the instance simultaneously resembles \texttt{tvSeries} in terms of its genre and geographic
+% profile (as shown by SHAP) and in terms of its metadata footprint (as shown by LIME). This reinforces the
+% importance of using multiple interpretability methods to obtain a more complete understanding of the model's
+% decision process.
+
+
+
 
 
 % \subsubsection{Explainability for the \texttt{averageRating} task}
