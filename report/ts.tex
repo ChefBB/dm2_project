@@ -130,6 +130,25 @@ the decision was made to merge the Low and Medium Low categories into a single c
 \input{ts_KNN.tex}
 
 
+\subsubsection{Shapelet-based Classification}
+
+\begin{figure}[H]
+    \centering
+    \begin{minipage}{0.41\textwidth}
+        \includegraphics[width=1\textwidth]{plotsss/cm_shapelets.png}
+        \caption{Confusion matrix for the RF model based on shapelets}
+        \label{fig:cm_shapelets}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.55\textwidth}
+        Figure~\ref{fig:cm_shapelets} shows the confusion matrix for
+        Random Forest model based on shapelets.
+
+    \end{minipage}
+\end{figure}
+
+
+
 \subsubsection{Recurrent Neural Network}
 
 As the last model, a Recurrent Neural Network (RNN) was
@@ -260,5 +279,3 @@ without being overly biased towards the more frequent ones.
     \label{tab:macro_weighted_avg}
 \end{table} 
 
-
-\subsubsection{Shapelet-based Classification}
