@@ -1,8 +1,8 @@
 \subsection{Motifs and Anomalies Discovery}\label{subsec:motifs_discords}
 
-\hl{To analyze recurrent temporal patterns in the movie time series, 
-we adopted a motif-based approach grounded in the Matrix Profile 
-framework}. Prior to motif extraction, all series were normalized 
+To analyze temporal patterns in the movie time series an
+approach based on Matrix Profile analysis was adopted.
+Prior to motifs and discords extraction, all series were normalized 
 using z-score normalization applied independently to each time series, 
 in order to focus the analysis on pattern shape rather than absolute 
 scale. Motifs were extracted using the \texttt{STUMPY} implementation 
@@ -35,6 +35,14 @@ within the series, whereas the discord corresponds to a highly
 irregular subsequence, exhibiting little resemblance to the remaining
 patterns in the time series.
 
+Complementary analyses indicated that the identified discords did not
+exhibit clear or consistent structural patterns.
+This was done both by exploring single time series, and by aggregating
+the retrieved patterns through clustering.
+Therefore, the following analyses do not take them into account, and
+instead focused solely on motifs.
+
+
 
 \begin{figure}[H]
     \centering
@@ -46,7 +54,8 @@ patterns in the time series.
 For all following motifs-related analyses, the three subsequences
 associated with the 
 lowest matrix profile values were selected, resulting in the extraction 
-of the top-3 motifs per time series.\\
+of the top-3 motifs per time series. Furthermore, discords were not
+considered to be insightful enough
 All extracted motifs were aggregated into 
 a single dataset. To analyze similarities among 
 motifs, K-Means clustering using Euclidean distance was applied. 
