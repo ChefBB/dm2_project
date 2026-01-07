@@ -107,3 +107,23 @@ comprehensive anomaly detection strategy. Therefore, we combined the results of 
     \label{fig:outlier_methods}
 \end{figure}
 
+% Figure~\ref{fig:tsne_outliers} presents a comparative T-SNE visualization of the outlier scores 
+% produced by Local Outlier Factor (LOF), Isolation Forest (IF), and Angle-Based Outlier Detection (ABOD). 
+% Each method reveals distinct spatial patterns in how anomalies are distributed across the feature space. 
+% LOF (Figure~\ref{fig:tsne_outliers}a) primarily flagged points at the periphery of the data cloud, 
+% consistent with its sensitivity to local density variations. IF (Figure~\ref{fig:tsne_outliers}b) 
+% identified outliers within compact clusters, suggesting that it isolates points based on their 
+% distance from the overall distribution rather than local sparsity. ABOD (Figure~\ref{fig:tsne_outliers}c) 
+% exhibited a hybrid behaviour, marking anomalies both at the edges and within dense regions, 
+% reflecting its angular-based scoring mechanism. These visual differences confirm the complementary 
+% nature of the three algorithms. LOF excels at detecting boundary anomalies, IF captures global isolation, 
+% and ABOD balances both perspectives. Importantly, the dataset is dominated by a single high-density region, 
+% which explains why ABOD flagged fewer strong anomalies—most points lacked sufficient angular separation 
+% from their neighbours. To ensure computational efficiency, we used the fast approximation of ABOD with a 
+% fixed number of neighbors. Despite these algorithmic differences, Table~\ref{tab:outlier_accuracy} shows 
+% that removing outliers—regardless of method or contamination level—led to only marginal improvements in 
+% classification accuracy (1–2\% gain). This suggests that while outlier removal helps stabilize model 
+% performance, it does not drastically alter predictive outcomes. However, the consistency of improvement 
+% across both KNN and Decision Tree models validates the utility of anomaly filtering as a preprocessing step. 
+% To balance precision and coverage, we aggregated the outlier scores and removed instances flagged by at 
+% least two of the three methods, resulting in a final exclusion of approximately 3\% of the dataset.
