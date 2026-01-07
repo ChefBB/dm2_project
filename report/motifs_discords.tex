@@ -71,7 +71,13 @@ clustering was also performed using Dynamic Time Warping as distance
 measure in order to account for possible temporal misalignments 
 between motifs; this alternative formulation led to cluster 
 structures and representative patterns that were largely consistent 
-with those obtained using Euclidean distance. \\
+with those obtained using Euclidean distance.
+
+In addition to this analysis, SAX representation was computed
+considering, again, 
+the top three motifs of each time series, with a word length of 4 and
+alphabet size of 3.
+Figure~\ref{fig:sax_representation} shows the most common motifs.
 
 \begin{figure}[H]
     \centering
@@ -85,7 +91,7 @@ with those obtained using Euclidean distance. \\
     \begin{minipage}{0.45\textwidth} 
         \includegraphics[width=\textwidth]{plotsss/ts_sax.png}
         \caption{SAX representation of motifs.}
-        \label{ fig:sax_representation }
+        \label{fig:sax_representation}
     \end{minipage}
 
 \end{figure}

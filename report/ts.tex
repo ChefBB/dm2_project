@@ -62,19 +62,19 @@ All fliers are concentrated in the upper range, showing that data is
 right-skewed, with a few films achieving exceptionally high revenues
 compared to the majority. 
 
-Graph~\ref{fig:ts_distrib} shows the log-scale distribution of all time series.
-Log-scale was chosen for the representation because it highlights
-the high seasonality of the dataset better, while linear scale flattened
-the time series in the later time steps. \hl{specify that we are are also plotting rating\_category}\\
-
-
-Furthermore, a downward trend is visible in all time series, showing
+Figure~\ref{fig:ts_distrib} illustrates the log-scaled distribution of
+all time series, grouped by rating class.
+For each class, the mean time series is reported together with the
+corresponding minimum and maximum values at each time step.
+Logarithmic scale was adopted to better capture the strong seasonal
+patterns present in the data, which are otherwise compressed in the
+later time steps when using a linear scale.
+From this plot, a downward trend is visible in all classes, showing
 higher engagement at release.
 
 Another important note on the dataset is that missing values for films with 
-runs shorter than 100 time steps, were completed through a synthetic extension
-procedure, which imputes values using a noise-augmented mean of the
-observed revenues.\\
+runs shorter than 100 time steps were completed through a synthetic extension
+procedure.\\
 
 Although a 7-step seasonal pattern appears to be present, the seasonality is 
 much more pronounced at a 14-step interval. This suggests that the time series may 
@@ -134,12 +134,12 @@ the decision was made to merge the Low and Medium Low categories into a single c
 To move beyond global similarity measures and explicitly capture local
 discriminative patterns in the revenue dynamics, the classification
 task was also addressed using shapelet-based methods, using the 
-extracted shapelet features to train a Random Forest classifier.
+extracted shapelet features to train a Random Forest classifier.\\
 
-This approach is particularly well suited to the present task, as
-films with similar overall revenue levels may still differ in
-localized behaviors such as early peaks, decay rates, or delayed
-growth.\\
+% This approach is particularly well suited to the present task, as
+% films with similar overall revenue levels may still differ in
+% localized behaviors such as early peaks, decay rates, or delayed
+% growth.\\
 
 The preprocessing pipeline first applied a logarithmic transformation
 to the raw revenue time series to reduce skewness and stabilize
@@ -281,43 +281,41 @@ it likely still represents a non-anomalous pattern.
 
 \subsubsection{Recurrent Neural Network}
 
+\begin{wrapfigure}{r}{0.48\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{plotsss/rnn_model.png}
+    \caption{Architecture of the RNN model}
+    \label{fig:rnn_model}
+\end{wrapfigure}
+
 As the last model, a Recurrent Neural Network (RNN) was
 implemented, because of the suitability of RNNs for
 sequential data.
-Its architecture is shown in Figure~\ref{fig:rnn_model}.
+The preprocessing applied was log-scale transformation, followed
+by global scaling, in order to preserve absolute scale.
 
-\begin{figure}[H]
+Its architecture is shown in Figure~\ref{fig:rnn_model},
+and was obtained through experimentation with
+different configurations and hyperparameters.
+The test and validation sets used 40\% of the dataset each,
+while the training set used the remaining 60\%.
+The split was stratified, to maintain class proportions across sets.
 
-    \begin{minipage}{0.49\textwidth}
-        The architecture was obtained through experimentation with
-        different configurations and hyperparameters.
-        The test and validation sets used 40\% of the dataset each,
-        while the training set used the remaining 60\%.
-        The split was stratified, to maintain class proportions across sets.
+The genre features are handled the same way as in previous Neural
+Networks (a Dense layer with 8 neurons and ReLU activation function,
+the right-most branch in figure~\ref{fig:rnn_model}).
 
-        The genre features are handled the same way as in previous Neural
-        Networks (a Dense layer with 8 neurons and ReLU activation function,
-        the right-most branch in figure~\ref{fig:rnn_model}).
-
-        The time series data is processed through an encoder-decoder
-        architecture, to extract relevant features from the sequences.
-        The encoder processes the first half of the time series,
-        with two Bidirectional LSTM layers (with 32 and 64 units respectively).
-        The decoder processes the second half of the time series,
-        with two Bidirectional LSTM layers (with 64 and 32 units respectively).
-        The final shape resembles a diamond shape, with the number of units
-        first increasing, then decreasing, to capture both local and global
-        patterns in the data.
-        Both the encoder and decoder use recurrent dropout of 0.3 in every layer
-        for regularization.
-    \end{minipage}
-    \hfill
-    \begin{minipage}{0.48\textwidth}
-        \includegraphics[width=1\textwidth]{plotsss/rnn_model.png}
-        \caption{Architecture of the RNN model}
-        \label{fig:rnn_model}
-    \end{minipage}
-\end{figure}
+The time series data is processed through an encoder-decoder
+architecture, to extract relevant features from the sequences.
+The encoder processes the first half of the time series,
+with two Bidirectional LSTM layers (with 32 and 64 units respectively).
+The decoder processes the second half of the time series,
+with two Bidirectional LSTM layers (with 64 and 32 units respectively).
+The final shape resembles a diamond shape, with the number of units
+first increasing, then decreasing, to capture both local and global
+patterns in the data.
+Both the encoder and decoder use recurrent dropout of 0.3 in every layer
+for regularization.
 
 
 
@@ -346,6 +344,13 @@ validation loss and accuracy over epochs.
     \label{fig:loss_acc}
 \end{figure}
 
+\begin{wrapfigure}{r}{0.4\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{plotsss/rnn_cm.png}
+    \caption{Confusion matrix for the RNN model on the test set}
+    \label{fig:cm_rnn}
+\end{wrapfigure}
+
 The loss curves show incremental improvement over epochs,
 with relative stability.
 Their shape do not indicate overfitting, as the validation loss
@@ -356,42 +361,32 @@ They also show significant instability, likely due to the small
 size of the dataset, which makes the small sizes of validation
 and test sets more susceptible to changes in the model's behavior.
 
+Figure~\ref{fig:cm_rnn} shows the confusion matrix for the RNN
+model on the test set.
 
-\begin{figure}[H]
-    \centering
-    \begin{minipage}{0.41\textwidth}
-        \includegraphics[width=1\textwidth]{plotsss/rnn_cm.png}
-        \caption{Confusion matrix for the RNN model on the test set}
-        \label{fig:cm_rnn}
-    \end{minipage}
-    \hfill
-    \begin{minipage}{0.55\textwidth}
-        Figure~\ref{fig:cm_rnn} shows the confusion matrix for the RNN
-        model on the test set.
+Both the \textbf{Low} and \textbf{Medium High} classes exhibit
+weaker performance, likely due to their relatively small number
+of samples. The use of balanced class weights appears to
+increase confusion with adjacent classes, as the model assigns
+similar importance to neighboring categories.
 
-        Both \textbf{Low} and \textbf{Medium High} classes struggle
-        a bit, likely because of their small size.
-        Likely because of balanced class weights, both of them
-        often get confused with adjacent classes.
+The \textbf{Medium} class is generally the most challenging to
+distinguish.
+It also accounts for the majority of non-adjacent
+misclassifications, with instances frequently predicted as
+\textbf{High}. This behavior suggests a substantial overlap
+between the feature distributions of the \textbf{Medium}
+class and the surrounding classes.
 
-        The \textbf{Medium} class seems to be generally hard to
-        distinguish.
-        It also represents the only frequent case of non-adjacent
-        class misclassification, as its instances are often
-        misclassified as \textbf{High}.
-        This overall difficulty could be due to high overlap between
-        this class and the others.
-    \end{minipage}
-\end{figure}
-
-Table~\ref{tab:macro_weighted_avg} shows the macro and weighted average precision,
-recall, and F1-score for the RNN model.
-The final model's accuracy represents a relatively satisfactory result,
-especially considering the small size of the dataset and
-class imbalance.
-Both macro and weighted averages can also be considered decent,
-indicating that the model performs reasonably well across all classes,
-without being overly biased towards the more frequent ones.
+Table~\ref{tab:macro_weighted_avg} reports the macro- and
+weighted-average precision, recall, and F1-score for the
+RNN model.
+Despite the limited dataset size and class imbalance, the
+final model achieves a satisfactory accuracy.
+Moreover, the macro and weighted averages indicate reasonably
+consistent performance across all classes, without excessive
+bias toward the most frequent ones.
+    
 
 \begin{table}[H]
     \centering
@@ -409,3 +404,33 @@ without being overly biased towards the more frequent ones.
     \label{tab:macro_weighted_avg}
 \end{table} 
 
+\subsubsection{Model Comparison}
+
+Overall, all approaches achieve comparable accuracy values, ranging
+between 42\% and 48\%, reflecting the intrinsic difficulty of the
+task and the strong overlap between rating classes.
+
+The \textit{k-NN} classifiers provide a simple and interpretable baseline.
+The Euclidean-distance variant slightly outperforms the DTW-based
+version, suggesting that absolute trends and magnitude-related patterns
+are more informative for rating prediction than fine-grained temporal
+alignments.
+Both variants struggle with minority classes and mainly confuse
+adjacent rating levels, consistent with the ordinal nature of the
+target.
+
+The shapelet-based Random Forest achieves similar accuracy to the
+\textit{k-NN} baseline but improves the macro-averaged F1-score,
+indicating a better balance across classes.
+This improvement is primarily driven by enhanced recognition of
+underrepresented classes, particularly \textbf{Low}, at the cost of a
+slight degradation in performance for the \textbf{High} class.
+
+The RNN model attains the highest overall accuracy and competitive
+macro- and weighted-average scores.
+While its performance gains over classical methods are modest,
+the RNN shows more consistent behavior across classes, without being
+overly biased toward the majority ones.
+However, training instability and residual confusion between
+\textbf{Medium} and \textbf{High} classes suggest that model capacity
+is constrained by the limited dataset size.
