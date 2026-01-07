@@ -6,14 +6,22 @@ framework}. Prior to motif extraction, all series were normalized
 using z-score normalization applied independently to each time series, 
 in order to focus the analysis on pattern shape rather than absolute 
 scale. Motifs were extracted using the \texttt{STUMPY} implementation 
-of the matrix profile. 
+of the matrix profile.
 % A sliding window of length 28 was selected as a compromise between capturing meaningful temporal 
 % dynamics and preserving local variations. 
 A window length of 28 was selected to capture repeated seasonal 
 dynamics rather than isolated cycles.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{plotsss/motif_discord.png}
+    \caption{Example of Matrix Profile on Time Series 1000 (\texttt{ratingCategory} = High)} 
+    \label{fig:matrix_profile}
+\end{figure}
+
 For each time series, the three subsequences associated with the 
 lowest matrix profile values were selected, resulting in the extraction 
-of the top-3 motifs per time series. \\
+of the top-3 motifs per time series.\\
 All extracted motifs were aggregated into 
 a single dataset. To analyze similarities among 
 motifs, K-Means clustering using Euclidean distance was applied. 
