@@ -49,7 +49,14 @@ Of the initial categorical attributes, the following were removed:
 \end{itemize}
 
 
-Table~\ref{tab:initial_features_numerical} lists the initial numerical features.
+Table~\ref{tab:initial_features_numerical} lists the initial numerical features.\\
+
+Of the initial numerical attributes, the following were removed:
+\begin{itemize}
+    \item \texttt{endYear}, as it had no values for non-Series titles, and having around 50\% of missing values for \textit{tvSeries} and
+\textit{tvMiniSeries};
+    \item \texttt{numVotes}, as it had a very high correlation with \texttt{ratingCount}.
+\end{itemize}
 
 
 \begin{table}[H]
@@ -83,21 +90,14 @@ Table~\ref{tab:initial_features_numerical} lists the initial numerical features.
     \label{tab:initial_features_numerical}
 \end{table}
 
-Of the initial numerical attributes, the following were removed:
-\begin{itemize}
-    \item \texttt{endYear}, as it had no values for non-Series titles, and having around 50\% of missing values for \textit{tvSeries} and
-\textit{tvMiniSeries};
-    \item \texttt{numVotes}, as it had a very high correlation with \texttt{ratingCount};
-\end{itemize}
-
 
 
 \subsection{Exploratory Data Analysis}
 
-\begin{wrapfigure}{l}{0.4\textwidth}
+\begin{wrapfigure}{r}{0.4\textwidth}
     \centering
     \includegraphics[width=0.38\textwidth,height=4.5cm]{plotsss/rating_distrib.png}
-    \caption{Distribution of the \texttt{averageRating} attribute}
+    \caption{Distribution of the \texttt{averageRating}}
     \label{fig:rating_dist}
 \end{wrapfigure}
 
@@ -109,207 +109,84 @@ which appears approximately Normal with a peak around 7. This feature is central
 making its distribution essential for understanding model behavior and potential biases.
 
 
-In Figure~\ref{fig:genre_popularity} we visualized the distribution of titles across different genres.  
+Figure~\ref{fig:genre_popularity} shows the distribution of titles across different genres.  
 The chart reveals that nearly half of the titles fall under the Drama and Comedy genres, 
-highlighting their dominant role in the entertainment industry and audience preferences. This insight helps guide further analysis, 
-such as predicting genre popularity, tailoring recommendations, or identifying gaps in content diversity.
+highlighting their dominant role in the entertainment industry and audience preferences.
+% This insight helps guide further analysis, 
+% such as predicting genre popularity, tailoring recommendations, or identifying gaps in content diversity.\\
 
-\begin{figure}[ht]
+
+To understand viewer perceptions we plotted figure~\ref{fig:year_rating} the trend of average ratings over time.
+It reveals historical shifts in audience engagement 
+and rating standards. We observe a steady increase in average ratings from the early 1900s to the present, 
+with notable peaks around the 1960s and 2020s. 
+
+We observed that several features in the dataset exhibited a heavy right skew, 
+characterized by a long tail of high values. Based on this insight, we proceeded to the feature engineering phase, 
+where we merged relevant columns and applied preprocessing techniques such as one-hot encoding and normalization to 
+prepare the data for modeling.
+
+
+\begin{figure}[H]
     \centering
     \begin{minipage}[t]{0.48\textwidth}
         \centering
-        \includegraphics[width=\linewidth,height=4.5cm]{plotsss/genre_popularity.png}
+        \includegraphics[width=\linewidth]{plotsss/genre_popularity.png}
         \caption{Distribution of titles across genres}
         \label{fig:genre_popularity}
     \end{minipage}
     \hspace{0.02\textwidth}
     \begin{minipage}[t]{0.48\textwidth}
         \centering
-        \includegraphics[width=\linewidth,height=4.5cm]{plotsss/year_rating.png}
+        \includegraphics[width=\linewidth]{plotsss/year_rating.png}
         \caption{Average rating trend over the years}
         \label{fig:year_rating}
     \end{minipage}
 \end{figure}
 
 
-% \begin{figure}[ht]
-%     \centering
-%     \begin{minipage}{0.45\textwidth}
-%         \centering
-%         \includegraphics[width=\textwidth]{plotsss/ts_boxplot.png} 
-%         \captionof{figure}{Boxplot of box-office gross revenues}
-%         \label{fig:ts_boxplot} 
-%     \end{minipage}
-%     \hfill
-%     \begin{minipage}{0.5\textwidth} 
-%         \includegraphics[width=\textwidth]{plotsss/ts_distrib.png}
-%         \caption{Log-scale box-office gross revenues}
-%         \label{fig:ts_distrib}
-%     \end{minipage}
-
-% \end{figure}
-To understand viewer perceptions we plotted figure~\ref{fig:year_rating} the trend of average ratings over time.
-It reveals historical shifts in audience engagement 
-and rating standards. We observe a steady increase in average ratings from the early 1900s to the present, 
-with notable peaks around the 1960s and 2020s. This upward trend may reflect improvements in production quality, 
-storytelling, and accessibility, offering valuable context for analyzing rating dynamics across different eras.
-\newline We observed that several features in the dataset exhibited a heavy right skew, 
-characterized by a long tail of high values. Based on this insight, we proceeded to the feature engineering phase, 
-where we merged relevant columns and applied preprocessing techniques such as one-hot encoding and normalization to 
-prepare the data for modeling.
-
-
-
 \subsection{Feature Engineering}
 \begin{itemize}
-    \item \texttt{totalImages}, \texttt{totalVideos} and \texttt{quotesTotal}, were merged
-through a simple sum operation
-into a single feature (\texttt{totalMedia}) because of their similar semantic
-meaning, as well as heavy right skewness;
-    \item \texttt{awardWins} and \texttt{awardNominations}, were merged with the same procedure
-as above into \texttt{totalNominations}, since they represented the same concept;
-    \item \texttt{userReviewsTotal} and\texttt{criticReviewsTotal},were merged with the same procedure
-as above into \texttt{reviewsTotal}, since they represented the same concept;
-    \item \texttt{regions} and \texttt{countryOfOrigin},
-were merged through a simple union operation. The resulting feature was then
-represented trhough frequency encoding on the entire list, as well as
-counts of the number of countries from each continent.
-This resulted in eight new features (six continents, one for unknown country codes,
-and the last for the frequency encoding);
-    \item \texttt{genre}, it was observed that each record
-contained up to three genres, listed in alphabetical order—indicating that the order
-did not convey any semantic information about the title.
-To represent this information, three separate features were created, each
-corresponding to one of the genres. These features were encoded using frequency
-encoding, sorted in descending order of frequency across the dataset.  
-A value of 0 was used to indicate missing genres—either when no genres were present or
-to fill the remaining slots when fewer than three were available;
-\item \texttt{titleType}, was one-hot encoded, as it was a nominal categorical
-feature with no intrinsic order;
-    \item \texttt{deltaCredits}, was created as the difference between
-\texttt{totalCredits} and the sum of \texttt{castNumber}, \texttt{writerCredits} and \texttt{directorCredits}. 
-This feature aimed to capture the number of other types of credits
-(such as producers, editors, etc.) associated with a title, which could be relevant for
-understanding its production scale and complexity;
-    \item \texttt{runtimeMinutes}, had a very high number of missing values approx ~27\%. 
+    \item \texttt{totalImages}, \texttt{totalVideos} and \texttt{quotesTotal} were merged
+    through a simple sum operation
+    into\newline\texttt{totalMedia} because of their similar semantic
+    meaning;
+    
+    \item \texttt{awardWins} and \texttt{awardNominations} were merged
+    through a simple sum operation into \texttt{totalNominations};
+
+    \item \texttt{userReviewsTotal} and \texttt{criticReviewsTotal} were merged
+    through a simple sum operation into\newline\texttt{reviewsTotal};
+
+    \item \texttt{regions} and \texttt{countryOfOrigin}
+    were merged through a simple union operation. The resulting feature was then
+    represented trhough frequency encoding on the entire list, as well as
+    counts of the number of countries from each continent.
+    This resulted in eight new features (six continents, one for unknown country codes,
+    and the last for the frequency encoding);
+
+    \item \texttt{genre} each record
+    contained up to three genres, listed in alphabetical order, indicating that the order
+    did not convey any semantic information about the title.
+    To represent this information, three separate features were created, each
+    corresponding to one of the genres. These features were encoded using frequency
+    encoding.  
+    A value of 0 was used to indicate missing genres;
+
+    \item \texttt{titleType} was one-hot encoded, as it was a nominal categorical
+    feature with no intrinsic order;
+    
+    \item \texttt{deltaCredits} was created as the difference between
+    \texttt{totalCredits} and the sum of \texttt{castNumber},\newline\texttt{writerCredits} and \texttt{directorCredits}. 
+    This feature aimed to capture the number of other types of credits
+    (such as producers, editors, etc.) associated with a title;
+    
+    \item \texttt{runtimeMinutes} had $\approx$27\% missing values. 
     Since the feature had high relevance in the domain, it was
-imputed with the interquartile range, separately for each title
-type. For advanced classification, in order to avoid any correlation with the target variable, 
-we imputed the feature with random integers within the global interquartile range.
+    imputed with random numbers within the interquartile range, separately for each title
+    type. For advanced classification, in cases where the target variable
+    was \texttt{titleType}, the feature was imputed
+    within the global interquartile range instead, in order
+    to avoid leakage.
 
 \end{itemize}
-
-
-
-% \subsection{Exploratory Data Analysis}
-
-% To gain an initial understanding of the dataset, we conducted several exploratory analyses focusing on key attributes related to ratings, genres, and temporal trends. Figure~\ref{fig:eda_overview} presents three core visualizations side by side, each highlighting a different aspect of the IMDb dataset.
-
-% The first plot illustrates the distribution of the \texttt{averageRating} attribute, which appears approximately Normal with a peak around 7. This feature is central to both the classification and regression tasks, making its distribution essential for understanding model behavior and potential biases.
-
-% The second plot shows the distribution of titles across genres. We observe that Drama and Comedy dominate the dataset, together accounting for nearly half of all titles. This imbalance is important for downstream modeling, as it may influence genre‑related predictions and highlight areas where content diversity is limited.
-
-% The third plot depicts the trend of average ratings over time. The steady upward movement—from the early 1900s to recent years—suggests evolving audience expectations, improvements in production quality, and shifts in rating standards. These temporal patterns provide valuable context for interpreting rating dynamics across different eras.
-
-% Together, these visualizations offer a comprehensive overview of the dataset structure and guide subsequent steps in feature engineering and model development.
-
-% \begin{figure}[H]
-%     \centering
-%     \begin{minipage}[t]{0.32\textwidth}
-%         \centering
-%         \includegraphics[height=5cm]{plotsss/rating_distrib.png}
-%         \caption{Distribution of the \texttt{averageRating} attribute}
-%         \label{fig:rating_dist}
-%     \end{minipage}
-%     \hfill
-%     \begin{minipage}[t]{0.32\textwidth}
-%         \centering
-%         \includegraphics[height=5cm]{plotsss/genre_popularity.png}
-%         \caption{Distribution of titles across genres}
-%         \label{fig:genre_popularity}
-%     \end{minipage}
-%     \hfill
-%     \begin{minipage}[t]{0.32\textwidth}
-%         \centering
-%         \includegraphics[height=5cm]{plotsss/year_rating.png}
-%         \caption{Average rating trend over the years}
-%         \label{fig:year_rating}
-%     \end{minipage}
-%     \caption{Overview of key exploratory data analysis visualizations}
-%     \label{fig:eda_overview}
-% \end{figure}
-
-% \subsection{Exploratory Data Analysis2}
-
-% \begin{wrapfigure}{l}{0.45\textwidth}
-%     \centering
-%     \includegraphics[width=0.43\textwidth]{plotsss/rating_distrib.png}
-%     \caption{Distribution of the \texttt{averageRating} attribute}
-%     \label{fig:rating_dist}
-% \end{wrapfigure}
-
-% \begin{figure}[H]
-%     \centering
-%     \begin{subfigure}{0.48\textwidth}
-%         \centering
-%         \includegraphics[width=\textwidth]{plotsss/genre_popularity.png}
-%         \caption{Distribution of titles across genres}
-%         \label{fig:genre_popularity}
-%     \end{subfigure}
-%     \hfill
-%     \begin{subfigure}{0.48\textwidth}
-%         \centering
-%         \includegraphics[width=\textwidth]{plotsss/year_rating.png}
-%         \caption{Average rating trend over the years}
-%         \label{fig:year_rating}
-%     \end{subfigure}
-%     \caption{Genre popularity and rating trends over time}
-%     \label{fig:eda_bottom}
-% \end{figure}
-
-
-% \begin{figure}[H]
-%     \centering
-%     \includegraphics[width=0.6\textwidth]{plotsss/year_rating.png}
-%     \caption{Distribution of average rating over the years}
-%     \label{fig:year_rating1}
-% \end{figure}
-
-% \subsection{Exploratory Data Analysis2}
-
-% \noindent
-% \begin{minipage}[t]{0.4\textwidth}
-%     \includegraphics[width=\linewidth,height=4.5cm]{plotsss/rating_distrib.png}
-%     \captionof{figure}{Distribution of the \texttt{averageRating} attribute}
-%     \label{fig:rating_dist1}
-% \end{minipage}
-% \hfill
-% \begin{minipage}[t]{0.58\textwidth}
-%     The distribution of the \texttt{averageRating} attribute appears approximately Normal, peaking around 7. This feature is central to both classification and regression tasks, making its distribution essential for understanding model behavior and potential biases.
-% \end{minipage}
-
-% \vspace{1cm}
-
-% \noindent
-% \begin{minipage}[t]{0.4\textwidth}
-%     \includegraphics[width=\linewidth,height=4.5cm]{plotsss/genre_popularity.png}
-%     \captionof{figure}{Distribution of titles across genres}
-%     \label{fig:genre_popularity1}
-% \end{minipage}
-% \hfill
-% \begin{minipage}[t]{0.58\textwidth}
-%     Drama and Comedy dominate the genre distribution, accounting for nearly half of all titles. This imbalance is important for downstream modeling, as it may influence genre-related predictions and highlight areas where content diversity is limited.
-% \end{minipage}
-
-% \vspace{1cm}
-
-% \noindent
-% \begin{minipage}[t]{0.4\textwidth}
-%     \includegraphics[width=\linewidth,height=4.5cm]{plotsss/year_rating.png}
-%     \captionof{figure}{Average rating trend over the years}
-%     \label{fig:year_rating1}
-% \end{minipage}
-% \hfill
-% \begin{minipage}[t]{0.58\textwidth}
-%     The trend of average ratings over time shows a steady upward movement from the early 1900s to recent years. This suggests evolving audience expectations, improvements in production quality, and shifts in rating standards—valuable context for interpreting rating dynamics across eras.
-% \end{minipage}
