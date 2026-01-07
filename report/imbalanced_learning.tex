@@ -1,120 +1,127 @@
 \section{Imbalanced Learning}
 We then proceeded with imbalance learning task, we used the same variable \texttt{averageRating} to categorize the data into three classes:
 low (0-4], medium (4-7], high (7-10]. The distribution of the classes is 4979, 67394, 72539 respectively, where the low class accounts for 
-approx 3.5\% of the dataset, which is highly imbalanced. 
-We then applied Decision Tree classifier to the initial dataset and achieved 63\% accuracy. 
- Then we performed \texttt{RandomSearchCV} to tune the hyperparameters of the Decision Tree Classifier and achieved 67\% accuracy. 
- The best parameter were
- \begin{center}
-    \texttt{random\_state=42, criterion=`gini', max\_features=None, max\_depth=None, min\_samples\_leaf=10, min\_samples\_split=2, splitter = `random'} 
- \end{center}
+approx 3.5\% of the dataset, which is highly imbalanced.
+We then applied Decision Tree classifier to the initial dataset, to be
+used as a baseline for other models.
+Training was performed using \texttt{RandomSearchCV} to tune the
+hyperparameters of the Decision Tree Classifier.
 
- Our focus was to improve the recall of the low class, so we plotted the confusion matrix to see the number of true positives. 
- As we can see from the table \ref{tab:Imbalance_Learning} 
- the number of true positives for the low class had increased with different imbalanced learning techniques.
- Finally, we applied different imbalance learning techniques to improve the performance of the model.
+Table~\ref{tab:clean} reports the performance of the model.
 
-\begin{table}[]
-\centering
-\begin{tabular}{|l|l|l|l|}
-\hline
-Model Name & Accuracy & True Positives & Recall \\ \hline
-Initial DT & 63 & 200 & 0.20 \\ \hline
-HyperParameter Tuned DT & 67 & 95 & 0.09 \\ \hline
-\textbf{SMOTE} & \textbf{62} & \textbf{449} & \textbf{0.44} \\ \hline
-ADASYN & 62 & 439 & 0.43 \\ \hline
-Resample & 53 & 576 & 0.56 \\ \hline
-ENN & 68 & 346 & 0.21 \\ \hline
-AllKNN & 66 & 469 & 0.30 \\ \hline
-RandomUnderSampler + ENN & 43 & 1307 & 0.82 \\ \hline
-DBSCAN + K-Means & 56 & 907 & 0.57 \\ \hline
-\end{tabular}
-\caption{Imbalanced Learning Model Performance on Low (0-4{]} class}
-\label{tab:Imbalance_Learning}
+
+\begin{table}[H]
+  \centering
+  \begin{tabular}{|l|l|l|l|}
+    \hline
+    \textbf{Model Name} & \textbf{Accuracy} & \textbf{Precision (on Low Class)} & \textbf{Recall (on Low Class)} \\ \hline
+    DT & 0.63 & 0.18 & 0.19 \\ \hline
+  \end{tabular}
+  \caption{Plain Decision Tree Model Performance}
+  \label{tab:clean}
 \end{table}
 
+For the next subsections, only the training set was changed.
+
 \subsection{Oversampling}
-In the oversampling techniques, we applied \texttt{Synthetic Minority Oversampling Technique (SMOTE)}, 
-and \texttt{Adaptive Synthetic Sampling (ADASYN)} to increase the size of the minority class. 
-Despite the different methodologies, \texttt{SMOTE} and \texttt{ADASYN}, both approaches resulted in nearly identical performance 62\% accuracy 
-and recall around 0.44-0.43 for the low class respectively \ref{tab:Imbalance_Learning}. 
-This highlights that while the oversampling strategy can influence which minority samples are emphasized, 
-it does not fundamentally change the class distribution dynamics and may even introduce synthetic noise, thereby limiting overall accuracy improvements.
-As in our dataset both methods allowed the model to 
-achieve similar overall accuracy and recall, indicating that the choice between these two oversampling techniques may not significantly impact performance in this specific context.
-The key difference lies in the sample generation strategy: \texttt{SMOTE} treats all minority samples equally during interpolation, 
-whereas \texttt{ADASYN} focuses more on difficult-to-learn samples by adaptively weighting them according to their density in the feature space.. 
-However, the similarity in results suggests that the dataset characteristics were such that both oversampling strategies provided 
-comparable benefit in improving the model's sensitivity to minority classes.
+In the oversampling techniques, we applied \texttt{Synthetic Minority
+Oversampling Technique (SMOTE)} and \texttt{Adaptive Synthetic
+Sampling (ADASYN)} to increase the size of the minority class.
+Table~\ref{tab:over} provides the performances of the oversampling
+methods.
+
+Despite the different methodologies, both approaches resulted in
+similar overall performance, with SMOTE achieving 0.63 accuracy and
+0.23 recall for the low class, and ADASYN achieving 0.62 accuracy and
+0.21 recall.
+This indicates that while the oversampling strategy can influence
+minority samples representation, it may also introduce synthetic
+noise, limiting overall accuracy improvements.
+
+Comparing the oversampling techniques with the baseline, we observe
+that both \texttt{SMOTE} and \texttt{ADASYN} improve
+recall for the low class, indicating that oversampling
+helps the model detect more minority-class instances.  
+
+However, this improvement in recall comes with a slight reduction in
+precision. This suggests that while oversampling effectively
+increases sensitivity to the minority class, it may introduce additional
+false positives and does not substantially improve overall model
+performance.
+
+
+\begin{table}[H]
+  \centering
+  \begin{tabular}{|l|l|l|l|}
+  \hline
+  \textbf{Model Name} & \textbf{Accuracy} & \textbf{Precision (on Low Class)} & \textbf{Recall (on Low Class)} \\ \hline
+  SMOTE & 0.63 & 0.16 & 0.23 \\ \hline
+  ADASYN & 0.62 & 0.15 & 0.21 \\ \hline
+  \end{tabular}
+  \caption{Oversampling Models' Performances}
+  \label{tab:over}
+\end{table}
+
 
 
 \subsection{Undersampling}
-In the undersampling techniques, we applied \texttt{resample}, \texttt{Edited EditedNearestNeighbours (ENN)}, 
-\texttt{AllKNN}, combination of \texttt{RandomUnderSampler + ENN} and clustering based undersampling using \texttt{DBSCAN + K-Means}.
-The best performance was achieved by \texttt{RandomUnderSampler + ENN} with 43\% accuracy and 0.82 recall for the low class.
-\texttt{DBSCAN} and \texttt{K-Means} achieved 56\% accuracy and 0.57 recall for the low class.
-The results were varied and sometimes counterintuitive, 
-making it challenging to derive a single optimal strategy. For instance, the simple \texttt{resample} method achieved an accuracy of 53\% with a recall of 0.56, 
- indicating a balanced compromise between correctly predicting the majority class and detecting minority class instances. 
- In contrast, \texttt{ENN} prioritized cleaning noisy or borderline samples, resulting in higher overall accuracy of 68\% but a significantly lower recall of 0.21, 
- reflecting poor sensitivity to the minority class. 
- Similarly, \texttt{AllKNN}, which removes samples misclassified by all nearest neighbors, yielded a moderate accuracy of 66\% and a recall of 0.30, 
- suggesting that while it reduces noise, it also inadvertently removes some informative minority samples. 
- The combination of \texttt{RandomUnderSampler + ENN} achieved an extreme result, with a low accuracy of 43\% but a very high recall of 0.82, 
- demonstrating that aggressive removal of majority class instances can drastically improve detection of the minority class at the cost of 
- overall predictive correctness. Finally, the clustering-based approach \texttt(DBSCAN + K-Means)using \texttt{DBSCAN + K-Means} produced an accuracy of 56\% and a recall of 0.57, 
- which is relatively balanced, highlighting that clustering can preserve the structure of the data while reducing the majority class. 
- In a nutshell we can say that: 
- simple random resampling treats all samples equally, ENN and AllKNN remove noisy or ambiguous majority samples based on neighborhood consistency, 
- the combined \texttt{RandomUnderSampler + ENN} aggressively removes majority instances to favor recall, 
- and clustering-based undersampling attempts to retain representative majority samples while reducing redundancy. Overall, these experiments highlight the inherent 
- trade-off in undersampling strategies between detecting minority classes 
- and maintaining high overall accuracy, emphasizing that the choice of method should be guided by the specific priorities of the task.
- For instance, in credit card fraud detection, aggressively undersampling legitimate transactions may help the model catch more fraudulent cases \texttt{(higher recall)}
- but can also cause more false alarms among genuine transactions texttt{(lower overall accuracy)}. 
- The choice of undersampling method should therefore depend on whether catching fraud or avoiding false alarms is more critical.
+
+In the undersampling techniques, we applied \texttt{RandomUnderSampler},
+\texttt{Edited Nearest Neighbors (ENN)} and
+clustering-based undersampling using \texttt{DBSCAN} combined with
+\texttt{K-Means}.
+Table~\ref{tab:under} provides the performances of the undersampling
+models.
+
+\texttt{RandomUnderSampler} alone achieved high recall with
+moderate accuracy, though its precision was very low, indicating
+that it was too aggressive.
+The model was found to perform slightly better when using \texttt{ENN}
+with \texttt{kind\_sel=all} and \texttt{n\_neighbors=1}, meaning that
+a more conservative approach proved to be more beneficial.
+
+The clustering-based approach (\texttt{DBSCAN + K-Means}) achieved an
+overall balanced performance. This setup was chosen because
+it allowed to remove noise points to address k-means' weakness.
+
+These results highlight the trade-off inherent in undersampling:
+methods that aggressively reduce majority samples improve minority
+class detection but can substantially reduce overall accuracy.
 
 
+\begin{table}[H]
+  \centering
+  \begin{tabular}{|l|l|l|l|}
+  \hline
+  \textbf{Model Name} & \textbf{Accuracy} & \textbf{Precision (on Low Class)} & \textbf{Recall (on Low Class)} \\ \hline
+  RandomUnderSampler & 0.63 & 0.09 & 0.71 \\ \hline
+  ENN & 0.68 & 0.20 & 0.23 \\ \hline
+  DBSCAN + K-Means & 0.56 & 0.10 & 0.57 \\ \hline
+  \end{tabular}
+  \caption{Undersampling Models' Performances}
+  \label{tab:under}
+\end{table}
 
-\subsection{Decision Threshold}
 
-After experimenting with both increasing and decreasing the training samples, 
-we focused on the decision tree algorithm and attempted to adjust its decision threshold and class weights in the hypertuned model. 
-We assigned higher importance to the minority class, \texttt{low} class, using the weights obtained from the \texttt{balanced} parameter, 
-which were 
-\begin{center}
-  \texttt{`high': 0.6659, `low': 9.7015, `medium': 0.7167}.  
-\end{center} So, in this way the model would penalize misclassifications of the \texttt{low} class more heavily during training.
-It was surprising to see that even experimenting with different values of weights and assigning very high weight to \texttt{low} 
-class could not lead to an increase in accuracy. In an attempt to further increase 
-the recall of the \texttt{low} class, we also experimented with adjusting the decision threshold 
-to shift the cutoff point for predicting each class after training.
-We modified the decision threshold to extreme values such as [0.1, 0.9, 0.1], the model's accuracy showed only marginal changes in decimals and 
-consistently struggled to surpass the baseline accuracy of 67\%. 
-This suggests that the limitation may not be due to the model parameters or algorithmic tuning alone, 
-but rather is inherently linked to the characteristics of the data.  
-Both methods share the goal of improving minority class detection, yet their similarity lies in the fact that they cannot generate additional information; 
-they only reweigh or reassign predictions based on existing patterns. 
-The lack of improvement indicates that the features may not provide sufficient discriminatory power 
-to separate the classes effectively, or that the classes themselves are inherently overlapping in the feature space. 
+\subsection{Conclusion}
 
-\subsection{Imbalanced Learning Conclusion}
-In conclusion, we can say that in an attempt to strive for both high \textbf{accuracy} and high \textbf{recall}, 
-we carried out a series of extensive experiments. While our initial \texttt{DecisionTree} model achieved a reasonable accuracy of 63\%, 
-the recall was extremely low (0.20), reflecting its bias towards the majority class. 
-After hyperparameter tuning, the accuracy improved to 67\% but recall dropped further to 0.09. 
-This counter-intuitive outcome can be attributed to the fact that tuning optimized for accuracy rather than recall, 
-causing the model to become even more conservative in predicting the minority class. 
-Oversampling techniques such as \texttt{SMOTE} and \texttt{ADASYN} substantially increased recall (0.44 and 0.43, respectively) 
-because they synthetically generated minority samples, allowing the classifier to better recognize underrepresented patterns. 
-However, this came at the cost of accuracy (dropping to 62\%), since synthetic data can blur class boundaries and make the classifier 
-more prone to misclassifications in the majority class.  
-Undersampling approaches such as \texttt{Resample} and \texttt{RandomUnderSampler + ENN} achieved very high recall (0.56 and 0.82, respectively), 
-but their accuracy decreased sharply (to 53\% and 43\%). The reason is that by aggressively reducing the majority class, 
-these methods forced the classifier to focus disproportionately on the minority class, which inflated recall but degraded its ability to 
-generalize across the full distribution.  
-To understand the trade-offs more we looked at feature importance and we found out that the feature \texttt{tvEpisode} emerged as the 
-most significant contributor across multiple models, 
-while other features such as \texttt{startYear}, \texttt{genre1}, \texttt{genre2}, \texttt{castNumber}, and \texttt{totalCredits} also played crucial roles. 
-However, the relative importance of these features varied across different models, indicating that no single feature consistently dominated in all approaches. 
-Thus, we were satisfied with the results of \texttt{SMOTE} and \texttt{ADASYN} as they provided a good balance between accuracy and recall.
+As shown in Tables~\ref{tab:clean}, \ref{tab:over}, and \ref{tab:under},
+handling class imbalance significantly affects model performance,
+particularly for the minority (low) class.
+
+Oversampling methods
+(\texttt{SMOTE} and \texttt{ADASYN}) improved recall compared to the
+baseline Decision Tree, allowing better detection of minority instances,
+but at the cost of slightly reduced precision and no substantial gain
+in overall accuracy.
+
+Undersampling approaches produced more varied trade-offs.
+\texttt{RandomUnderSampler} achieved the highest recall but very
+low precision, whereas \texttt{ENN} increased overall accuracy
+with only modest improvement in recall.
+The clustering-based \texttt{DBSCAN + K-Means} approach provided a
+more balanced solution, while sacrificing accuracy and recall. 
+
+Overall, no single method simultaneously optimizes all metrics.
+The choice of strategy should therefore be guided by the specific task
+priorities.

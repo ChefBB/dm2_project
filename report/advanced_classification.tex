@@ -14,13 +14,12 @@ following mapping: \texttt{movie} and \texttt{tvMovie} $\rightarrow$ \texttt{mov
 \texttt{tvShort} $\rightarrow$ \texttt{short}; \texttt{tvSeries} and 
 \texttt{tvMiniSeries} $\rightarrow$ \texttt{tvSeries}; while \texttt{tvEpisode}, \texttt{tvSpecial},
  and \texttt{video} remained unchanged. 
- % All feature columns were standardized using \texttt{StandardScaler}. 
  The attribute \texttt{canHaveEpisodes} was removed to avoid data leakage, 
  as it directly reveals information about the target \texttt{titleType}.
 
 The second target variable, \texttt{averageRating}, 
-was transformed into six discrete classes as described in section~\ref{sec:outlier} to convert the regression-style target 
-into a balanced multi-class problem and to reduce noise caused by small rating fluctuations. 
+was transformed into six discrete classes as described in section~\ref{sec:outlier} to convert the continuous target 
+into a multi-class problem.
 
 
 
@@ -43,14 +42,15 @@ We also tested the \textit{multinomial} strategy, but it was significantly slowe
 produced comparable results, so OVR was selected for efficiency.
 
 To optimize the model, a hyperparameter search was performed using 
-\texttt{RandomizedSearchCV} with \texttt{StratifiedKFold} (5 folds), ensuring that the class 
+\texttt{RandomizedSearchCV} with
+\newline\texttt{StratifiedKFold} (5 folds), ensuring that the class 
 distribution was preserved in each fold. The solver was set to \texttt{saga}, and the 
 parameters tested included the regularization term $C$ (50 values logarithmically spaced 
 between $10^{-3}$ and $10^2$), \texttt{penalty} (\texttt{l2} and \texttt{l1}), and 
 \texttt{class\_weight} (\texttt{None} and \texttt{balanced}). The hyperparameter 
 search was performed using \texttt{f1\_macro} as the scoring metric to balance 
 performance across all classes. The best parameters selected by the search were 
-\textbf{C = 2.95}, \textbf{penalty = l1}, and \textbf{class\_weight = balanced}.
+C = 2.95, penalty = l1, and class\_weight = balanced.
 
 For computational efficiency, the search was conducted on a 10\% stratified sample 
 of the dataset, which was approximately representative of the original class distribution. The final 
@@ -136,7 +136,7 @@ All numerical features were scaled and, in addition, the categorical variable
 Hyperparameters were optimized using again \texttt{RandomizedSearchCV} with \texttt{StratifiedKFold} (5 folds), 
 performed on a 10\% stratified sample of the data for computational efficiency. 
 The scoring metric was \texttt{f1\_macro}, and the search explored the same set of parameters used for \texttt{titleType}. 
-The optimal configuration was found to be: \textbf{C = 0.08}, \textbf{penalty = l2 }, and \textbf{class\_weight = balanced}.
+The optimal configuration was found to be: C = 0.08, penalty = l2, and class\_weight = balanced.
 
 The best parameters were then used to fit the model on the full dataset, and evaluation on the test set was carried out. 
 
@@ -605,7 +605,7 @@ and the loss function was Categorical Crossentropy.
 The model was trained for a maximum of 500 epochs, with early
 stopping based on validation loss with a patience of 20 epochs.
 The batch size used was 64, and balanced class weights were used to
-address class imbalance.\\
+address class imbalance.
 
 Figures~\ref{fig:nn_performance_titletype} shows the training and
 validation loss and accuracy over epochs.
@@ -682,6 +682,12 @@ positives (lower precision).
     \caption{Confusion Matrix and ROC Curve for the Neural Network on the \texttt{titleType} classification task.}
     \label{fig:cm_roc_nn_titletype}
 \end{figure}
+
+Figure~\ref{fig:cm_nn_rating} shows the confusion matrix. Consistently
+good performances are found across the most represented classes, in line
+with the previous models.
+Figure~\ref{fig:roc_nn_rating} shows the ROC curve, which again
+have good performances and are in line with the previous models.
 
 \subsubsection{averageRating task}
 This first neural network initially has four branches:
@@ -818,36 +824,68 @@ intermediate ones are harder to distinguish.
 
 \subsubsection{titleType task}
 
+% \begin{wraptable}{r}{0.45\textwidth}
+% \centering
+% \begin{tabular}{lcc}
+% \hline
+% \textbf{Hyperparameter} & \textbf{titleType} & \textbf{averageRating} \\
+% \hline
+% \texttt{subsample}            & 0.8   & 0.6   \\
+% \texttt{n\_estimators}        & 500   & 400   \\
+% \texttt{max\_depth}           & 6     & 5     \\
+% \texttt{min\_samples\_split}  & 10    & 10    \\
+% \texttt{min\_samples\_leaf}   & 1     & 2     \\
+% \texttt{max\_features}        & None  & sqrt  \\
+% \texttt{learning\_rate}       & 0.1   & 0.05  \\
+% \hline
+% \end{tabular}
+% \caption{Hyperparameter search space for GBM.}
+% \label{tab:GBM_param}
+% \end{wraptable}
+
 \begin{wraptable}{r}{0.45\textwidth}
 \centering
-\begin{tabular}{lcc}
+\begin{tabular}{lc}
 \hline
-\textbf{Hyperparameter} & \textbf{titleType} & \textbf{averageRating} \\
+\textbf{Hyperparameter} & \textbf{titleType} \\
 \hline
-\texttt{subsample}            & 0.8   & 0.6   \\
-\texttt{n\_estimators}        & 500   & 400   \\
-\texttt{max\_depth}           & 6     & 5     \\
-\texttt{min\_samples\_split}  & 10    & 10    \\
-\texttt{min\_samples\_leaf}   & 1     & 2     \\
-\texttt{max\_features}        & None  & sqrt  \\
-\texttt{learning\_rate}       & 0.1   & 0.05  \\
+\texttt{subsample}            & 0.8   \\
+\texttt{n\_estimators}        & 500   \\
+\texttt{max\_depth}           & 6     \\
+\texttt{min\_samples\_split}  & 10    \\
+\texttt{min\_samples\_leaf}   & 1     \\
+\texttt{max\_features}        & None  \\
+\texttt{learning\_rate}       & 0.1   \\
 \hline
 \end{tabular}
-\caption{Hyperparameter search space for GBM.}
-\label{tab:GBM_param}
+\caption{Hyperparameters for \texttt{titleType}.}
+\label{tab:GBM_param_titletype}
 \end{wraptable}
 
 
 Next, we applied a \texttt{Gradient Boosting Machine (GBM)} to evaluate its ability to classify the \texttt{titleType} variable. 
-\texttt{GBM} is an ensemble method that builds a series of decision trees sequentially, where each tree attempts to correct 
-the errors of its predecessor. Unlike \texttt{Random Forest}, which builds trees independently and averages their predictions, 
-\texttt{GBM} focuses on minimizing the loss function through gradient descent, making it highly adaptive to complex patterns in the data.
-The baseline accuracy to predict \texttt{titleType} was found out to be 0.94.
 
-For both tasks, we sampled the data to 10\% of the training set to perform hyperparameter tuning.
-It was performed using \texttt{RandomizedSearchCV} with 5-fold stratified cross-validation.
-Table \ref{tab:GBM_param} shows the best parameters found for the \texttt{titleType} and \texttt{averageRating}.
 
+Hyperparameter tuning was performed using
+\newline\texttt{RandomizedSearchCV} with 5-fold stratified cross-validation.
+Table \ref{tab:GBM_param_titletype} shows the best parameters found for the \texttt{titleType} task.
+
+
+From the table \ref{tab:GBM_report_t}, we can see that GBM performs very well on the \texttt{titleType} task, achieving an accuracy of 0.96.
+The confusion matrix (Figure~\ref{fig:GBM_confusion_title}) shows that the model is able to correctly classify most of the classes, 
+with only a few misclassifications recorded for the less represented classes \texttt{video} and \texttt{tvSpecial}.
+The ROC curves (Figure~\ref{fig:GBM_ROC_title}) also show high AUC values for all classes, 
+indicating that the model is able to separate the classes well.
+The differences in ROC curve suggest that the model is more effective at distinguishing structured and well-documented 
+categories such as \textit{tvEpisode}, \textit{tvSeries}, and \textit{movie}, 
+To further investigate, we examined feature importance and found that \texttt{runtimeMinutes}, \texttt{numRegions}, 
+and \texttt{directorCredits} were among the most influential features. 
+Titles with longer runtimes and broader regional distribution were more likely to be classified as \textit{movies} or \textit{tvSeries}, 
+while shorter or regionally limited titles tended to fall into categories like \textit{short} or \textit{video}. 
+The number of director credits also might represent a proxy for
+production quality and documentation.
+Interestingly, the \textit{Europe} feature emerged as a strong predictor, 
+possibly due to cultural or market-specific trends in title type distribution. 
 
 
 \begin{figure}[H]
@@ -869,73 +907,147 @@ Table \ref{tab:GBM_param} shows the best parameters found for the \texttt{titleT
     \label{fig:cm_roc_gbm}
 \end{figure}
 
+% \begin{table}[H]
+% \centering
+% \begin{minipage}{0.48\textwidth}
+%     \centering
+%     \begin{tabular}{lccc}
+%     \hline
+%     \textbf{Class} & \textbf{Precision} & \textbf{Recall} & \textbf{F1-score} \\
+%     \hline
+%     tvEpisode  & 0.94 & 0.97 & 0.96 \\
+%     movie      & 0.95 & 0.98 & 0.97 \\
+%     short      & 0.98 & 0.98 & 0.98 \\
+%     tvSeries   & 0.94 & 0.97 & 0.96 \\
+%     video      & 0.77 & 0.45 & 0.57 \\
+%     tvSpecial  & 0.79 & 0.55 & 0.65 \\
+%     \hline
+%     \textbf{Accuracy}       & \multicolumn{3}{c}{0.96} \\
+    % \textbf{Macro avg}      & 0.90 & 0.82 & 0.85 \\
+    % \textbf{Weighted avg}   & 0.96 & 0.96 & 0.96 \\
+%     \hline
+%     \end{tabular}
+%     \caption{Classification report for \texttt{titleType}}
+%     \label{tab:GBM_report_t}
+% \end{minipage}
+% \hspace{0.02\textwidth}
+% \begin{minipage}{0.48\textwidth}
+%     \centering
+%     \begin{tabular}{lccc}
+%     \hline
+%     \textbf{Class} & \textbf{Precision} & \textbf{Recall} & \textbf{F1-score} \\
+%     \hline
+%     \texttt{[1,5)}   & 0.49 & 0.38 & 0.43 \\
+%     \texttt{[5,6)}   & 0.37 & 0.26 & 0.31 \\
+%     \texttt{[6,7)}   & 0.41 & 0.39 & 0.40 \\
+%     \texttt{[7,8)}   & 0.47 & 0.67 & 0.56 \\
+%     \texttt{[8,9)}   & 0.43 & 0.30 & 0.35 \\
+%     \texttt{[9,10]}  & 0.44 & 0.22 & 0.29 \\
+%     \hline
+%     \textbf{Accuracy}       & \multicolumn{3}{c}{0.44} \\
+    % \textbf{Macro avg}      & 0.44 & 0.37 & 0.39 \\
+    % \textbf{Weighted avg}   & 0.44 & 0.44 & 0.43 \\
+%     \hline
+%     \end{tabular}
+%     \caption{Classification report for \texttt{averageRating}}
+%     \label{tab:GBM_report_r}
+% \end{minipage}
+% \end{table}
+
 \begin{table}[H]
-\centering
-\begin{minipage}{0.48\textwidth}
     \centering
     \begin{tabular}{lccc}
     \hline
-    \textbf{Class} & \textbf{Precision} & \textbf{Recall} & \textbf{F1-score} \\
+     & \textbf{Precision} & \textbf{Recall} & \textbf{F1-score}\\
     \hline
-    tvEpisode  & 0.94 & 0.97 & 0.96 \\
-    movie      & 0.95 & 0.98 & 0.97 \\
-    short      & 0.98 & 0.98 & 0.98 \\
-    tvSeries   & 0.94 & 0.97 & 0.96 \\
-    video      & 0.77 & 0.45 & 0.57 \\
-    tvSpecial  & 0.79 & 0.55 & 0.65 \\
-    \hline
-    \textbf{Accuracy}       & \multicolumn{3}{c}{0.96} \\
     \textbf{Macro avg}      & 0.90 & 0.82 & 0.85 \\
     \textbf{Weighted avg}   & 0.96 & 0.96 & 0.96 \\
     \hline
+    \textbf{Accuracy}    & & & 0.96 \\
+    \hline
     \end{tabular}
-    \caption{Classification report for \texttt{titleType}}
+    \caption{Classification performances for the GBM on the \texttt{titleType} classification task.}
     \label{tab:GBM_report_t}
-\end{minipage}
-\hspace{0.02\textwidth}
-\begin{minipage}{0.48\textwidth}
-    \centering
-    \begin{tabular}{lccc}
-    \hline
-    \textbf{Class} & \textbf{Precision} & \textbf{Recall} & \textbf{F1-score} \\
-    \hline
-    \texttt{[1,5)}   & 0.49 & 0.38 & 0.43 \\
-    \texttt{[5,6)}   & 0.37 & 0.26 & 0.31 \\
-    \texttt{[6,7)}   & 0.41 & 0.39 & 0.40 \\
-    \texttt{[7,8)}   & 0.47 & 0.67 & 0.56 \\
-    \texttt{[8,9)}   & 0.43 & 0.30 & 0.35 \\
-    \texttt{[9,10]}  & 0.44 & 0.22 & 0.29 \\
-    \hline
-    \textbf{Accuracy}       & \multicolumn{3}{c}{0.44} \\
-    \textbf{Macro avg}      & 0.44 & 0.37 & 0.39 \\
-    \textbf{Weighted avg}   & 0.44 & 0.44 & 0.43 \\
-    \hline
-    \end{tabular}
-    \caption{Classification report for \texttt{averageRating}}
-    \label{tab:GBM_report_r}
-\end{minipage}
 \end{table}
 
 
-From the table \ref{tab:GBM_report_t}, we can see that GBM performs very well on the \texttt{titleType} task, achieving an accuracy of 0.96.
-The confusion matrix (Figure~\ref{fig:GBM_confusion_title}) shows that the model is able to correctly classify most of the classes, 
-with only a few misclassifications recorded for the less represented classes \texttt{video} and \texttt{tvSpecial}.
-The ROC curves (Figure~\ref{fig:GBM_ROC_title}) also show high AUC values for all classes, 
-indicating that the model is able to separate the classes well.
-The differences in ROC curve suggest that the model is more effective at distinguishing structured and well-documented 
-categories such as \textit{tvEpisode}, \textit{tvSeries}, and \textit{movie}, 
-To further investigate, we examined feature importance and found that \texttt{runtimeMinutes}, \texttt{numRegions}, 
-and \texttt{directorCredits} were among the most influential features. 
-Titles with longer runtimes and broader regional distribution were more likely to be classified as \textit{movies} or \textit{tvSeries}, 
-while shorter or regionally limited titles tended to fall into categories like \textit{short} or \textit{video}. 
-The number of director credits also served as a proxy for production quality and documentation, 
-helping the model differentiate between professionally produced content and less formal formats. 
-Interestingly, the \textit{Europe} feature emerged as a strong predictor, 
-possibly due to cultural or market-specific trends in title type distribution. 
+
+
+
+
 
 
 
 \subsubsection{averageRating task}
+
+
+
+\begin{wraptable}{r}{0.45\textwidth}
+\centering
+\begin{tabular}{lc}
+\hline
+\textbf{Hyperparameter} & \textbf{averageRating} \\
+\hline
+\texttt{subsample}            & 0.6   \\
+\texttt{n\_estimators}        & 400   \\
+\texttt{max\_depth}           & 5     \\
+\texttt{min\_samples\_split}  & 10    \\
+\texttt{min\_samples\_leaf}   & 2     \\
+\texttt{max\_features}        & sqrt  \\
+\texttt{learning\_rate}       & 0.05  \\
+\hline
+\end{tabular}
+\caption{Hyperparameters for \texttt{averageRating}.}
+\label{tab:GBM_param_rating}
+\end{wraptable}
+
+Hyperparameter tuning was performed using
+\newline\texttt{RandomizedSearchCV} with 5-fold stratified cross-validation.
+Table \ref{tab:GBM_param_rating} shows the best parameters found for the \texttt{averageRating} task.
+
+
+From the table \ref{tab:GBM_report_r}, it is evident that the Gradient Boosting Machine performs moderately on the 
+\texttt{averageRating} classification task, achieving an overall accuracy of 0.44.
+Examination of the confusion matrix
+(Figure~\ref{fig:GBM_confusion_rating}) reveals that the model correctly
+classifies rating class [6,7) more reliably than others.
+A noteworthy observation is that misclassifications tend to occur
+between neighboring classes, whereas classes that are further apart
+are rarely confused. 
+This suggests that the proximity and overlap of class distributions
+presents inherent challenges in distinguishing closely spaced ratings.
+
+The ROC curves (Figure~\ref{fig:GBM_ROC_rating}) are reported in
+figure~\ref{fig:GBM_ROC_rating}.
+Feature importance analysis provides additional insight:
+\textit{ratingCount} emerges as the strongest predictor. 
+\textit{StartYear} appears influential, potentially reflecting temporal
+trends in ratings, while \textit{runtimeMinutes} indicates that longer
+titles tend to receive higher ratings. 
+% Other features such as \textit{totalCredits}, \textit{castNumber},
+% \textit{totalMedia}, and \textit{tvEpisode} also contribute significantly, 
+% with \textit{tvEpisode} being more impactful than other TV formats like \textit{tvMiniseries}, \textit{tvSpecial}, or \textit{tvShort}, 
+% possibly due to greater representation in the dataset.
+Overall, the results suggest that while the model captures broad
+patterns, it struggles with fine-grained distinctions between closely
+spaced rating bins. 
+
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{lccc}
+    \hline
+     & \textbf{Precision} & \textbf{Recall} & \textbf{F1-score}\\
+    \hline
+    \textbf{Macro avg}      & 0.44 & 0.37 & 0.39 \\
+    \textbf{Weighted avg}   & 0.44 & 0.44 & 0.43 \\
+    \hline
+    \textbf{Accuracy}    & & & 0.44 \\
+    \hline
+    \end{tabular}
+    \caption{Classification performances for the GBM on the \texttt{titleType} classification task.}
+    \label{tab:GBM_report_r}
+\end{table}
 
 \begin{figure}[H]
     \centering
@@ -956,44 +1068,15 @@ possibly due to cultural or market-specific trends in title type distribution.
 \end{figure}
 
 
-From the table \ref{tab:GBM_report_r}, it is evident that the Gradient Boosting Machine performs moderately on the 
-\texttt{averageRating} classification task, achieving an overall accuracy of 0.44, nearly outperforming the baseline
-accuracy of 0.40. While this is less than 50\%, 
-considering that the task involves six classes, the model exceeds the baseline accuracy of 1/6, indicating that it is 
-capturing some underlying patterns in the data. Examination of the confusion matrix (Figure~\ref{fig:GBM_confusion_rating}) 
-reveals that the model correctly classifies rating class 3 more reliably than others, while classes 2 and 4 are often misclassified 
-as 3, and classes 0, 1, and 5 exhibit similar tendencies. A noteworthy observation is that misclassifications tend to 
-occur between neighboring classes, whereas classes that are further apart, such as 0 and 5, are rarely confused. 
-This suggests that the model is not producing random predictions, but rather that the proximity and overlap of 
-class distributions present inherent challenges in distinguishing closely spaced ratings.
-
-The ROC curves (Figure~\ref{fig:GBM_ROC_rating}) reinforce this observation, 
-showing relatively low AUC values of approximately 0.54 for all classes, which indicates limited 
-separability among the rating bins. Compared to tasks such as \textit{titleType}, the model struggles to distinguish \texttt{averageRating}, 
-likely due to the continuous and overlapping nature of ratings as opposed to the more discrete and structured categories of title types. 
-Feature importance analysis provides additional insight: \textit{ratingCount} emerges as the strongest predictor, 
-which is intuitive since titles with higher ratings are more likely to be correctly classified. 
-\textit{StartYear} appears influential, potentially reflecting temporal trends in ratings, 
-while \textit{runtimeMinutes} indicates that longer titles tend to receive higher ratings. 
-Other features such as \textit{totalCredits}, \textit{castNumber}, \textit{totalMedia}, and \textit{tvEpisode} also contribute significantly, 
-with \textit{tvEpisode} being more impactful than other TV formats like \textit{tvMiniseries}, \textit{tvSpecial}, or \textit{tvShort}, 
-possibly due to greater representation in the dataset.
-Overall, the results suggest that while the model captures broad patterns such as the tendency for longer 
-or more regionally distributed titles to receive higher ratings, 
-it struggles with fine-grained distinctions between closely spaced rating bins. 
-
-
 
 \subsection{Model Comparison}
 
-In this subsection, we compared the performance of all advanced classification models applied to the two target variables,
-\texttt{titleType} and \texttt{averageRating}. 
-Each model was trained on the same preprocessed dataset to ensure a fair comparison, 
-and the evaluation was conducted using accuracy, and macro-averaged F1 score. 
-Since the two tasks differed in class distribution and semantic complexity, 
-the comparison allowed us to understand how each algorithm handled multi-class imbalance, nonlinear decision boundaries, 
-and high-dimensional feature interactions. To support this analysis, we included a 
-summary table reporting the performance metrics of all models in Table~\ref{tab:merged_model_comparison}.
+In this subsection, we compared the performance of all advanced
+classification models applied to the two target variables,
+\texttt{titleType} and \texttt{averageRating}.
+To support this analysis, we included a summary table reporting the
+performance metrics of all models in
+Table~\ref{tab:merged_model_comparison}.
 
 \begin{table}[h!]
 \centering
@@ -1007,7 +1090,7 @@ summary table reporting the performance metrics of all models in Table~\ref{tab:
 & \textbf{Accuracy} & \textbf{F1-Macro} \\
 \hline
 Logistic Regression        & 0.75 & 0.54 & 0.27 & 0.25 \\
-SVM (RBF)                  & 0.90 & 0.64 & 0.39 & 0.33 \\
+SVM (RBF)                  & 0.90 & 0.64 & 0.39 & 0.28 \\
 Random Forest              & 0.92 & 0.75 & 0.45 & 0.37 \\
 AdaBoost                   & 0.92 & 0.73 & 0.43 & 0.35 \\
 Neural Network             & 0.90 & 0.73 & 0.35 & 0.34 \\
@@ -1019,43 +1102,48 @@ Gradient Boosting Machine  & 0.96 & 0.85 & 0.44 & 0.39 \\
 \end{table}
 
 
-\subsubsection{titleType task}
+% \subsubsection{titleType task}
 
-For the \texttt{titleType} task, the results showed a clear trend: models capable of capturing nonlinear relationships significantly outperformed linear approaches. 
-Logistic Regression achieved an accuracy of approximately 0.75, providing a reasonable baseline but struggling with the complex, 
-multi-modal structure of the feature space. Support Vector Machines with an RBF kernel improved performance substantially, 
-reaching around 0.90 accuracy, confirming that nonlinear decision boundaries were essential for this task.
-Tree-based ensemble methods delivered the strongest results. Both Random Forest and AdaBoost achieved accuracies close to 0.92, 
-benefiting from their ability to model heterogeneous interactions between features such as \texttt{startYear}, \texttt{genre1}, 
-\texttt{castNumber}, and \texttt{totalCredits}. Neural Networks also performed competitively with an accuracy around 0.90, although they exhibited higher variance 
-and required careful tuning. Gradient Boosting Machines (GBM) outperformed all other models, 
-reaching approximately 0.96 accuracy, demonstrating superior handling of feature interactions and class boundaries.
+% For the \texttt{titleType} task, the results showed a clear trend:
+% models capable of capturing nonlinear relationships significantly
+% outperformed linear approaches. 
+% Logistic Regression achieved an accuracy of approximately 0.75,
+% providing a reasonable baseline but struggling with the complex, 
+% multi-modal structure of the feature space.
+% Support Vector Machines with an RBF kernel improved performance substantially, 
+% reaching around 0.90 accuracy, confirming that nonlinear decision boundaries were essential for this task.
+% Tree-based ensemble methods delivered the strongest results. Both Random Forest and AdaBoost achieved accuracies close to 0.92, 
+% benefiting from their ability to model heterogeneous interactions between features such as \texttt{startYear}, \texttt{genre1}, 
+% \texttt{castNumber}, and \texttt{totalCredits}. Neural Networks also performed competitively with an accuracy around 0.90, although they exhibited higher variance 
+% and required careful tuning. Gradient Boosting Machines (GBM) outperformed all other models, 
+% reaching approximately 0.96 accuracy, demonstrating superior handling of feature interactions and class boundaries.
 
 
-\subsubsection{averageRating task}
+% \subsubsection{averageRating task}
 
-For the \texttt{averageRating} task, the overall performance of all models was significantly 
-lower than in the \texttt{titleType} task. This was expected, as the rating classes were highly 
-overlapping in the feature space and exhibited weaker separability. Logistic Regression achieved an accuracy of approximately 0.27, 
-indicating that linear boundaries were insufficient for capturing the subtle differences between rating categories. 
-Support Vector Machines with an RBF kernel improved performance to around 0.39, but still struggled due to the intrinsic difficulty of the task.
-Tree-based models again performed better than linear methods. Random Forest achieved an accuracy of 
-approximately 0.45, while AdaBoost reached around 0.43. Neural Networks achieved an accuracy of around 0.35, performing worse than tree-based models, likely due to 
-the limited discriminative power of the features for this target.
-Gradient Boosting Machines performed similarly with an accuracy of 
-about 0.44, confirming that ensemble methods were more capable of modeling the nonlinear relationships present in the data. 
+% For the \texttt{averageRating} task, the overall performance of all models was significantly 
+% lower than in the \texttt{titleType} task. This was expected, as the rating classes were highly 
+% overlapping in the feature space and exhibited weaker separability. Logistic Regression achieved an accuracy of approximately 0.27, 
+% indicating that linear boundaries were insufficient for capturing the subtle differences between rating categories. 
+% Support Vector Machines with an RBF kernel improved performance to around 0.39, but still struggled due to the intrinsic difficulty of the task.
+% Tree-based models again performed better than linear methods. Random Forest achieved an accuracy of 
+% approximately 0.45, while AdaBoost reached around 0.43. Neural Networks achieved an accuracy of around 0.35, performing worse than tree-based models, likely due to 
+% the limited discriminative power of the features for this target.
+% Gradient Boosting Machines performed similarly with an accuracy of 
+% about 0.44, confirming that ensemble methods were more capable of modeling the nonlinear relationships present in the data. 
 
-\subsection{Advanced Classification Conclusion}
-Across both tasks, ensemble-based methods such as Gradient Boosting Machines and Random Forests 
-consistently outperformed linear models, confirming that nonlinear relationships played a significant 
-role in the IMDb dataset. Logistic Regression, despite its simplicity, provided a strong baseline for the \texttt{titleType} 
-task but struggled with the \texttt{averageRating} classes due to overlapping feature distributions 
-and the ordinal nature of the target. Support Vector Machines achieved competitive performance, 
-particularly with the RBF kernel, but required substantial computational resources due to the dataset size. 
-Neural Networks demonstrated strong predictive power but showed higher variance across runs, 
-indicating sensitivity to hyperparameter choices and initialization. These observations highlighted the importance of model 
-flexibility and the ability to capture complex interactions among features such as \texttt{startYear}, 
-\texttt{genre1}, \texttt{castNumber}, and \texttt{totalCredits}.
+% \subsection{Advanced Classification Conclusion}
+Across both tasks, ensemble-based methods such as Gradient Boosting
+Machines and Random Forests consistently outperformed linear models,
+confirming that nonlinear relationships played a significant role in
+the IMDb dataset. Logistic Regression, despite its simplicity,
+provided a strong baseline for the \texttt{titleType} 
+task but struggled with the \texttt{averageRating} classes.
+Support Vector Machines achieved competitive performance, 
+particularly with the RBF kernel, but required substantial
+computational resources.
+Neural Networks demonstrated good predictive power, but were
+outperformed in both tasks by other models.
 
 
 

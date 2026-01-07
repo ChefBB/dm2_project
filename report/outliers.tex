@@ -1,37 +1,45 @@
 \section{Outliers}
 \label{sec:outlier}
 
+This section investigates the presence and impact of outliers in the
+dataset using multiple unsupervised anomaly detection techniques.
+The goal is to assess how outlier removal affects downstream
+classification performance and to compare the behavior of different
+detection methods.
+
 
 \subsection{Finding Baseline}
-In this outlier analysis section, our primary objective was to identify the top outliers in the dataset using three well-established methods- 
-\texttt{Local Outlier Factor, Isolation Forest}, and \texttt{Angle-Based Outlier Detection}. 
-To establish a baseline for model performance, we initially employed two supervised learning algorithms- 
-\texttt{Decision Tree} and \texttt{K-Nearest Neighbors}.
+In this section, our primary objective was to identify the top outliers in the dataset using three methods
+(\texttt{Local Outlier Factor, Isolation Forest}, and \texttt{Angle-Based Outlier Detection}). 
+To establish a baseline for model performance, we initially employed two supervised learning algorithms
+(\texttt{Decision Tree} and \texttt{kNN}).
 To enhance the alignment between the later module tasks we defined a categorical target variable, \texttt{rating\_bin}, 
 by dividing the continuous \texttt{averageRating} into six distinct classes. 
 The classes were defined as follows:
-\begin{center}
-    \texttt{0 = [0-5); 1 = [5-6); 2 = [6-7); 3 = [7-8); 4 = [8-9); and 5 = [9-10]}\\
-\end{center}
+
+    $$0 \leftarrow [1-5)\text{; }1 \leftarrow [5-6)\text{; }2 \leftarrow [6-7)\text{; }
+    3 \leftarrow [7-8)\text{; } 4 \leftarrow [8-9)\text{; } 5 \leftarrow [9-10]$$
+
 The value count for each class was 12856, 19576, 37032, 49164, 25414, and 5489 respectively.\\
 We then performed a grid search with cross-validation \texttt{(GridSearchCV)} on both models to identify the best hyperparameters. 
 Since our dataset was large, we conducted the grid search on a 10\% stratified sample to optimize computational efficiency. 
-For K-NN, the optimal parameters were- 
+For K-NN, the optimal parameters were:
 \begin{center}
-    \texttt{metric = `manhattan', n\_neighbors = 122, weights = `distance'}
+    \texttt{metric = manhattan, n\_neighbors = 50, weights = distance}
 \end{center} 
-However, to strike a balance between accuracy and computational efficiency, we restricted our model to use \texttt{50 n\_neighbors}. 
-For Decision Tree, the optimal parameters were-
+
+For Decision Tree, the optimal parameters were:
 \begin{center}
-    \texttt{criterion = `gini', max\_depth = 10, min\_samples\_leaf = 4, min\_samples\_split = 10, splitter = `random'}
+    \texttt{criterion = gini, max\_depth = 10, min\_samples\_leaf = 4, min\_samples\_split = 10}
 \end{center}
 We trained both models on the entire training dataset and evaluated their performance on the test set. 
 We split our training dataset into training (80\%) and validation (20\%) sets. We computed the baseline accuracy 
 without removing any outliers, which was 36\% for \texttt{K-NN} and 32\% for \texttt{Decision Tree}.
 
+\newpage
 \subsection{Finding Threshold}
 
-\begin{wraptable}{l}{0.4\textwidth}
+\begin{wraptable}{r}{0.4\textwidth}
 \centering
 \begin{tabular}{|l|l|l|l|l|}
 \hline
@@ -53,15 +61,16 @@ After removing the identified outliers, we retrained both models on the cleaned 
 We observed that removing outliers generally improved model accuracy, but different contamination levels had no significant impact on the results as shown in table \ref{tab: threshold}.
 Only the results from \texttt{LOF} with a contamination level of 0.1 showed an improvement of 1\%. 
 Therefore, we fixed the contamination level at 10\% for all three methods to maintain consistency. 
-Subsequently, we combined the results of the three methods by aggregating the outlier score and 
-removed those rows that were flagged as outliers by at least \texttt{two out of the three methods}, 
-which accounted for approximately \texttt{3\%} of the dataset.
+% Subsequently, we combined the results of the three methods by aggregating the outlier score and 
+% removed those rows that were flagged as outliers by at least two out of the three methods, 
+% which accounted for approximately 3\% of the dataset.
 
 
 \subsection{Outlier Detection Conclusion}
 In conclusion, our anomaly detection task revealed a consistent trend: both models \texttt{KNN} and \texttt{DT} performed better than the 
 baseline after the removal of outliers. This outcome sets the foundation for our subsequent focus on model 
-explainability in the later sections.\\ 
+explainability in the later sections.
+
 From the T-SNE visualization, we observed that \texttt{LOF} predominantly 
 identified outliers at the edges of the data distribution \ref{fig:LOF}, whereas \texttt{IF} detected 
 them primarily within a clustered region \ref{fig:ISF}. \texttt{ABOD}, on the other hand, captured outliers both at 
@@ -71,14 +80,17 @@ while \texttt{IF} isolates points distant from the main distribution.
 \texttt{ABOD}, which evaluates outliers based on the angular relationships of points, reflects a hybrid behavior by 
 marking anomalies in both sparse and dense regions. Importantly, since the dataset is dominated by a 
 single high-density region, most points lack anomalous neighbors, explaining why \texttt{ABOD} highlighted relatively 
-fewer strong anomalies. To ensure computational efficiency, we implemented the 'fast' version of \texttt{ABOD}, 
-which approximates angle-based detection using a specified number of neighbors rather than exhaustively 
-computing angles across all data points. \\
+fewer strong anomalies. To ensure computational efficiency, we implemented \texttt{ABOD}'s fast version.
+
 Overall, as we can see from table \ref{tab: threshold} the removal of outliers with different threshold 
 led to only marginal gains in predictive performance.
 However, the differences in detection patterns across methods provide valuable insights into the structure and density 
 of the data distribution, reinforcing the importance of combining multiple approaches for a more 
-comprehensive anomaly detection strategy. Therefore, we combined the results of all three methods to identify the common outliers.
+comprehensive anomaly detection strategy.
+% Therefore, we combined the results of all three methods to identify the common outliers.
+Therefore, we combined the results of the three methods by aggregating the outlier score and 
+removed those rows that were flagged as outliers by at least two out of the three methods, 
+which accounted for approximately 3\% of the dataset.
 
 
 \begin{figure}[htbp]
