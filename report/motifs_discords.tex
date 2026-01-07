@@ -3,17 +3,25 @@
 \hl{To analyze recurrent temporal patterns in the movie time series, 
 we adopted a motif-based approach grounded in the Matrix Profile 
 framework}. Prior to motif extraction, all series were normalized 
-using z-score normalization applied independently to each time series 
+using z-score normalization applied independently to each time series, 
 in order to focus the analysis on pattern shape rather than absolute 
 scale. Motifs were extracted using the \texttt{STUMPY} implementation 
-of the matrix profile. 
+of the matrix profile.
 % A sliding window of length 28 was selected as a compromise between capturing meaningful temporal 
 % dynamics and preserving local variations. 
 A window length of 28 was selected to capture repeated seasonal 
 dynamics rather than isolated cycles.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{plotsss/motif_discord.png}
+    \caption{Example of Matrix Profile on Time Series 1000 (\texttt{ratingCategory} = High)} 
+    \label{fig:matrix_profile}
+\end{figure}
+
 For each time series, the three subsequences associated with the 
 lowest matrix profile values were selected, resulting in the extraction 
-of the top-3 motifs per time series. \\
+of the top-3 motifs per time series.\\
 All extracted motifs were aggregated into 
 a single dataset. To analyze similarities among 
 motifs, K-Means clustering using Euclidean distance was applied. 
@@ -31,13 +39,13 @@ between motifs; this alternative formulation led to cluster
 structures and representative patterns that were largely consistent 
 with those obtained using Euclidean distance. \\
 
-\begin{figure}[ht]
+\begin{figure}[H]
     \centering
     \begin{minipage}{0.45\textwidth}
         \centering
         \includegraphics[width=\textwidth]{plotsss/ts_motifs_kmeans.png} 
         \captionof{figure}{Motif clusters via K-Means.}
-        \label{fig:motif_clusters} 
+        \label{fig:motif_clusters}
     \end{minipage}
     \hfill
     \begin{minipage}{0.45\textwidth} 
@@ -48,4 +56,32 @@ with those obtained using Euclidean distance. \\
 
 \end{figure}
 
-\hl{comment the results}
+The two plots reveal three partially overlapping groups of motifs,
+whose shapes are characterized by wave-like patterns with evolving
+peaks:
+
+\begin{itemize}
+    \item \textbf{Cluster 0} (\textbf{cccb}) predominantly captures
+    motifs from the earliest stages of the time series, characterized
+    by a high initial peak followed by a gradual decline;
+
+    \item \textbf{Cluster 2} (\textbf{cbbb}) corresponds mainly to
+    early-to-middle stages of the time series, exhibiting moderate
+    peaks and a smoother overall wave shape;
+
+    \item \textbf{Cluster 3} (\textbf{baaa}) represents motifs from
+    the mid-to-late stages of the time series, with a noticeably
+    flattened waveform and lower-amplitude peaks.
+\end{itemize}
+
+The remaining SAX representation depicts motifs occurring in
+later stages of the time series, which display an almost flat shape.
+These motifs are therefore also assigned to \textbf{Cluster 3},
+reinforcing its interpretation as capturing late-stage, low-variability
+patterns.
+
+The final cluster (\textbf{Cluster 1}), which is also the least
+populated, exhibits a distinct behavior: its motifs show a clear
+increasing trend, with rising peaks over time, setting it apart from
+the predominantly decaying or flattening patterns observed in the
+other clusters.

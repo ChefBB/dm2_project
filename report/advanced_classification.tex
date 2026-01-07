@@ -599,10 +599,13 @@ to achieve better stability.
 A dropout of 0.2 is also applied everywhere but in the input
 branches.
 
-\hl{The optimizer's setup and training procedure are the same as for
-the \texttt{averageRating} task reported in the previous section,
-except for the optimizer's learning rate, which was set to
-0.0006.}\\
+
+The optimizer used was Adam with a learning rate of 0.0001,
+and the loss function was Categorical Crossentropy.
+The model was trained for a maximum of 500 epochs, with early
+stopping based on validation loss with a patience of 20 epochs.
+The batch size used was 64, and balanced class weights were used to
+address class imbalance.\\
 
 Figures~\ref{fig:nn_performance_titletype} shows the training and
 validation loss and accuracy over epochs.
@@ -706,12 +709,16 @@ A dropout of 0.2 is also applied everywhere but in the input
 branches, to reduce overfitting. More aggressive dropout rates
 were tested, but generally lead to worse performances.
 
-The optimizer used was Adam with a learning rate of 0.0006,
-and the loss function was Categorical Crossentropy.
-The model was trained for a maximum of 500 epochs, with early
-stopping based on validation loss with a patience of 20 epochs.
-The batch size used was 64, and balanced class weights were used to
-address class imbalance.\\
+The optimizer's setup and training procedure are the same as for
+the \texttt{titleType} task reported in the previous section,
+except for the optimizer's learning rate, which was set to
+0.0006.\\
+% The optimizer used was Adam with a learning rate of 0.0006,
+% and the loss function was Categorical Crossentropy.
+% The model was trained for a maximum of 500 epochs, with early
+% stopping based on validation loss with a patience of 20 epochs.
+% The batch size used was 64, and balanced class weights were used to
+% address class imbalance.\\
 
 
 Figure~\ref{fig:nn_performance_rating}
@@ -1082,8 +1089,8 @@ Positive contributions increase the probability of the class being explained (in
 while negative contributions reduce it. The cumulative effect of all these contributions, starting from a baseline, 
 leads to the final predicted probability displayed at the top of the figure.
 The labels such as \texttt{tvSeries} and \texttt{NOT tvSeries} (and analogously for other classes) reflect the one-vs-rest formulation 
-used by \texttt{LIME} for each class. \
-texttt{LIME} learns a simple linear classifier that separates that class 
+used by \texttt{LIME} for each class.
+\texttt{LIME} learns a simple linear classifier that separates that class 
 from all others. Bars aligned with \texttt{tvSeries} indicate conditions that make this instance look more like a typical \texttt{tvSeries}, 
 whereas bars aligned with \texttt{NOT tvSeries} capture conditions that would instead support other classes. 
 The same feature can appear with different signs across different class panels, meaning that it pushes the prediction towards one class while 

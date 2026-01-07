@@ -166,7 +166,7 @@ from the others.
 
 
 
-\begin{table}[ht]
+\begin{table}[H]
     \centering
     \caption{Descriptive statistics of box office Gross by cluster.}
     \label{tab:cluster_descriptive}
@@ -186,13 +186,11 @@ from the others.
 
 
     % --- LEFT: plot ---
-    \begin{wrapfigure}{l}{0.48\textwidth}
+    \begin{wrapfigure}{l}{0.5\textwidth}
         \centering
         \vspace{-0.5em}
         \includegraphics[width=\linewidth]{plotsss/ts_log_clustering.png}
-        \caption{Log-scale average box office gross by cluster.
-        Solid lines represent cluster mean trajectories, while shaded areas
-        indicate the range between minimum and maximum values.}
+        \caption{Log-scale box office gross by cluster.}
         \label{fig:cluster_log}
         \vspace{-1em}
     \end{wrapfigure}
@@ -205,14 +203,14 @@ from the others.
     the average gross at the release time step ($t=0$), at the midpoint of the observation
     window ($t=50$), and at the final time step ($t=99$) is reported in order to summarize
     the typical temporal evolution of movies belonging to each cluster.
-
     These pieces of information about absolute values are complemented by
     the log-scale plot in Figure~\ref{fig:cluster_log}, which provides an overview
     of the temporal dynamics for all movies within each cluster. 
+    Solid lines represent the average trajectory within each cluster, while shaded areas indicate 
+    the variability across movies, measured as the range between minimum and maximum values at each time step.
     Compared to the previous analysis on the representative microcluster medoids, 
-    we now consider the full set of original time series, confirming that the
+    now the full set of original time series is considered, confirming that the
     temporal patterns identified earlier are generally preserved.
-
     Cluster~2, originally identified as a single outlier among the medoids, 
     remains an isolated series after mapping back to the original time series,
     confirming its atypical behavior.
