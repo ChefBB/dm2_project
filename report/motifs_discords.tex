@@ -1,4 +1,4 @@
-\subsection{Motifs and Anomalies Discovery}
+\subsection{Motifs and Anomalies Discovery}\label{subsec:motifs_discords}
 
 \hl{To analyze recurrent temporal patterns in the movie time series, 
 we adopted a motif-based approach grounded in the Matrix Profile 
@@ -12,6 +12,30 @@ of the matrix profile.
 A window length of 28 was selected to capture repeated seasonal 
 dynamics rather than isolated cycles.
 
+% Figure~\ref{fig:matrix_profile} shows an example of the motifs and
+% discords detection, on time series 1000, with \texttt{ratingCategory}
+% equal to High. Because of the relative length of the detected patterns
+% with respect to the total length of the time series, only the lowest
+% (motif) and the highest (discord) values for the matrix profile
+% are highlighted.
+% As can be seen in this example, the motif captures a shape that is
+% encountered frequently, while the discord highlights a pattern that almost
+% seems random.
+
+
+Figure~\ref{fig:matrix_profile} shows an example of motif and discord
+detection for time series 1000, whose \texttt{ratingCategory} is
+\textbf{High}.
+Due to the relative length of the detected subsequences with respect to
+the full time series, only the global minimum (motif) and maximum
+(discord) values of the matrix profile are highlighted. 
+
+In this example, the motif captures a shape that occurs repeatedly
+within the series, whereas the discord corresponds to a highly
+irregular subsequence, exhibiting little resemblance to the remaining
+patterns in the time series.
+
+
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth]{plotsss/motif_discord.png}
@@ -19,7 +43,8 @@ dynamics rather than isolated cycles.
     \label{fig:matrix_profile}
 \end{figure}
 
-For each time series, the three subsequences associated with the 
+For all following motifs-related analyses, the three subsequences
+associated with the 
 lowest matrix profile values were selected, resulting in the extraction 
 of the top-3 motifs per time series.\\
 All extracted motifs were aggregated into 

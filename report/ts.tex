@@ -133,16 +133,15 @@ the decision was made to merge the Low and Medium Low categories into a single c
 \subsubsection{Shapelet-based Classification}
 To move beyond global similarity measures and explicitly capture local
 discriminative patterns in the revenue dynamics, the classification
-task was also addressed using shapelet-based methods, with the
-extracted shapelet features subsequently used to train a Random
-Forest classifier.
+task was also addressed using shapelet-based methods, using the 
+extracted shapelet features to train a Random Forest classifier.
 
 This approach is particularly well suited to the present task, as
 films with similar overall revenue levels may still differ in
 localized behaviors such as early peaks, decay rates, or delayed
 growth.\\
 
-The preprocessing pipeline first applies a logarithmic transformation
+The preprocessing pipeline first applied a logarithmic transformation
 to the raw revenue time series to reduce skewness and stabilize
 variance, followed by a per-series mean-variance normalization to
 emphasize temporal shape over absolute scale. This choice is motivated
@@ -150,64 +149,148 @@ by the nature of shapelet-based methods, which aim to identify
 discriminative local patterns whose relevance lies in their temporal
 structure rather than in absolute revenue magnitude.
 
-A \texttt{RandomShapeletTransform} is subsequently fitted on the
+A \texttt{RandomShapeletTransform} was then fitted on the
 training data to extract a fixed set of discriminative subsequences,
-which are used to transform both training and test sets into feature
+which were used to transform both training and test sets into feature
 representations.
-These shapelet-based features are then concatenated with the
-genre-related features to form a combined input space.
-Finally, a standard feature-wise normalization is applied to the
-combined feature matrix before training the downstream classifier.
+The minimum shapelet length was set to 7, while the maximum was set to
+29. Other configurations were also tested, but were discarded because
+of worse performances.\\
 
-The classifier was tuned using a randomized hyperparameter
-search.
-The search space included the number of trees, maximum tree depth,
-minimum samples required for node splitting and leaf nodes, and the
-number of features considered at each split.
-A RandomizedSearchCV procedure with 20 sampled configurations was
-employed, using 3-fold cross-validation and balanced accuracy as the
-optimization metric to account for class imbalance.
-
-\begin{table}[h]
+\begin{wraptable}{r}{0.35\textwidth}
     \centering
-    \caption{Best Random Forest hyperparameters}
+    \caption{Random Forest's overview}
     \label{tab:rf_best_params}
-    \begin{tabular}{lcc}
-    \hline
-    \textbf{Hyperparameter} & \textbf{Value} \\
-    \hline
-    \texttt{n\_estimators} & 100 \\
-    \texttt{max\_depth} & 20 \\
-    \texttt{min\_samples\_split} & 10 \\
-    \texttt{min\_samples\_leaf} & 4 \\
-    \texttt{max\_features} & \texttt{sqrt} \\
-    \hline
+    \begin{tabular}{lc}
+        \hline
+        \textbf{Hyperparameter} & \textbf{Value} \\
+        \hline
+        \texttt{n\_estimators} & 100 \\
+        \texttt{max\_depth} & 20 \\
+        \texttt{min\_samples\_split} & 10 \\
+        \texttt{min\_samples\_leaf} & 4 \\
+        \texttt{max\_features} & \texttt{sqrt} \\
+        \hline
+        \textbf{Accuracy} & 0.46 \\
+        \textbf{Macro F1} & 0.42 \\
+        \hline
     \end{tabular}
-\end{table}
+\end{wraptable}
 
 
-Figure~\ref{fig:shapelets} shows the eight shapelets that provided
-the highest Information Gain.
-The most influential shapelet for the medium class is the 21st
-most influential overall.
+% The Random Forest classifier used balanced class weights, and was
+% tuned using a randomized hyperparameter search.
+
+% A \texttt{RandomizedSearchCV} procedure with 20 sampled configurations
+% was employed, using 3-fold cross-validation and balanced accuracy as the
+% optimization metric to account for class imbalance.
+% Table~\ref{tab:rf_best_params} reports the best configuration found by
+% the random search, along with some key metrics to measure performance.
+
+% The parameters reflect a balanced model: enough trees and maximum
+% depth for learning, while regularization via minimum samples and feature
+% subsampling prevents overfitting.
+
+% The model achieves an overall accuracy of 46\%, consistent with the
+% previous model, while the macro-averaged F1-score is higher,
+% indicating better handling of class imbalance.
+
+% This is confirmed in the confusion matrix in Figure~\ref{fig:cm_shapelets}.
+% The \textbf{Low} class in particular is considered more, relatively to
+% the kNN classifiers. Errors for it and the \textbf{Medium High}
+% are usually close to the correct class.
+
+% The \textbf{Medium} and \textbf{High} classes have many instances
+% in which they are misclassified as the other, as in both kNN classifiers,
+% though performance for the latter class is a bit worse.
+
+% Figure~\ref{fig:shapelets} shows the eight shapelets that provided
+% the highest Information Gain.
+% As can be seen in the legend, the more informative shapelets for the
+% model are from the Low and Medium High classes, which are the least
+% represented. The most informative Shapelet for the High class is the
+% eleventh most informative overall, while for the Medium class it is
+% the sixteenth.
+
+% It is also interesting to note how the shapelets' lengths, shapes and
+% position in their time series vary a lot.
+
+The Random Forest classifier used balanced class weights and was tuned
+via a randomized hyperparameter search.
+A \texttt{RandomizedSearchCV} procedure with 20 sampled configurations
+and 3-fold cross-validation was employed, optimizing for balanced
+accuracy to account for class imbalance.
+Table~\ref{tab:rf_best_params} reports the best configuration, along
+with key performance metrics.
+
+The selected hyperparameters reflect a balanced model: sufficient trees
+and depth for learning, while minimum sample thresholds and feature
+subsampling help prevent overfitting.
+The model achieves an overall accuracy of 46\%, consistent with the
+previous model, while the macro-averaged F1-score is higher, indicating
+improved handling of minority classes.
+
+This is confirmed by the confusion matrix in
+Figure~\ref{fig:cm_shapelets}.
+The \textbf{Low} class is better captured relative to the kNN
+classifiers. Errors for this and the \textbf{Medium High} class
+are often close to the correct category.
+The \textbf{Medium} and \textbf{High} classes are often
+misclassified as each other, similar to the kNN models.
+The \textbf{High} class performs slightly worse with respect to
+the kNN models.
+
+Figure~\ref{fig:shapelets} shows the eight shapelets with the highest
+Information Gain. As indicated in the legend, the most informative
+shapelets come from the \textbf{Low} and \textbf{Medium High} classes,
+which are the least represented.
+The top shapelet for the \textbf{High} class ranks eleventh overall,
+while the top \textbf{Medium} class shapelet ranks sixteenth.
+
+Notably, the shapelets vary considerably in length, shape, and position
+within their respective time series, reflecting the diverse patterns the
+model leverages for classification.
+
 
 \begin{figure}[H]
     \centering
-    \begin{minipage}{0.48\textwidth}
-        \includegraphics[width=1.\textwidth]{plotsss/shapelets.png}
-        \caption{8 most important shapelets}
-        \label{fig:shapelets}
-    \end{minipage}
-    \hfill
     \begin{minipage}{0.43\textwidth}
         \includegraphics[width=1\textwidth]{plotsss/cm_shapelets.png}
         \caption{Confusion matrix for the RF model based on shapelets}
         \label{fig:cm_shapelets}
     \end{minipage}
+    \hfill
+    \begin{minipage}{0.48\textwidth}
+        \includegraphics[width=1.\textwidth]{plotsss/shapelets.png}
+        \caption{8 most important shapelets}
+        \label{fig:shapelets}
+    \end{minipage}
+\end{figure}
+
+
+Figures~\ref{fig:toplow},~\ref{fig:topmedium},~\ref{fig:topmediumhigh},
+and~\ref{fig:tophigh} show the most informative shapelets for the
+Random Forest model, grouped by class.
+Each shapelet is compared with the top four SAX motifs of the same
+length, allowing a direct comparison of their shapes and illustrating
+how discriminative subsequences relate to commonly recurring patterns
+in the time series.
+
+The shapelets for the \textbf{Low} and \textbf{High} classes generally
+follow the shape of the corresponding motifs.
+For the \textbf{Medium} class, the shape aligns with the \texttt{cbbb}
+SAX motif, albeit shifted by a few time steps.
+In contrast, the \textbf{Medium High} shapelet differs from all motifs
+of that length; however, its form is consistent with parts of the extended
+motifs identified in Section~\ref{subsec:motifs_discords}, suggesting
+it likely still represents a non-anomalous pattern.
+
+
+\begin{figure}[H]
     \centering
     \begin{minipage}{0.48\textwidth}
         \includegraphics[width=1\textwidth]{plotsss/toplow.png}
-        \caption{Most influential shapelet for the Low class}
+        \caption{Best shapelet for the Low class}
         \label{fig:toplow}
     \end{minipage}
     \hfill
