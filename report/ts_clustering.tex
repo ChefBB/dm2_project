@@ -34,6 +34,29 @@ This behaviour was expected, as the IMDb time series exhibited strong overall si
 only subtle differences in temporal patterns, causing most series to cluster together 
 while only a few outliers separated.
 
+\begin{figure}[htbp]
+    \centering
+    \begin{minipage}[t]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{plotsss/dtw_agglo.png}
+        \caption{Agglomerative Clustering Dendrogram}
+        \label{fig:dtw_agglo}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[t]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{plotsss/elbow_kmean.png}
+        \caption{K-Means Elbow Method}
+        \label{fig:elbow_kmean}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[t]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{plotsss/silhouette.png}
+        \caption{K-Means Silhouette Score}
+        \label{fig:silhouette}
+    \end{minipage}
+\end{figure}
 
 
 % As a baseline, we applied K-Means clustering directly on the catch22 features, setting the number
